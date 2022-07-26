@@ -1,6 +1,15 @@
+import { orange } from "@mui/material/colors";
+import { createTheme } from "@mui/system";
+
 export default function Home() {
-	console.log("HALLO")
+	const theme = createTheme({
+		status: {
+			danger: orange[500],
+		},
+	});
 	return (
-		<>HOME!</>
-	)
+		<div id="home">
+			
+		</div>
+	);
 }

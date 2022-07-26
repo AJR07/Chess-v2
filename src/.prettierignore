@@ -1,0 +1,7 @@
+/firebase
+/dist
+/public
+/node_modules
+/.firebase
+yarn.lock
+.prettierrc

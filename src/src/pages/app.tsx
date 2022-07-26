@@ -1,14 +1,21 @@
-import { useState } from 'react';
-import reactLogo from './assets/react.svg';
+import { Routes, Route, BrowserRouter } from 'react-router-dom';
+import { ParallaxProvider } from 'react-scroll-parallax';
+import Home from './home/home';
 
 function App() {
-  const [count, setCount] = useState(0)
-
-  return (
-    <div className="App">
-      HI
-    </div>
-  )
+    return (
+        <>
+            <BrowserRouter>
+                <ParallaxProvider>
+                    <div id="app">
+                        <Routes>
+                            <Route path="/" element={<Home />} />
+                        </Routes>
+                    </div>
+                </ParallaxProvider>
+            </BrowserRouter>
+        </>
+    );
 }
 
-export default App
+export default App;

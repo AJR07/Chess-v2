@@ -1,27 +1,42 @@
-import { ThemeProvider } from '@mui/material';
+import {
+    createTheme,
+    Grid,
+    responsiveFontSizes,
+    ThemeProvider,
+} from '@mui/material';
 import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import { ParallaxProvider } from 'react-scroll-parallax';
 import NavBar from '../components/navbar/navbar';
 import { themeOptions } from '../components/theme/theme';
 import Home from './home/home';
 
-function App() {
+export default function App() {
+    return AppSettings(
+        <>
+            <NavBar />
+            <Grid item id='app'>
+                <Routes>
+                    <Route path="/" element={<Home />} />
+                </Routes>
+            </Grid>
+        </>
+    );
+}
+
+function AppSettings(content: JSX.Element) {
     return (
         <>
             <BrowserRouter>
                 <ParallaxProvider>
-                    <ThemeProvider theme={themeOptions}>
-                        <NavBar/>
-                        <div id="app">
-                            <Routes>
-                                <Route path="/" element={<Home />} />
-                            </Routes>
-                        </div>
+                    <ThemeProvider
+                        theme={responsiveFontSizes(createTheme(themeOptions))}
+                    >
+                        <Grid container direction="row" spacing="2.5vw">
+                            {content}
+                        </Grid>
                     </ThemeProvider>
                 </ParallaxProvider>
             </BrowserRouter>
         </>
     );
 }
-
-export default App;

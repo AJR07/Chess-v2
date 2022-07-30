@@ -6,9 +6,10 @@ import {
 } from '@mui/material';
 import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import { ParallaxProvider } from 'react-scroll-parallax';
-import NavBar from '../components/navbar/navbar';
-import { themeOptions } from '../components/theme/theme';
+import NavBar from '../components/navbar';
+import { themeOptions } from '../components/theme';
 import Home from './home/home';
+import '../css/master.css';
 
 export default function App() {
     return AppSettings(
@@ -31,7 +32,7 @@ function AppSettings(content: JSX.Element) {
                     <ThemeProvider
                         theme={responsiveFontSizes(createTheme(themeOptions))}
                     >
-                        <Grid container direction="row" spacing="2.5vw">
+                        <Grid container direction="row" spacing="2.5vw" sx={{height:'100vw'}}>
                             {content}
                         </Grid>
                     </ThemeProvider>

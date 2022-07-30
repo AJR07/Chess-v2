@@ -1,15 +1,9 @@
-import { orange } from "@mui/material/colors";
-import { createTheme } from "@mui/system";
+import { Typography } from "@mui/material";
 
 export default function Home() {
-	const theme = createTheme({
-		status: {
-			danger: orange[500],
-		},
-	});
 	return (
 		<div id="home">
-			
+			<Typography variant="h6">Welcome to...</Typography>
 		</div>
 	);
 }

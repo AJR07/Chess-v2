@@ -32,7 +32,7 @@ function AppSettings(content: JSX.Element) {
                     <ThemeProvider
                         theme={responsiveFontSizes(createTheme(themeOptions))}
                     >
-                        <Grid container direction="row" spacing="2.5vw" sx={{height:'100vw'}}>
+                        <Grid container direction="row" sx={{height:'100vw'}}>
                             {content}
                         </Grid>
                     </ThemeProvider>

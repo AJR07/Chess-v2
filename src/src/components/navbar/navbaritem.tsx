@@ -15,7 +15,6 @@ export default function NavBarItem(props: NavBarItemProps) {
             onClick={() => {
                 navigate(props.redirect);
 			}}
-			sx={{ marginLeft: "40%" }}
 			size="large"
         >
             {props.icon}

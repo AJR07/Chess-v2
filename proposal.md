@@ -36,7 +36,7 @@ For when the features will be implemented, see [plans for specific features in t
 - Maybe to host some events in the school community
 
 # Skills that my project requires me to pick up
-> Most of these skills I sort of get, it will probably not be covered in CEP but it is just listed here because I might still need to learn stuff about it
+> Most of these skills I have an idea about, and it will probably not be covered in CEP but it is just listed here because I might still need to learn details about it
 - React.js
 - Typescript
 - Animation (Framer-Motion)
@@ -44,12 +44,3 @@ For when the features will be implemented, see [plans for specific features in t
 - UI (Material-Ui React)
 - Databases (Firebase, React-Firebase Hooks)
 - Authentication (Firebase Auth, Firebase Storage for profile picture etc)
-
-# [Development Log](/devlog.md)
-> You will be updating this section regularly
-> - Week 5
-> - Week 6
-> - Week 7
-> - Week 8
-> - Week 9
-> - Week 10

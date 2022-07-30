@@ -1,24 +1,73 @@
 # Development Log
-> A successful final project is built slowly over many weeks not thrown together at the last minute. To incentivize good project pacing and to let your project mentor stay informed about the status of your work, each week you should add an entry to your log.md file in the development directory.
-
-> Each entry should describe:
 
 > - What goals you had set for the week and whether they were accomplished or not
 > - What problems you encountered (if any) that prevented you from meeting your goals
 > - What you plan to accomplish or attempt next week
 
-> The development log will be graded for completion, detail, and honesty – not progress. It is much better to truthfully evaluate the work you completed in a week then lie to make the project sound further along then it really is. It is totally acceptable to have an entry that says you tried nothing and accomplished nothing. However if every week starts to say that, both yourself and your project mentor will be able to identify the issue before it becomes impossible to fix.
 
-## Week 5 (26 Jul - 1 Aug)
+### **Week 5 (26 Jul - 1 Aug)**
+- Goal: **Basic setup + Chessboard Update**
+	 - Setup the project
+	 - Install required dependencies
+	 - Setup any readme files
+	 - Get the chessboard represented on the website
+	 - Chessboard FEN Parser and Interpreter
+	 - Chessboard Legal Moves Checker (if have time)
+- Problems:
+	- (not updated)
 
-## Week 6 (2 Aug - 8 Aug)
+### **Week 6 (2 Aug - 8 Aug)**
+- Goal: **Chess Single-player update**
+	 - Ensure chess engine works
+	 - Test chess engine
+	 - Represent chess engine on the website
+	 - FEN parsing and displaying on the website
+	 - Pass and play complete
+- Problems:
+	- (not updated)
 
-## Week 7 (9 Aug - 15 Aug)
+### **Week 7 (9 Aug - 15 Aug)**
+- Goal: **Authentication Update**
+	 - Sign up functionality
+	 - Login functionality
+	 - Other account-related functionality
+	 - Editing of profiles
+	 - Friend systems
+- Problems:
+	- (not updated)
 
-## Week 8 (16 Aug - 22 Aug)
+### **Week 8 (16 Aug - 22 Aug)**
+- Goal: **UI Update** (a lighter update because there are more WAs closing up to this date)
+	 - Improve on the UI of the app in general
+	 - Chatting functionality
+	 - Catch up on any updates that have not been done
+- Problems:
+	- (not updated)
 
-## Week 9 (23 Aug - 29 Aug)
+### **Week 9 (23 Aug - 29 Aug)**
+- Goal: **AI update**
+	 - New section of the website: Playing against an AI
+	 	- Different levels of the AI
+	 - Set up the AI player
+	 - Implement basic algorithms for the AI to calculate moves
+	 	- Alpha-beta pruning
+		- Min-max searching
+- Problems:
+	- (not updated)
 
-## Week 10 (30 Aug - 5 Sep)
+### **Week 10 (30 Aug - 5 Sep)**
+- Goal: **AI Update-2.0**
+	 - Implement much more complex algorithm
+	 - (Possibly) Training of a model
+	 - Implement different levels of the AI
+	 - Ensure playing against AI works
+- Problems:
+	- (not updated)
 
-## Sep Holiday (5 Sep - 10 Sep) **Submission date is 10 Sep**
+### **Sep Holiday (5 Sep - 10 Sep)** (Submission date is 10 Sep)
+- Goal: **Final Touches Update**
+	 - Catch up on anything not done yet
+	 - Improve the UI and playing experiences (includes optimisation)
+	 - (to be updated)
+- Problems:
+	- (not updated)

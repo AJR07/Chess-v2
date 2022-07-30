@@ -5,10 +5,12 @@ Building an online pass-and-play chess engine. This will be hosted on a website 
 Experiment with making a chess engine that is functional, and in the future extend it for multiple users to be able to play it online. I want to do this so that I can have a chess app that I can use and implement whatever features I can whenever I want to.
 
 # Listing of features
+For when the features will be implemented, see [plans for specific features in the development log.](devlog.md)
 - Game modes:
 	- Pass and Play
+	- Against an AI
 	- Multiplayer (Potentially in the future)
-	- 4-player?
+	- 4-player? (Potentially int he future)
 - Game Engine:
 	- Renderer and basic UI
 	- Verification of legal moves
@@ -41,6 +43,7 @@ Experiment with making a chess engine that is functional, and in the future exte
 - Routing (React-router)
 - UI (Material-Ui React)
 - Databases (Firebase, React-Firebase Hooks)
+- Authentication (Firebase Auth, Firebase Storage for profile picture etc)
 
 # [Development Log](/devlog.md)
 > You will be updating this section regularly

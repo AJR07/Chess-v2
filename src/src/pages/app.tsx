@@ -6,7 +6,7 @@ import {
 } from '@mui/material';
 import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import { ParallaxProvider } from 'react-scroll-parallax';
-import NavBar from '../components/navbar';
+import NavBar from '../components/navbar/navbar';
 import { themeOptions } from '../components/theme';
 import Home from './home/home';
 import '../css/master.css';

@@ -20,7 +20,7 @@ export const themeOptions: ThemeOptions = {
     },
   },
   typography: {
-    fontFamily: 'IBM Plex Sans',
+    fontFamily: 'Helvetica',
   },
   spacing: 8,
 };

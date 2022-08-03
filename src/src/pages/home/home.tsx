@@ -1,7 +1,9 @@
 import { Stack, Typography } from '@mui/material';
 import { motion } from 'framer-motion';
+import ChessBoard from '../../engine/board';
 
 export default function Home() {
+    let _ = new ChessBoard();
     return (
         <Stack id="home" style={{ padding: '1vw' }} direction="column">
             <Typography

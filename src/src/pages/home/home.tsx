@@ -17,11 +17,12 @@ export default function Home() {
                 <motion.img
                     src="/images/chess_set/version2/white_pawn.png"
                     style={{ width: 'auto', height: 90 }}
-                    animate={{ rotate: [0, 90, 180, 270, 360] }}
+                    animate={{ rotate: [0, 360] }}
                     transition={{
                         repeat: Infinity,
                         repeatType: 'loop',
-                        repeatDelay: 0.5,
+                        repeatDelay: 1,
+                        duration: 1
                     }}
                 />
                 <Typography

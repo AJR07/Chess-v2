@@ -15,7 +15,7 @@ export default function App() {
     return AppSettings(
         <>
             <NavBar />
-            <Grid item id='app'>
+            <Grid item id="app">
                 <Routes>
                     <Route path="/" element={<Home />} />
                 </Routes>
@@ -32,7 +32,11 @@ function AppSettings(content: JSX.Element) {
                     <ThemeProvider
                         theme={responsiveFontSizes(createTheme(themeOptions))}
                     >
-                        <Grid container direction="row" sx={{height:'100vw'}}>
+                        <Grid
+                            container
+                            direction="row"
+                            sx={{ height: '100vw' }}
+                        >
                             {content}
                         </Grid>
                     </ThemeProvider>

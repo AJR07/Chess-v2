@@ -1,0 +1,25 @@
+{
+  "name": "chess-v2",
+  "version": "1.0.0",
+  "description": "A chess project that is made for CEP WA3 in year 3 :D",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AJR07/Chess-v2.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AJR07/Chess-v2/issues"
+  },
+  "homepage": "https://github.com/AJR07/Chess-v2#readme",
+  "devDependencies": {
+    "husky": "^8.0.0",
+    "pretty-quick": "^3.1.3"
+  }
+}

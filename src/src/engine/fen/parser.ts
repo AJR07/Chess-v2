@@ -13,17 +13,17 @@ export default class FENParser {
     parse(fen: string) {
         // TODO: ERROR HANDLING FOR INCORRECT STRINGS
         let fenComponents = fen.split(' '),
-			data = new FENDetails();
+            data = new FENDetails();
 
         // !parse piece placements
-		let piecePlacementBoard = fenComponents[0].split('/');
-		data.piecePlacement = [];
-		for (let row of piecePlacementBoard) {
+        let piecePlacementBoard = fenComponents[0].split('/');
+        data.piecePlacement = [];
+        for (let row of piecePlacementBoard) {
             // loop over each row that is separated by '/'
             let currentRow = [];
             for (let pieceIdx = 0; pieceIdx < row.length; pieceIdx++) {
                 // loop over every piece in the row
-				let piece = row[pieceIdx];
+                let piece = row[pieceIdx];
                 if (!isNaN(parseInt(piece))) {
                     // if the piece is an integer, that means that there is no piece there
                     // store as blank ('')
@@ -68,19 +68,19 @@ export default class FENParser {
                     data.castlingRights.push(castlingRight);
                 }
             }
-		}
-		
-		// !parse en-passant targets
-		let enPassantTarget = fenComponents[3];
-		if (enPassantTarget == '-') {
-			data.enPassantTarget = '-';
-		} else {
-			data.enPassantTarget = new Square(enPassantTarget);
-		}
+        }
 
-		// !parse half-move and full-move clock
-		data.halfMoveClock = parseInt(fenComponents[4]);
-		data.fullMoveClock = parseInt(fenComponents[5]);
+        // !parse en-passant targets
+        let enPassantTarget = fenComponents[3];
+        if (enPassantTarget == '-') {
+            data.enPassantTarget = '-';
+        } else {
+            data.enPassantTarget = new Square(enPassantTarget);
+        }
+
+        // !parse half-move and full-move clock
+        data.halfMoveClock = parseInt(fenComponents[4]);
+        data.fullMoveClock = parseInt(fenComponents[5]);
 
         return data;
     }

@@ -22,7 +22,7 @@ export default function Home() {
                         repeat: Infinity,
                         repeatType: 'loop',
                         repeatDelay: 1,
-                        duration: 1
+                        duration: 1,
                     }}
                 />
                 <Typography

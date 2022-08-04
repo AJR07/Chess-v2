@@ -10,12 +10,12 @@ interface NavBarItemProps {
 export default function NavBarItem(props: NavBarItemProps) {
     const navigate = useNavigate();
     return (
-		<IconButton
+        <IconButton
             aria-label={props.title}
             onClick={() => {
                 navigate(props.redirect);
-			}}
-			size="large"
+            }}
+            size="large"
         >
             {props.icon}
         </IconButton>

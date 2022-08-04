@@ -5,7 +5,7 @@ import NavBarItem from './navbaritem';
 export default function NavBar() {
     return (
         <Grid item id="navbar" sx={{ width: '7.5vw' }}>
-            <Grid container sx={{height: '85vh'}}>
+            <Grid container sx={{ height: '85vh' }}>
                 <Grid
                     item
                     className="vertical-center"

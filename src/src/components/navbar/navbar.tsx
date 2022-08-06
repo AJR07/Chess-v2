@@ -1,4 +1,4 @@
-import { Home } from '@mui/icons-material';
+import { Home, Person } from '@mui/icons-material';
 import { Grid, Stack } from '@mui/material';
 import NavBarItem from './navbaritem';
 
@@ -16,7 +16,7 @@ export default function NavBar() {
                         borderTopRightRadius: 25,
                         borderBottomRightRadius: 25,
                         '&:hover': {
-                            backgroundColor: 'primary.light',
+                            backgroundColor: 'primary.dark',
                         },
                     }}
                 >
@@ -26,6 +26,11 @@ export default function NavBar() {
                         sx={{ paddingTop: '10%' }}
                     >
                         <NavBarItem title="home" redirect="/" icon={<Home />} />
+                        <NavBarItem
+                            title="singleplayer"
+                            redirect="/singleplayer"
+                            icon={<Person />}
+                        />
                     </Stack>
                 </Grid>
             </Grid>

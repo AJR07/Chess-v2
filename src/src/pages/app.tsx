@@ -10,13 +10,15 @@ import NavBar from '../components/navbar/navbar';
 import { themeOptions } from '../components/theme';
 import Home from './home/home';
 import '../css/master.css';
+import SinglePlayer from './singleplayer/singleplayer';
 
 export default function App() {
     return AppSettings(
         <>
             <NavBar />
-            <Grid item id="app">
+            <Grid item id="app" sx={{ width: '92.5vw' }}>
                 <Routes>
+                    <Route path="/singleplayer" element={<SinglePlayer />} />
                     <Route path="/" element={<Home />} />
                 </Routes>
             </Grid>
@@ -35,7 +37,7 @@ function AppSettings(content: JSX.Element) {
                         <Grid
                             container
                             direction="row"
-                            sx={{ height: '100vw' }}
+                            sx={{ height: '100vh' }}
                         >
                             {content}
                         </Grid>

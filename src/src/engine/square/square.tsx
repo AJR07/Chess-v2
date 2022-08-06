@@ -29,19 +29,22 @@ export default class Square extends React.Component<SquareProps, {}> {
             <Box
                 id="square"
                 sx={{
-                    backgroundColor: `secondary.${
+                    backgroundColor: `primary.${
                         (this.coordinates.coords!.first +
                             this.coordinates.coords!.second) %
                             2 ==
                         0
-                            ? 'primary.light'
-                            : 'primary.dark'
+                            ? 'light'
+                            : 'dark'
                     }`,
+                    width: '5vw',
+                    height: '5vw',
                 }}
             >
                 {this.piece ? (
                     <img
                         src={`/images/chess_set/version2/${this.piece}.png`}
+                        style={{ width: '5vw', height: '5vw' }}
                     ></img>
                 ) : (
                     <></>

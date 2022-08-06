@@ -8,9 +8,13 @@ export default function SinglePlayer() {
                 variant="h2"
                 fontWeight={1000}
                 className="horizontal-center"
-                sx={{ color: 'secondary.light', paddingTop: '5vh' }}
+                sx={{
+                    color: 'secondary.light',
+                    paddingTop: '5vh',
+                    paddingBottom: '5vh',
+                }}
             >
-                SinglePlayer Chessboard
+                Single-Player Chessboard
             </Typography>
             <ChessBoard />
         </div>

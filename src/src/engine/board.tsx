@@ -31,8 +31,14 @@ export default class ChessBoard extends Component {
             boardDisplay.push(<Stack direction="row">{row}</Stack>);
         }
         return (
-            <div id="chessboard">
-                <Stack direction="column">{boardDisplay}</Stack>
+            <div id="chessboard" className="horizontal-center">
+                <Stack
+                    alignItems="center"
+                    justifyContent="center"
+                    direction="column"
+                >
+                    {boardDisplay}
+                </Stack>
             </div>
         );
     }

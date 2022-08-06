@@ -7,7 +7,7 @@ Board details are stored slightly differently than that of the FEN notation, for
 import Square from '../square/square';
 
 export default class FENDetails {
-    piecePlacement: (string | number)[][] = [
+    piecePlacement: string[][] = [
         ['r', 'n', 'b', 'q', 'k', 'b', 'n', 'r'],
         ['p', 'p', 'p', 'p', 'p', 'p', 'p', 'p'],
         ['', '', '', '', '', '', '', ''],

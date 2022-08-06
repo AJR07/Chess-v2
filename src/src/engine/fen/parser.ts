@@ -1,3 +1,4 @@
+import CoordType from '../coordinates/coordtype';
 import Square from '../square/square';
 import FENDetails from './details';
 
@@ -75,7 +76,11 @@ export default class FENParser {
         if (enPassantTarget == '-') {
             data.enPassantTarget = '-';
         } else {
-            data.enPassantTarget = new Square(enPassantTarget);
+            data.enPassantTarget = new Square({
+                coordinates: enPassantTarget,
+                coordtype: CoordType.algebraicCoordinates,
+                piece: null,
+            });
         }
 
         // !parse half-move and full-move clock

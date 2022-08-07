@@ -5,6 +5,7 @@ import ChessEngine from './engine';
 import Square from './square/square';
 import { motion, PanInfo } from 'framer-motion';
 import Pair from '../utils/pair';
+import { Box } from '@mui/system';
 
 interface ChessBoardProps {
     reference: React.MutableRefObject<null>;
@@ -35,10 +36,12 @@ class ChessBoardClass extends Component<ChessBoardProps, {}> {
 
     render() {
         let boardData = this.engine.getBoardData(),
-            boardDisplay: JSX.Element[] = [];
+            boardDisplay: JSX.Element[] = [],
+            background: JSX.Element[] = [];
 
         for (let i = 0; i < 8; i++) {
-            let row: JSX.Element[] = [];
+            let row: JSX.Element[] = [],
+                rowBackground: JSX.Element[] = [];
             for (let j = 0; j < 8; j++) {
                 row.push(
                     <motion.div
@@ -48,9 +51,7 @@ class ChessBoardClass extends Component<ChessBoardProps, {}> {
                         onDragEnd={(
                             event: MouseEvent | TouchEvent | PointerEvent,
                             info: PanInfo
-                        ) => {
-                            this.onDragEnd(new Pair(i, j), event, info);
-                        }}
+                        ) => this.onDragEnd(new Pair(i, j), event, info)}
                         dragConstraints={this.props.reference}
                         dragMomentum={false}
                     >
@@ -58,8 +59,20 @@ class ChessBoardClass extends Component<ChessBoardProps, {}> {
                             coordinates={`${i}${j}`}
                             coordtype={CoordType.numericCoordinates}
                             piece={boardData[i][j]}
+                            key={j}
                         ></Square>
                     </motion.div>
+                );
+                rowBackground.push(
+                    <Box
+                        sx={{
+                            backgroundColor: `primary.${
+                                (i + j) % 2 == 0 ? 'light' : 'dark'
+                            }`,
+                            width: '5vw',
+                            height: '5vw',
+                        }}
+                    ></Box>
                 );
             }
             boardDisplay.push(
@@ -67,7 +80,13 @@ class ChessBoardClass extends Component<ChessBoardProps, {}> {
                     {row}
                 </Stack>
             );
+            background.push(
+                <Stack direction="row" key={i}>
+                    {rowBackground}
+                </Stack>
+            );
         }
+
         return (
             <motion.div id="chessboard" ref={this.props.reference}>
                 <Stack
@@ -75,7 +94,21 @@ class ChessBoardClass extends Component<ChessBoardProps, {}> {
                     justifyContent="center"
                     direction="column"
                 >
-                    {boardDisplay}
+                    <Stack
+                        alignItems="center"
+                        justifyContent="center"
+                        direction="column"
+                        style={{ position: 'absolute' }}
+                    >
+                        {boardDisplay}
+                    </Stack>
+                    <Stack
+                        alignItems="center"
+                        justifyContent="center"
+                        direction="column"
+                    >
+                        {background}
+                    </Stack>
                 </Stack>
             </motion.div>
         );

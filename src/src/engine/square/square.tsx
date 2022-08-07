@@ -29,14 +29,6 @@ export default class Square extends React.Component<SquareProps, {}> {
             <Box
                 id="square"
                 sx={{
-                    backgroundColor: `primary.${
-                        (this.coordinates.coords!.first +
-                            this.coordinates.coords!.second) %
-                            2 ==
-                        0
-                            ? 'light'
-                            : 'dark'
-                    }`,
                     width: '5vw',
                     height: '5vw',
                 }}

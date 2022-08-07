@@ -45,6 +45,8 @@ export default class Square extends React.Component<SquareProps, {}> {
                     <img
                         src={`/images/chess_set/version2/${this.piece}.png`}
                         style={{ width: '5vw', height: '5vw' }}
+                        draggable={false}
+                        className="undraggable"
                     ></img>
                 ) : (
                     <></>

@@ -1,10 +1,10 @@
 import { Stack } from '@mui/material';
 import { Box } from '@mui/system';
 import React from 'react';
-import Pair from '../../../utils/pair';
-import Coordinates from '../coordinates/coordinates';
-import CoordType from '../coordinates/coordtype';
-import piece from '../piece/piece';
+import Pair from '../../utils/pair';
+import Coordinates from './coordinates/coordinates';
+import CoordType from './coordinates/coordtype';
+import piece from './piece';
 
 interface SquareProps {
     coordinates: string;

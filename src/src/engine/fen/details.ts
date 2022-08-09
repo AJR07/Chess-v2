@@ -4,7 +4,7 @@ Initialised by default with the details of the board in a chess starting positio
 Board details are stored slightly differently than that of the FEN notation, for ease of usage
 */
 
-import Square from '../board/square/square';
+import Square from '../board/square';
 
 export default class FENDetails {
     piecePlacement: string[][] = [

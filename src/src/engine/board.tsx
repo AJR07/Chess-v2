@@ -11,7 +11,10 @@ import MoveEngine from './board/move/moveengine';
 
 interface ChessBoardProps {
     reference: React.MutableRefObject<null>;
-    moveState: [Move | null, React.Dispatch<React.SetStateAction<Move | null>>];
+}
+
+interface ChessBoardState {
+    move: Move | null;
 }
 
 function ChessBoard(Component: any) {
@@ -25,17 +28,22 @@ function ChessBoard(Component: any) {
     };
 }
 
-class ChessBoardClass extends Component<ChessBoardProps, {}> {
+class ChessBoardClass extends Component<ChessBoardProps, ChessBoardState> {
     engine: ChessEngine;
     moveEngine: MoveEngine;
 
     constructor(props: ChessBoardProps) {
         super(props);
         this.engine = new ChessEngine();
-        this.moveEngine = new MoveEngine(
-            props.moveState[0],
-            props.moveState[1]
-        );
+
+        // move state
+        this.state = { move: null };
+        this.updateMove = this.updateMove.bind(this);
+        this.moveEngine = new MoveEngine(this.state.move, this.updateMove);
+    }
+
+    updateMove(newMove: Move | null) {
+        this.setState({ move: newMove });
     }
 
     render() {
@@ -88,11 +96,11 @@ class ChessBoardClass extends Component<ChessBoardProps, {}> {
                     <Box
                         sx={{
                             backgroundColor:
-                                this.props.moveState[0]?.startPosition.comparingWith(
+                                this.state.move?.startPosition.comparingWith(
                                     new Pair(i, j)
                                 )
                                     ? 'warning.light'
-                                    : this.props.moveState[0]?.endPosition.comparingWith(
+                                    : this.state.move?.endPosition.comparingWith(
                                           new Pair(i, j)
                                       )
                                     ? 'error.light'

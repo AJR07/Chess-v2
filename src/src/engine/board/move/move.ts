@@ -1,13 +1,8 @@
-import Coordinates from '../coordinates/coordinates';
+import BaseMove from './types/basemove';
+import CaptureMove from './types/capturemove';
+import CastleMove from './types/castlemove';
+import CheckMove from './types/checkmove';
 
-export default class Move {
-    startPosition: Coordinates;
-    endPosition: Coordinates;
+type Move = BaseMove | CaptureMove | CastleMove | CheckMove;
 
-    constructor(startCoords: Coordinates) {
-        this.startPosition = startCoords;
-        this.endPosition = startCoords;
-    }
-
-    // TODO: More methods including notation, applying move etc to be implemented
-}
+export default Move;

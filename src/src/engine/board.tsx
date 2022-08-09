@@ -1,37 +1,41 @@
 import { Stack } from '@mui/material';
-import { Component, useRef } from 'react';
+import { Component, useRef, useState } from 'react';
 import CoordType from './board/coordinates/coordtype';
 import ChessEngine from './engine';
 import Square from './board/square';
 import { motion, PanInfo } from 'framer-motion';
 import Pair from '../utils/pair';
 import { Box } from '@mui/system';
+import Move from './board/move/move';
+import MoveEngine from './board/move/moveengine';
 
 interface ChessBoardProps {
     reference: React.MutableRefObject<null>;
+    moveState: [Move | null, React.Dispatch<React.SetStateAction<Move | null>>];
 }
 
 function ChessBoard(Component: any) {
     return function WrappedComponent() {
         const ref = useRef(null);
-        return <Component reference={ref} />;
+        let moveState = useState(null) as [
+            Move | null,
+            React.Dispatch<React.SetStateAction<Move | null>>
+        ];
+        return <Component reference={ref} moveState={moveState} />;
     };
 }
 
 class ChessBoardClass extends Component<ChessBoardProps, {}> {
     engine: ChessEngine;
+    moveEngine: MoveEngine;
 
     constructor(props: ChessBoardProps) {
         super(props);
         this.engine = new ChessEngine();
-    }
-
-    onDragEnd(
-        dragged: Pair<number, number>,
-        event: MouseEvent | TouchEvent | PointerEvent,
-        info: PanInfo
-    ) {
-        console.log(dragged.toString(), info.point.x, info.point.y);
+        this.moveEngine = new MoveEngine(
+            props.moveState[0],
+            props.moveState[1]
+        );
     }
 
     render() {
@@ -48,10 +52,26 @@ class ChessBoardClass extends Component<ChessBoardProps, {}> {
                         key={j}
                         drag={true}
                         dragElastic={0}
+                        onDragStart={(
+                            event: MouseEvent | TouchEvent | PointerEvent,
+                            info: PanInfo
+                        ) =>
+                            this.moveEngine.onStart(new Pair(i, j), event, info)
+                        }
+                        onDrag={(
+                            event: MouseEvent | TouchEvent | PointerEvent,
+                            info: PanInfo
+                        ) =>
+                            this.moveEngine.whenDragged(
+                                new Pair(i, j),
+                                event,
+                                info
+                            )
+                        }
                         onDragEnd={(
                             event: MouseEvent | TouchEvent | PointerEvent,
                             info: PanInfo
-                        ) => this.onDragEnd(new Pair(i, j), event, info)}
+                        ) => this.moveEngine.onEnd(new Pair(i, j), event, info)}
                         dragConstraints={this.props.reference}
                         dragMomentum={false}
                     >
@@ -63,15 +83,26 @@ class ChessBoardClass extends Component<ChessBoardProps, {}> {
                         ></Square>
                     </motion.div>
                 );
+
                 rowBackground.push(
                     <Box
                         sx={{
-                            backgroundColor: `primary.${
-                                (i + j) % 2 == 0 ? 'light' : 'dark'
-                            }`,
+                            backgroundColor:
+                                this.props.moveState[0]?.startPosition.comparingWith(
+                                    new Pair(i, j)
+                                )
+                                    ? 'warning.light'
+                                    : this.props.moveState[0]?.endPosition.comparingWith(
+                                          new Pair(i, j)
+                                      )
+                                    ? 'error.light'
+                                    : `primary.${
+                                          (i + j) % 2 == 0 ? 'light' : 'dark'
+                                      }`,
                             width: '5vw',
                             height: '5vw',
                         }}
+                        key={j}
                     ></Box>
                 );
             }
@@ -94,7 +125,7 @@ class ChessBoardClass extends Component<ChessBoardProps, {}> {
                     justifyContent="center"
                     direction="column"
                     sx={{
-                        opacity: '0.75',
+                        opacity: '0.9',
                     }}
                 >
                     <Stack

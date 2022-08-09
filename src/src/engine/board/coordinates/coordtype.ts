@@ -1,6 +1,7 @@
 enum CoordType {
-    algebraicCoordinates = 1,
-    numericCoordinates = 2,
+    algebraicCoordinates,
+    numericCoordinates,
+    pairCoordinates,
 }
 
 export default CoordType;

@@ -3,10 +3,18 @@ import CoordType from './coordtype';
 
 export default class Coordinates {
     coords: Pair<number, number> | null;
-    constructor(coords: string, coordtype: CoordType) {
-        if (coordtype == CoordType.algebraicCoordinates)
-            this.coords = this.parseAlgebraic(coords);
-        else this.coords = this.parseAlgebraic(coords);
+
+    constructor(coords: unknown, coordtype: CoordType) {
+        if (coordtype == CoordType.pairCoordinates)
+            this.coords = coords as Pair<number, number>;
+        else if (coordtype == CoordType.algebraicCoordinates)
+            this.coords = this.parseAlgebraic(coords as string);
+        else this.coords = this.parseAlgebraic(coords as string);
+    }
+
+    comparingWith(otherCoordinates: Pair<number, number>) {
+        if (this.coords == null) return false;
+        else return this.coords.equals(otherCoordinates);
     }
 
     parseAlgebraic(coords: string): Pair<number, number> | null {

@@ -1,4 +1,4 @@
-import Pair from '../../utils/pair';
+import Pair from '../../../utils/pair';
 import CoordType from './coordtype';
 
 export default class Coordinates {

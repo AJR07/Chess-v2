@@ -1,10 +1,10 @@
 import { Stack } from '@mui/material';
 import { Component, useRef } from 'react';
 import CoordType from './coordinates/coordtype';
-import ChessEngine from './engine';
+import ChessEngine from '../engine';
 import Square from './square/square';
 import { motion, PanInfo } from 'framer-motion';
-import Pair from '../utils/pair';
+import Pair from '../../utils/pair';
 import { Box } from '@mui/system';
 
 interface ChessBoardProps {
@@ -93,6 +93,9 @@ class ChessBoardClass extends Component<ChessBoardProps, {}> {
                     alignItems="center"
                     justifyContent="center"
                     direction="column"
+                    sx={{
+                        opacity: '0.75',
+                    }}
                 >
                     <Stack
                         alignItems="center"

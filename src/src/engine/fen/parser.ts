@@ -1,5 +1,5 @@
-import CoordType from '../coordinates/coordtype';
-import Square from '../square/square';
+import CoordType from '../board/coordinates/coordtype';
+import Square from '../board/square/square';
 import FENDetails from './details';
 
 export default class FENParser {

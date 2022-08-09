@@ -1,5 +1,5 @@
 import { Typography } from '@mui/material';
-import ChessBoard from '../../engine/board/board';
+import ChessBoard from '../../engine/board';
 
 export default function SinglePlayer() {
     return (

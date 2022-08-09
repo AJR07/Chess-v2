@@ -1,10 +1,10 @@
 import { Stack } from '@mui/material';
 import { Component, useRef } from 'react';
-import CoordType from './coordinates/coordtype';
-import ChessEngine from '../engine';
-import Square from './square';
+import CoordType from './board/coordinates/coordtype';
+import ChessEngine from './engine';
+import Square from './board/square';
 import { motion, PanInfo } from 'framer-motion';
-import Pair from '../../utils/pair';
+import Pair from '../utils/pair';
 import { Box } from '@mui/system';
 
 interface ChessBoardProps {

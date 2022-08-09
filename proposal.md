@@ -14,6 +14,7 @@ For when the features will be implemented, see [plans for specific features in t
 - Game Engine:
 	- Renderer and basic UI
 	- Verification of legal moves
+	- Chess notation
 - Authentication/User Login:
 	- Login as a user
 	- Store a profile picture, name, etc...

@@ -14,7 +14,8 @@
 	 - Chessboard FEN Parser and Interpreter
 	 - Chessboard Legal Moves Checker (if have time)
 - Problems:
-	- (not updated)
+	- Most of the time was spent on brainstorming and getting the project setup
+	- A large part of the last 2 goals were not done, but was completed the next week
 
 ### **Week 6 (2 Aug - 8 Aug)**
 - Goal: **Chess Single-player update**
@@ -24,7 +25,9 @@
 	 - FEN parsing and displaying on the website
 	 - Pass and play complete
 - Problems:
-	- (not updated)
+	- Unfortunately, having OBS on this week meant that a large part of the week I didn't have enough rest and motivation to make a lot of progress
+	- There was a bunch of other details I had to iron out, and was not planned properly i guess
+	- Were able to get done all of the points until the last
 
 ### **Week 7 (9 Aug - 15 Aug)**
 - Goal: **Authentication Update**

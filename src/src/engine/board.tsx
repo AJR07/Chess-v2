@@ -1,4 +1,4 @@
-import { Stack } from '@mui/material';
+import { Stack, Theme, useTheme } from '@mui/material';
 import { Component, useRef, useState } from 'react';
 import CoordType from './board/coordinates/coordtype';
 import ChessEngine from './engine';
@@ -11,6 +11,7 @@ import MoveEngine from './board/move/moveengine';
 
 interface ChessBoardProps {
     reference: React.MutableRefObject<null>;
+    theme: Theme;
 }
 
 interface ChessBoardState {
@@ -20,11 +21,12 @@ interface ChessBoardState {
 function ChessBoard(Component: any) {
     return function WrappedComponent() {
         const ref = useRef(null);
+        const theme = useTheme();
         let moveState = useState(null) as [
             Move | null,
             React.Dispatch<React.SetStateAction<Move | null>>
         ];
-        return <Component reference={ref} moveState={moveState} />;
+        return <Component reference={ref} theme={theme} />;
     };
 }
 
@@ -79,7 +81,14 @@ class ChessBoardClass extends Component<ChessBoardProps, ChessBoardState> {
                         onDragEnd={(
                             event: MouseEvent | TouchEvent | PointerEvent,
                             info: PanInfo
-                        ) => this.moveEngine.onEnd(new Pair(i, j), event, info)}
+                        ) =>
+                            this.moveEngine.onEnd(
+                                new Pair(i, j),
+                                event,
+                                info,
+                                this.engine
+                            )
+                        }
                         dragConstraints={this.props.reference}
                         dragMomentum={false}
                     >
@@ -91,22 +100,23 @@ class ChessBoardClass extends Component<ChessBoardProps, ChessBoardState> {
                         ></Square>
                     </motion.div>
                 );
-
+                let startComparison =
+                        this.state.move?.startPosition.comparingWith(
+                            new Pair(i, j)
+                        ),
+                    endComparison = this.state.move?.endPosition.comparingWith(
+                        new Pair(i, j)
+                    );
                 rowBackground.push(
                     <Box
                         sx={{
-                            backgroundColor:
-                                this.state.move?.startPosition.comparingWith(
-                                    new Pair(i, j)
-                                )
-                                    ? 'warning.light'
-                                    : this.state.move?.endPosition.comparingWith(
-                                          new Pair(i, j)
-                                      )
-                                    ? 'error.light'
-                                    : `primary.${
-                                          (i + j) % 2 == 0 ? 'light' : 'dark'
-                                      }`,
+                            backgroundColor: startComparison
+                                ? this.props.theme.palette.secondary.light
+                                : endComparison
+                                ? this.props.theme.palette.error.light
+                                : `primary.${
+                                      (i + j) % 2 == 0 ? 'light' : 'dark'
+                                  }`,
                             width: '5vw',
                             height: '5vw',
                         }}

@@ -1,5 +1,6 @@
 import { PanInfo } from 'framer-motion';
 import Pair from '../../../utils/pair';
+import ChessEngine from '../../engine';
 import Coordinates from '../coordinates/coordinates';
 import CoordType from '../coordinates/coordtype';
 import Move from './move';
@@ -47,14 +48,16 @@ export default class MoveEngine {
     onEnd(
         dragged: Pair<number, number>,
         event: MouseEvent | TouchEvent | PointerEvent,
-        info: PanInfo
+        info: PanInfo,
+        engine: ChessEngine
     ) {
         this.whenDragged(dragged, event, info);
         // TODO: Processing of whether move is legal
         let legal = true;
+        if (legal) {
+        }
 
         this.move = null;
         this.updateMove(this.move);
-        return legal;
     }
 }

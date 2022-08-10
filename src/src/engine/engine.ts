@@ -2,7 +2,7 @@ import FENParser from './fen/parser';
 
 export default class ChessEngine {
     fenManager: FENParser;
-    board: string[][];
+    private board: string[][];
     constructor() {
         this.fenManager = new FENParser(
             'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'
@@ -13,4 +13,8 @@ export default class ChessEngine {
     getBoardData() {
         return this.fenManager.data.piecePlacement;
     }
+
+    editBoardData() {}
+
+    regenerateFen() {}
 }

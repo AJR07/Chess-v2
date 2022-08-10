@@ -4,7 +4,7 @@ import React from 'react';
 import Pair from '../../utils/pair';
 import Coordinates from './coordinates/coordinates';
 import CoordType from './coordinates/coordtype';
-import piece from './piece';
+import piece from './piece/piece';
 
 interface SquareProps {
     coordinates: string;

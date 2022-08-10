@@ -31,9 +31,21 @@ export default class MoveEngine {
         event: MouseEvent | TouchEvent | PointerEvent,
         info: PanInfo
     ) {
+        function resolveHalfSquare(num: number) {
+            if (num < 0) return num - 0.5;
+            else return num + 0.5;
+        }
         let offset = new Pair(
-            Math.trunc(info.offset.x / ((window.outerWidth / 100) * 5) + 0.5),
-            Math.trunc(info.offset.y / ((window.outerWidth / 100) * 5) + 0.5)
+            Math.trunc(
+                resolveHalfSquare(
+                    info.offset.x / ((window.outerWidth / 100) * 5)
+                )
+            ),
+            Math.trunc(
+                resolveHalfSquare(
+                    info.offset.y / ((window.outerWidth / 100) * 5)
+                )
+            )
         );
         dragged.first += offset.second;
         dragged.second += offset.first;

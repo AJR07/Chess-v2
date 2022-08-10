@@ -30,14 +30,9 @@ export default class MoveEngine {
         event: MouseEvent | TouchEvent | PointerEvent,
         info: PanInfo
     ) {
-        function roundCloseToZero(num: number) {
-            if (num > 0) return Math.floor(num);
-            else if (num < 0) return Math.ceil(num);
-            else return num;
-        }
         let offset = new Pair(
-            roundCloseToZero(info.offset.x / ((window.outerWidth / 100) * 5)),
-            roundCloseToZero(info.offset.y / ((window.outerHeight / 100) * 5))
+            Math.trunc(info.offset.x / ((window.outerWidth / 100) * 5) + 0.5),
+            Math.trunc(info.offset.y / ((window.outerWidth / 100) * 5) + 0.5)
         );
         dragged.first += offset.second;
         dragged.second += offset.first;

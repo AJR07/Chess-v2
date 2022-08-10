@@ -127,14 +127,18 @@ class ChessBoardClass extends Component<ChessBoardProps, ChessBoardState> {
         }
 
         return (
-            <motion.div id="chessboard" ref={this.props.reference}>
-                <Stack
-                    alignItems="center"
-                    justifyContent="center"
-                    direction="column"
-                    sx={{
-                        opacity: '0.9',
-                    }}
+            <Stack
+                alignItems="center"
+                justifyContent="center"
+                direction="column"
+                sx={{
+                    opacity: '0.9',
+                }}
+            >
+                <motion.div
+                    id="chessboard"
+                    className="horizontal-center"
+                    ref={this.props.reference}
                 >
                     <Stack
                         alignItems="center"
@@ -151,8 +155,8 @@ class ChessBoardClass extends Component<ChessBoardProps, ChessBoardState> {
                     >
                         {background}
                     </Stack>
-                </Stack>
-            </motion.div>
+                </motion.div>
+            </Stack>
         );
     }
 }

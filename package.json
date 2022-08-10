@@ -19,7 +19,9 @@
   },
   "homepage": "https://github.com/AJR07/Chess-v2#readme",
   "devDependencies": {
-    "husky": "^8.0.0",
     "pretty-quick": "^3.1.3"
+  },
+  "dependencies": {
+    "husky": "^8.0.1"
   }
 }

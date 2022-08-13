@@ -1,7 +1,7 @@
 import Move from '../../move/move';
-import Piece from '../piece';
+import Piece from './empty';
 
-export default class knight extends Piece {
+export default class Knight extends Piece {
     name = 'knight';
     shortName = 'n';
 

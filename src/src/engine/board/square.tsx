@@ -1,27 +1,26 @@
-import { Stack } from '@mui/material';
 import { Box } from '@mui/system';
 import React from 'react';
 import Pair from '../../utils/pair';
 import Coordinates from './coordinates/coordinates';
 import CoordType from './coordinates/coordtype';
-import piece from './piece/piece';
+import PieceType from './piece/piecetype';
+import piece from './piece/types/empty';
 
 interface SquareProps {
     coordinates: string;
     coordtype: CoordType;
-    piece: string | null;
+    piece: PieceType;
 }
 
 export default class Square extends React.Component<SquareProps, {}> {
-    piece: string | null;
+    piece: PieceType;
     coordinates: Coordinates;
 
     constructor(props: SquareProps) {
         super(props);
         // TODO: CHECK FOR INACCURATE PARAMS PASSED IN
         this.coordinates = new Coordinates(props.coordinates, props.coordtype);
-        if (props.piece) this.piece = piece.get(props.piece)!;
-        else this.piece = null;
+        this.piece = props.piece;
     }
 
     render() {
@@ -35,7 +34,7 @@ export default class Square extends React.Component<SquareProps, {}> {
             >
                 {this.piece ? (
                     <img
-                        src={`/images/chess_set/version2/${this.piece}.png`}
+                        src={`/images/chess_set/version2/${this.piece.getLongName()}.png`}
                         style={{ width: '5vw', height: '5vw' }}
                         draggable={false}
                         className="undraggable"

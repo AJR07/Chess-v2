@@ -1,5 +1,5 @@
 import Move from '../../move/move';
-import Piece from '../piece';
+import Piece from './empty';
 
 export default class Bishop extends Piece {
     name = 'bishop';

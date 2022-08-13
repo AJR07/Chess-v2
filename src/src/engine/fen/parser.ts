@@ -1,5 +1,8 @@
+import Coordinates from '../board/coordinates/coordinates';
 import CoordType from '../board/coordinates/coordtype';
-import Square from '../board/square';
+import Colour from '../board/piece/color';
+import convertPiece from '../board/piece/piececonversion';
+import PieceType from '../board/piece/piecetype';
 import FENDetails from './details';
 
 export default class FENParser {
@@ -13,15 +16,14 @@ export default class FENParser {
 
     parse(fen: string) {
         // TODO: ERROR HANDLING FOR INCORRECT STRINGS
-        let fenComponents = fen.split(' '),
-            data = new FENDetails();
+        let fenComponents = fen.split(' ');
 
         // !parse piece placements
-        let piecePlacementBoard = fenComponents[0].split('/');
-        data.piecePlacement = [];
+        let piecePlacementBoard = fenComponents[0].split('/'),
+            piecePlacement: PieceType[][] = [];
         for (let row of piecePlacementBoard) {
             // loop over each row that is separated by '/'
-            let currentRow = [];
+            let currentRow: PieceType[] = [];
             for (let pieceIdx = 0; pieceIdx < row.length; pieceIdx++) {
                 // loop over every piece in the row
                 let piece = row[pieceIdx];
@@ -33,15 +35,23 @@ export default class FENParser {
                         blankCount < parseInt(piece);
                         blankCount++
                     )
-                        currentRow.push('');
+                        currentRow.push(new (convertPiece(''))(Colour.none));
                 } else {
                     // if not just add the piece to the current row
-                    currentRow.push(piece);
+                    currentRow.push(
+                        new (convertPiece(piece.toLowerCase()))(
+                            piece.toUpperCase() == piece
+                                ? Colour.white
+                                : Colour.black
+                        )
+                    );
                 }
             }
             // add the current row to the board in data
-            data.piecePlacement.push(currentRow);
+            piecePlacement.push(currentRow);
         }
+
+        let data = new FENDetails(piecePlacement);
 
         // !parse active colour
         // active colour is just the character at the second index of fenComponents
@@ -74,13 +84,12 @@ export default class FENParser {
         // !parse en-passant targets
         let enPassantTarget = fenComponents[3];
         if (enPassantTarget == '-') {
-            data.enPassantTarget = '-';
+            data.enPassantTarget = null;
         } else {
-            data.enPassantTarget = new Square({
-                coordinates: enPassantTarget,
-                coordtype: CoordType.algebraicCoordinates,
-                piece: null,
-            });
+            data.enPassantTarget = new Coordinates(
+                enPassantTarget,
+                CoordType.algebraicCoordinates
+            );
         }
 
         // !parse half-move and full-move clock

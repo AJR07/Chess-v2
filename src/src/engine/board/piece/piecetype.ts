@@ -5,6 +5,11 @@ import Pawn from './types/pawn';
 import Queen from './types/queen';
 import King from './types/king';
 
-type PieceType = Piece | Pawn | Knight | Bishop | Queen | King;
-
-export default PieceType;
+export type Pieces = Piece | Pawn | Knight | Bishop | Queen | King;
+export type PieceType =
+    | typeof Piece
+    | typeof Pawn
+    | typeof Knight
+    | typeof Bishop
+    | typeof Queen
+    | typeof King;

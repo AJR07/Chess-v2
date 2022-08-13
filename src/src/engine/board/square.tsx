@@ -1,19 +1,17 @@
 import { Box } from '@mui/system';
 import React from 'react';
-import Pair from '../../utils/pair';
 import Coordinates from './coordinates/coordinates';
 import CoordType from './coordinates/coordtype';
-import PieceType from './piece/piecetype';
-import piece from './piece/types/empty';
+import { Pieces } from './piece/piecetype';
 
 interface SquareProps {
     coordinates: string;
     coordtype: CoordType;
-    piece: PieceType;
+    piece: Pieces;
 }
 
 export default class Square extends React.Component<SquareProps, {}> {
-    piece: PieceType;
+    piece: Pieces;
     coordinates: Coordinates;
 
     constructor(props: SquareProps) {
@@ -32,7 +30,7 @@ export default class Square extends React.Component<SquareProps, {}> {
                     height: '5vw',
                 }}
             >
-                {this.piece ? (
+                {this.piece.name !== '' ? (
                     <img
                         src={`/images/chess_set/version2/${this.piece.getLongName()}.png`}
                         style={{ width: '5vw', height: '5vw' }}

@@ -2,7 +2,7 @@ import Coordinates from '../board/coordinates/coordinates';
 import CoordType from '../board/coordinates/coordtype';
 import Colour from '../board/piece/color';
 import convertPiece from '../board/piece/piececonversion';
-import PieceType from '../board/piece/piecetype';
+import { PieceType, Pieces } from '../board/piece/piecetype';
 import FENDetails from './details';
 
 export default class FENParser {
@@ -20,10 +20,10 @@ export default class FENParser {
 
         // !parse piece placements
         let piecePlacementBoard = fenComponents[0].split('/'),
-            piecePlacement: PieceType[][] = [];
+            piecePlacement: Pieces[][] = [];
         for (let row of piecePlacementBoard) {
             // loop over each row that is separated by '/'
-            let currentRow: PieceType[] = [];
+            let currentRow: Pieces[] = [];
             for (let pieceIdx = 0; pieceIdx < row.length; pieceIdx++) {
                 // loop over every piece in the row
                 let piece = row[pieceIdx];
@@ -35,11 +35,12 @@ export default class FENParser {
                         blankCount < parseInt(piece);
                         blankCount++
                     )
-                        currentRow.push(new (convertPiece(''))(Colour.none));
+                        currentRow.push(convertPiece('', Colour.none));
                 } else {
                     // if not just add the piece to the current row
                     currentRow.push(
-                        new (convertPiece(piece.toLowerCase()))(
+                        convertPiece(
+                            piece.toLowerCase(),
                             piece.toUpperCase() == piece
                                 ? Colour.white
                                 : Colour.black

@@ -7,7 +7,7 @@ export default class ChessEngine {
         this.fenManager = new FENParser(
             'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'
         );
-        this.getBoardData();
+        console.log(this.getBoardData());
     }
 
     getBoardData() {

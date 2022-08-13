@@ -9,7 +9,7 @@ export default class Piece {
 
     constructor(colour: Colour = Colour.none) {
         this.colour = colour;
-        this.shortName = this.name[0].toLowerCase();
+        this.shortName = this.name.length > 0 ? this.name[0].toLowerCase() : '';
     }
 
     getLongName() {

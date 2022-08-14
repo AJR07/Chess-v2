@@ -1,8 +1,8 @@
 import Coordinates from '../board/coordinates/coordinates';
 import CoordType from '../board/coordinates/coordtype';
-import Colour from '../board/piece/color';
+import Colour from '../board/piece/colour';
 import convertPiece from '../board/piece/piececonversion';
-import { PieceType, Pieces } from '../board/piece/piecetype';
+import { Pieces } from '../board/piece/piecetype';
 import FENDetails from './details';
 
 export default class FENParser {

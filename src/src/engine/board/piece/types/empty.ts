@@ -1,15 +1,14 @@
 import Coordinates from '../../coordinates/coordinates';
 import Move from '../../move/move';
-import Colour from '../color';
+import Colour from '../colour';
 
 export default class Piece {
-    shortName: string;
+    shortName: string = '';
     name: string = '';
     colour: Colour;
 
     constructor(colour: Colour = Colour.none) {
         this.colour = colour;
-        this.shortName = this.name.length > 0 ? this.name[0].toLowerCase() : '';
     }
 
     getLongName() {

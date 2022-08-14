@@ -3,6 +3,8 @@ import Pair from '../../../utils/pair';
 import ChessEngine from '../../engine';
 import Coordinates from '../coordinates/coordinates';
 import CoordType from '../coordinates/coordtype';
+import Colour from '../piece/colour';
+import Piece from '../piece/types/empty';
 import Move from './move';
 import BaseMove from './types/basemove';
 
@@ -55,6 +57,8 @@ export default class MoveEngine {
             );
             this.updateMove(this.move);
         }
+
+        return dragged;
     }
 
     onEnd(
@@ -65,8 +69,19 @@ export default class MoveEngine {
     ) {
         this.whenDragged(dragged, event, info);
         // TODO: Processing of whether move is legal
-        let legal = true;
-        if (legal) {
+        let board = engine.getBoardData(),
+            coords = new Pair(this.move!.startPosition, this.move!.endPosition);
+        if (
+            board[coords.first.coords!.first][
+                coords.first.coords!.second
+            ].canBeMovedTo(this.move!)
+        ) {
+            board[coords.second.coords!.first][coords.second.coords!.second] =
+                board[coords.first.coords!.first][coords.first.coords!.second];
+            board[coords.first.coords!.first][coords.first.coords!.second] =
+                new Piece(Colour.none);
+            console.log('Swap Done!');
+            console.log(board);
         }
 
         this.move = null;

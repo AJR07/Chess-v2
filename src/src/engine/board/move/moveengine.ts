@@ -4,6 +4,7 @@ import ChessEngine from '../../engine';
 import Coordinates from '../coordinates/coordinates';
 import CoordType from '../coordinates/coordtype';
 import Colour from '../piece/colour';
+import { Pieces } from '../piece/piecetype';
 import Piece from '../piece/types/empty';
 import Move from './move';
 import BaseMove from './types/basemove';
@@ -11,10 +12,19 @@ import BaseMove from './types/basemove';
 export default class MoveEngine {
     move: Move | null;
     updateMove: (newMove: Move | null) => void;
+    resetDrag: (newDrag: boolean) => void;
+    updateBoard: (changesList: Pair<Coordinates, Pieces>[]) => void;
 
-    constructor(move: Move | null, setMove: (newMove: Move | null) => void) {
+    constructor(
+        move: Move | null,
+        setMove: (newMove: Move | null) => void,
+        resetDrag: (newDrag: boolean) => void,
+        updateBoard: (changesList: Pair<Coordinates, Pieces>[]) => void
+    ) {
         this.move = move;
         this.updateMove = setMove;
+        this.resetDrag = resetDrag;
+        this.updateBoard = updateBoard;
     }
 
     onStart(
@@ -26,6 +36,7 @@ export default class MoveEngine {
             new Coordinates(dragged, CoordType.pairCoordinates)
         );
         this.updateMove(this.move);
+        this.resetDrag(false);
     }
 
     whenDragged(
@@ -76,14 +87,30 @@ export default class MoveEngine {
                 coords.first.coords!.second
             ].canBeMovedTo(this.move!)
         ) {
+            let changesList: Pair<Coordinates, Pieces>[] = [];
             board[coords.second.coords!.first][coords.second.coords!.second] =
                 board[coords.first.coords!.first][coords.first.coords!.second];
+            changesList.push(
+                new Pair(
+                    coords.second,
+                    board[coords.second.coords!.first][
+                        coords.second.coords!.second
+                    ]
+                )
+            );
             board[coords.first.coords!.first][coords.first.coords!.second] =
                 new Piece(Colour.none);
-            console.log('Swap Done!');
-            console.log(board);
+            changesList.push(
+                new Pair(
+                    coords.first,
+                    board[coords.first.coords!.first][
+                        coords.first.coords!.second
+                    ]
+                )
+            );
+            this.updateBoard(changesList);
         }
-
+        this.resetDrag(true);
         this.move = null;
         this.updateMove(this.move);
     }

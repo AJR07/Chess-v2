@@ -19,8 +19,8 @@ export default class Coordinates {
 
     parseAlgebraic(coords: string): Pair<number, number> | null {
         return new Pair(
-            coords.charCodeAt(0) - 'a'.charCodeAt(0) + 1,
-            coords.charCodeAt(1)
+            7 - (coords.charCodeAt(0) - 'a'.charCodeAt(0)),
+            parseInt(coords[1]) - 1
         );
     }
 

@@ -8,6 +8,11 @@ import Pair from '../utils/pair';
 import { Box } from '@mui/system';
 import Move from './board/move/move';
 import MoveEngine from './board/move/moveengine';
+import { Pieces } from './board/piece/piecetype';
+import Coordinates from './board/coordinates/coordinates';
+import Colour from './board/piece/colour';
+import Piece from './board/piece/types/empty';
+import King from './board/piece/types/king';
 
 interface ChessBoardProps {
     reference: React.MutableRefObject<null>;
@@ -16,16 +21,14 @@ interface ChessBoardProps {
 
 interface ChessBoardState {
     move: Move | null;
+    resetDrag: boolean;
+    board: Pieces[][];
 }
 
 function ChessBoard(Component: any) {
     return function WrappedComponent() {
         const ref = useRef(null);
         const theme = useTheme();
-        let moveState = useState(null) as [
-            Move | null,
-            React.Dispatch<React.SetStateAction<Move | null>>
-        ];
         return <Component reference={ref} theme={theme} />;
     };
 }
@@ -39,9 +42,40 @@ class ChessBoardClass extends Component<ChessBoardProps, ChessBoardState> {
         this.engine = new ChessEngine();
 
         // move state
-        this.state = { move: null };
         this.updateMove = this.updateMove.bind(this);
-        this.moveEngine = new MoveEngine(this.state.move, this.updateMove);
+        // reset drag state
+        this.resetDrag = this.resetDrag.bind(this);
+        // board state
+        this.updateBoard = this.updateBoard.bind(this);
+        this.state = {
+            move: null,
+            resetDrag: false,
+            board: this.engine.getBoardData(),
+        };
+
+        this.moveEngine = new MoveEngine(
+            this.state.move,
+            this.updateMove,
+            this.resetDrag,
+            this.updateBoard
+        );
+    }
+
+    updateBoard(changesList: Pair<Coordinates, Pieces>[]) {
+        let board: Pieces[][] = [];
+        for (let row of this.state.board) board.push([...row]);
+        let newBoard = [...board];
+
+        for (let change of changesList) {
+            newBoard[change.first.coords!.first][change.first.coords!.second] =
+                change.second;
+        }
+        console.log(newBoard);
+        this.setState({ board: newBoard });
+    }
+
+    resetDrag(newDrag: boolean) {
+        this.setState({ resetDrag: newDrag });
     }
 
     updateMove(newMove: Move | null) {
@@ -49,8 +83,7 @@ class ChessBoardClass extends Component<ChessBoardProps, ChessBoardState> {
     }
 
     render() {
-        let boardData = this.engine.getBoardData(),
-            boardDisplay: JSX.Element[] = [],
+        let boardDisplay: JSX.Element[] = [],
             background: JSX.Element[] = [];
 
         for (let i = 0; i < 8; i++) {
@@ -59,7 +92,7 @@ class ChessBoardClass extends Component<ChessBoardProps, ChessBoardState> {
             for (let j = 0; j < 8; j++) {
                 row.push(
                     <motion.div
-                        key={j}
+                        key={`${this.state.board[i][j].name}${i}${j}`}
                         drag={true}
                         dragElastic={0}
                         onDragStart={(
@@ -91,12 +124,12 @@ class ChessBoardClass extends Component<ChessBoardProps, ChessBoardState> {
                         }
                         dragConstraints={this.props.reference}
                         dragMomentum={false}
+                        animate={this.state.resetDrag ? { x: 0, y: 0 } : {}}
                     >
                         <Square
                             coordinates={`${i}${j}`}
                             coordtype={CoordType.numericCoordinates}
-                            piece={boardData[i][j]}
-                            key={j}
+                            piece={this.state.board[i][j]}
                         ></Square>
                     </motion.div>
                 );

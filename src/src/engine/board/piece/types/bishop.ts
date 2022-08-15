@@ -6,6 +6,8 @@ export default class Bishop extends Piece {
     shortName = 'b';
 
     canBeMovedTo(move: Move) {
-        return true;
+        let offset = this.calculateOffset(move);
+        if (Math.abs(offset.first) == Math.abs(offset.second)) return true;
+        else return false;
     }
 }

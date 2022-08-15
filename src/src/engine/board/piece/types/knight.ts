@@ -26,10 +26,7 @@ export default class Knight extends Piece {
     }
 
     canBeMovedTo(move: Move) {
-        let offset = new Pair(
-            move.startPosition.coords!.first - move.endPosition.coords!.first,
-            move.startPosition.coords!.second - move.endPosition.coords!.second
-        );
+        let offset = this.calculateOffset(move);
         for (let legalOffset of Knight.moveOffsets) {
             if (offset.equals(legalOffset)) return true;
         }

@@ -6,6 +6,8 @@ export default class Rook extends Piece {
     shortName = 'r';
 
     canBeMovedTo(move: Move) {
-        return true;
+        let offset = this.calculateOffset(move);
+        if (offset.first == 0 || offset.second == 0) return true;
+        else return false;
     }
 }

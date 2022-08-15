@@ -6,6 +6,9 @@ export default class Queen extends Piece {
     shortName = 'q';
 
     canBeMovedTo(move: Move) {
-        return true;
+        let offset = this.calculateOffset(move);
+        if (offset.first == 0 || offset.second == 0) return true;
+        if (Math.abs(offset.first) == Math.abs(offset.second)) return true;
+        else return false;
     }
 }

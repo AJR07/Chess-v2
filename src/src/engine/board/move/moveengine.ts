@@ -6,7 +6,6 @@ import CoordType from '../coordinates/coordtype';
 import Colour from '../piece/colour';
 import { Pieces } from '../piece/piecetype';
 import Piece from '../piece/types/empty';
-import MoveType from './movetypes';
 import Move from './move';
 
 export default class MoveEngine {
@@ -83,10 +82,15 @@ export default class MoveEngine {
         // TODO: Processing of whether move is legal
         let board = engine.getBoardData(),
             coords = new Pair(this.move!.startPosition, this.move!.endPosition);
+        this.move!.endPieceColour =
+            board[this.move!.endPosition.coords!.first][
+                this.move!.endPosition.coords!.second
+            ].colour;
+
         if (
             board[coords.first.coords!.first][
                 coords.first.coords!.second
-            ].canBeMovedTo(this.move!)
+            ].canBeMovedTo(this.move!, board)
         ) {
             let changesList: Pair<Coordinates, Pieces>[] = [];
             board[coords.second.coords!.first][coords.second.coords!.second] =

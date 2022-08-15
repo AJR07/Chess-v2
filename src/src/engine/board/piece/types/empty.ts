@@ -1,6 +1,6 @@
 import Pair from '../../../../utils/pair';
-import Coordinates from '../../coordinates/coordinates';
 import Move from '../../move/move';
+import { Pieces } from '../piecetype';
 import Colour from '../colour';
 
 export default class Piece {
@@ -23,7 +23,12 @@ export default class Piece {
         );
     }
 
-    canBeMovedTo(move: Move) {
+    basicLegalValidation(move: Move) {
+        if (move.endPieceColour == this.colour) return false;
+        return true;
+    }
+
+    canBeMovedTo(move: Move, board: Pieces[][]) {
         return false;
     }
 }

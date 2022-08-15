@@ -2,6 +2,7 @@ import Pair from '../../../../utils/pair';
 import Move from '../../move/move';
 import Colour from '../colour';
 import Piece from './empty';
+import { Pieces } from '../piecetype';
 
 export default class Knight extends Piece {
     name = 'knight';
@@ -25,8 +26,9 @@ export default class Knight extends Piece {
         return moveOffsets;
     }
 
-    canBeMovedTo(move: Move) {
+    canBeMovedTo(move: Move, board: Pieces[][]) {
         let offset = this.calculateOffset(move);
+        if (!this.basicLegalValidation(move)) return false;
         for (let legalOffset of Knight.moveOffsets) {
             if (offset.equals(legalOffset)) return true;
         }

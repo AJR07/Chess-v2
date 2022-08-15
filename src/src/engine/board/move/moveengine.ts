@@ -6,8 +6,8 @@ import CoordType from '../coordinates/coordtype';
 import Colour from '../piece/colour';
 import { Pieces } from '../piece/piecetype';
 import Piece from '../piece/types/empty';
+import MoveType from './movetypes';
 import Move from './move';
-import BaseMove from './types/basemove';
 
 export default class MoveEngine {
     move: Move | null;
@@ -32,8 +32,9 @@ export default class MoveEngine {
         event: MouseEvent | TouchEvent | PointerEvent,
         info: PanInfo
     ) {
-        this.move = new BaseMove(
-            new Coordinates(dragged, CoordType.pairCoordinates)
+        this.move = new Move(
+            new Coordinates(dragged, CoordType.pairCoordinates),
+            null
         );
         this.updateMove(this.move);
         this.resetDrag(false);

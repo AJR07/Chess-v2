@@ -8,7 +8,7 @@ export default class Knight extends Piece {
     shortName = 'n';
     static moveOffsets: Pair<number, number>[] = [];
 
-    constructor(colour: Colour) {
+    constructor(colour: Colour | undefined) {
         super(colour);
         if (Knight.moveOffsets.length == 0)
             Knight.moveOffsets = this.generateMoveOffsets();

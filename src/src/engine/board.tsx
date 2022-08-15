@@ -10,9 +10,6 @@ import Move from './board/move/move';
 import MoveEngine from './board/move/moveengine';
 import { Pieces } from './board/piece/piecetype';
 import Coordinates from './board/coordinates/coordinates';
-import Colour from './board/piece/colour';
-import Piece from './board/piece/types/empty';
-import King from './board/piece/types/king';
 
 interface ChessBoardProps {
     reference: React.MutableRefObject<null>;
@@ -62,16 +59,13 @@ class ChessBoardClass extends Component<ChessBoardProps, ChessBoardState> {
     }
 
     updateBoard(changesList: Pair<Coordinates, Pieces>[]) {
-        let board: Pieces[][] = [];
-        for (let row of this.state.board) board.push([...row]);
-        let newBoard = [...board];
+        let board: Pieces[][] = [...this.state.board];
 
         for (let change of changesList) {
-            newBoard[change.first.coords!.first][change.first.coords!.second] =
+            board[change.first.coords!.first][change.first.coords!.second] =
                 change.second;
         }
-        console.log(newBoard);
-        this.setState({ board: newBoard });
+        this.setState({ board: board });
     }
 
     resetDrag(newDrag: boolean) {
@@ -92,7 +86,7 @@ class ChessBoardClass extends Component<ChessBoardProps, ChessBoardState> {
             for (let j = 0; j < 8; j++) {
                 row.push(
                     <motion.div
-                        key={`${this.state.board[i][j].name}${i}${j}`}
+                        key={`${this.state.board[i][j].name}${this.state.board[i][j].colour}${i}${j}`}
                         drag={true}
                         dragElastic={0}
                         onDragStart={(

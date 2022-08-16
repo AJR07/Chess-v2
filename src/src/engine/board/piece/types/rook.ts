@@ -8,7 +8,7 @@ export default class Rook extends Piece {
     name = 'rook';
     shortName = 'r';
 
-    checkJump(move: Move, board: Pieces[][]) {
+    crossCheckJump(move: Move, board: Pieces[][]) {
         let iSorted = new Pair(
                 move.startPosition.coords!.first <
                 move.endPosition.coords!.first
@@ -31,10 +31,18 @@ export default class Rook extends Piece {
             );
 
         for (let i = iSorted.first + 1; i < iSorted.second; i++) {
-            for (let j = jSorted.first + 1; j < jSorted.second; j++) {
-                if (board[i][j].colour != Colour.none) {
-                    return false;
-                }
+            if (
+                board[i][move.startPosition.coords!.second].colour !=
+                Colour.none
+            ) {
+                return false;
+            }
+        }
+        for (let j = jSorted.first + 1; j < jSorted.second; j++) {
+            if (
+                board[move.startPosition.coords!.first][j].colour != Colour.none
+            ) {
+                return false;
             }
         }
         return true;
@@ -43,7 +51,7 @@ export default class Rook extends Piece {
     canBeMovedTo(move: Move, board: Pieces[][]) {
         let offset = this.calculateOffset(move);
         if (!this.basicLegalValidation(move)) return false;
-        if (!this.checkJump(move, board)) return false;
+        if (!this.crossCheckJump(move, board)) return false;
         if (offset.first == 0 || offset.second == 0) return true;
         return false;
     }

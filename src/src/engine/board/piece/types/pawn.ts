@@ -34,7 +34,7 @@ export default class Pawn extends Piece {
                 1 &&
             move.startPosition.coords!.second ==
                 move.endPosition.coords!.second &&
-            this.colour == Colour.white
+            this.colour == Colour.black
         )
             return true;
         if (
@@ -42,7 +42,7 @@ export default class Pawn extends Piece {
                 1 &&
             move.startPosition.coords!.second ==
                 move.endPosition.coords!.second &&
-            this.colour == Colour.black
+            this.colour == Colour.white
         )
             return true;
         return false;

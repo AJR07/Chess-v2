@@ -11,10 +11,11 @@ export default class FENParser {
 
     constructor(fen: string) {
         this.currentFen = fen;
-        this.data = this.parse(fen);
+        this.data = this.parseFEN(fen);
+        console.log(this.buildFenString(this.data));
     }
 
-    parse(fen: string) {
+    parseFEN(fen: string) {
         // TODO: ERROR HANDLING FOR INCORRECT STRINGS
         let fenComponents = fen.split(' ');
 
@@ -98,5 +99,36 @@ export default class FENParser {
         data.fullMoveClock = parseInt(fenComponents[5]);
 
         return data;
+    }
+
+    buildFenString(FENDetails: FENDetails) {
+        let fenString: string[] = [];
+
+        // parse piece placements
+        let piecePlacements = '';
+        for (let row of FENDetails.piecePlacement) {
+            let curString = '',
+                blankSpaces = 0;
+            for (let piece of row) {
+                if (piece.colour != Colour.none && blankSpaces != 0) {
+                    curString += `${blankSpaces}`;
+                }
+                if (piece.colour == Colour.none) {
+                    blankSpaces++;
+                }
+                curString +=
+                    piece.colour == Colour.white
+                        ? piece.shortName.toUpperCase()
+                        : piece.shortName.toLowerCase();
+            }
+            if (blankSpaces != 0) {
+                curString += `${blankSpaces}`;
+            }
+            piecePlacements += `${curString}/`;
+        }
+        fenString.push(piecePlacements.slice(0, -1));
+
+        // parse
+        return fenString.join(' ');
     }
 }

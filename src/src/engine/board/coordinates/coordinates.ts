@@ -27,4 +27,11 @@ export default class Coordinates {
     parseNumeric(coords: string): Pair<number, number> | null {
         return new Pair(coords.charCodeAt(0), coords.charCodeAt(1));
     }
+
+    convertAlgebraic(): string | null {
+        if (!this.coords) return null;
+        return `${String.fromCharCode(
+            7 - this.coords.first + 'a'.charCodeAt(0)
+        )}${this.coords.second + 1}`;
+    }
 }

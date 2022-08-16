@@ -104,7 +104,7 @@ export default class FENParser {
     buildFenString(FENDetails: FENDetails) {
         let fenString: string[] = [];
 
-        // parse piece placements
+        // !parse piece placements
         let piecePlacements = '';
         for (let row of FENDetails.piecePlacement) {
             let curString = '',
@@ -128,7 +128,27 @@ export default class FENParser {
         }
         fenString.push(piecePlacements.slice(0, -1));
 
-        // parse
+        // !parse active colour
+        fenString.push(FENDetails.activeColour);
+
+        // !parse castling rights
+        if (FENDetails.castlingRights == '-') {
+            fenString.push('-');
+        } else {
+            fenString.push(FENDetails.castlingRights.join(''));
+        }
+
+        // !parse en-passant targets
+        if (!FENDetails.enPassantTarget) {
+            fenString.push('-');
+        } else {
+            fenString.push(FENDetails.enPassantTarget.convertAlgebraic()!);
+        }
+
+        // !parse half-move and full-move clock
+        fenString.push(`${FENDetails.halfMoveClock}`);
+        fenString.push(`${FENDetails.fullMoveClock}`);
+
         return fenString.join(' ');
     }
 }

@@ -7,6 +7,10 @@ export default class King extends Piece {
     shortName = 'k';
 
     canBeMovedTo(move: Move, board: Pieces[][]) {
-        return true;
+        let offset = this.calculateOffset(move);
+        if (!this.basicLegalValidation(move)) return false;
+        if (Math.abs(offset.first) < 2 && Math.abs(offset.second) < 2)
+            return true;
+        return false;
     }
 }

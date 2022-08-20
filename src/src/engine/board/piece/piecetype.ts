@@ -13,3 +13,12 @@ export type PieceType =
     | typeof Bishop
     | typeof Queen
     | typeof King;
+
+export enum PieceShortNames {
+    Piece = '',
+    Pawn = 'p',
+    Knight = 'n',
+    Bishop = 'b',
+    Queen = 'q',
+    King = 'k',
+}

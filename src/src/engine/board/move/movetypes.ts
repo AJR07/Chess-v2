@@ -2,7 +2,7 @@ enum MoveTypes {
     BaseMove = 'move',
     CaptureMove = 'capture',
     CastleMove = 'castle',
-    CheckMove = 'check',
+    PromotionMove = 'promotion',
 }
 
 export default MoveTypes;

@@ -5,7 +5,7 @@ import FENDetails from '../../fen/details';
 import Coordinates from '../coordinates/coordinates';
 import CoordType from '../coordinates/coordtype';
 import Colour from '../piece/colour';
-import { Pieces } from '../piece/piecetype';
+import { Pieces, PieceShortNames } from '../piece/piecetype';
 import Piece from '../piece/types/empty';
 import Move from './move';
 import MoveTypes from './movetypes';
@@ -74,6 +74,40 @@ export default class MoveEngine {
         return dragged;
     }
 
+    checkMoveType(move: Move, board: Pieces[][]) {
+        if (
+            board[move.endPosition.coords!.first][
+                move.endPosition.coords!.second
+            ].colour != Colour.none
+        )
+            return MoveTypes.CaptureMove;
+        if (
+            board[move.startPosition.coords!.first][
+                move.startPosition.coords!.second
+            ].shortName === PieceShortNames.King &&
+            Math.abs(
+                move.startPosition.coords!.second -
+                    move.endPosition.coords!.second
+            ) > 1
+        )
+            return MoveTypes.CastleMove;
+        if (
+            board[move.startPosition.coords!.first][
+                move.startPosition.coords!.second
+            ].shortName === PieceShortNames.Pawn &&
+            ((board[move.startPosition.coords!.first][
+                move.startPosition.coords!.second
+            ].colour === Colour.white &&
+                move.endPosition.coords!.first === 0) ||
+                (board[move.startPosition.coords!.first][
+                    move.startPosition.coords!.second
+                ].colour === Colour.black &&
+                    move.endPosition.coords!.first === 7))
+        )
+            return MoveTypes.PromotionMove;
+        return MoveTypes.CaptureMove;
+    }
+
     onEnd(
         dragged: Pair<number, number>,
         event: MouseEvent | TouchEvent | PointerEvent,
@@ -91,6 +125,7 @@ export default class MoveEngine {
                 this.move!.endPosition.coords!.second
             ].colour;
         this.move!.currentFenDetails = engine.fenManager.data;
+        this.move!.moveType = this.checkMoveType(this.move!, board);
 
         if (
             board[coords.first.coords!.first][

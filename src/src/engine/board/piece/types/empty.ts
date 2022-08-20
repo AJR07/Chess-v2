@@ -24,6 +24,7 @@ export default class Piece {
     }
 
     basicLegalValidation(move: Move) {
+        if (move.currentFenDetails!.activeColour !== this.colour) return false;
         if (move.endPieceColour == this.colour) return false;
         return true;
     }

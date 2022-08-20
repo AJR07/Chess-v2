@@ -5,11 +5,12 @@ Board details are stored slightly differently than that of the FEN notation, for
 */
 
 import Coordinates from '../board/coordinates/coordinates';
+import Colour from '../board/piece/colour';
 import { Pieces } from '../board/piece/piecetype';
 
 export default class FENDetails {
     piecePlacement: Pieces[][];
-    activeColour: 'w' | 'b';
+    activeColour: Colour;
     castlingRights: '-' | ('Q' | 'q' | 'K' | 'k')[];
     enPassantTarget: Coordinates | null;
     halfMoveClock: number;
@@ -17,7 +18,7 @@ export default class FENDetails {
 
     constructor(
         piecePlacement: Pieces[][],
-        activeColour: 'w' | 'b' = 'w',
+        activeColour: Colour = Colour.white,
         castlingRights: '-' | ('Q' | 'q' | 'K' | 'k')[] = ['K', 'Q', 'k', 'q'],
         enPassantTarget: Coordinates | null = null,
         halfMoveClock: number = 0,

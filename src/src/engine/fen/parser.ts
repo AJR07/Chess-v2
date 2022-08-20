@@ -56,7 +56,8 @@ export default class FENParser {
 
         // !parse active colour
         // active colour is just the character at the second index of fenComponents
-        data.activeColour = fenComponents[1] as 'w' | 'b';
+        data.activeColour =
+            fenComponents[1] === 'w' ? Colour.white : Colour.black;
 
         // !parse castling rights
         let castlingRights = fenComponents[2];
@@ -129,7 +130,7 @@ export default class FENParser {
         fenString.push(piecePlacements.slice(0, -1));
 
         // !parse active colour
-        fenString.push(FENDetails.activeColour);
+        fenString.push(FENDetails.activeColour === Colour.white ? 'w' : 'b');
 
         // !parse castling rights
         if (FENDetails.castlingRights == '-') {

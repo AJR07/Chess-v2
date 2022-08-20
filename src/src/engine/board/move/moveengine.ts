@@ -81,13 +81,16 @@ export default class MoveEngine {
         engine: ChessEngine
     ) {
         this.whenDragged(dragged, event, info);
-        // TODO: Processing of whether move is legal
+
         let board = engine.getBoardData(),
             coords = new Pair(this.move!.startPosition, this.move!.endPosition);
+
+        // updating the moves
         this.move!.endPieceColour =
             board[this.move!.endPosition.coords!.first][
                 this.move!.endPosition.coords!.second
             ].colour;
+        this.move!.currentFenDetails = engine.fenManager.data;
 
         if (
             board[coords.first.coords!.first][
@@ -125,8 +128,8 @@ export default class MoveEngine {
                     board[coords.second.coords!.first][
                         coords.second.coords!.second
                     ].colour === Colour.white
-                        ? 'b'
-                        : 'w',
+                        ? Colour.black
+                        : Colour.white,
                     oldFenDetails.castlingRights,
                     null,
                     board[coords.second.coords!.first][

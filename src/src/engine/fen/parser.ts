@@ -12,7 +12,6 @@ export default class FENParser {
     constructor(fen: string) {
         this.currentFen = fen;
         this.data = this.parseFEN(fen);
-        console.log(this.buildFenString(this.data));
     }
 
     parseFEN(fen: string) {
@@ -112,6 +111,7 @@ export default class FENParser {
             for (let piece of row) {
                 if (piece.colour != Colour.none && blankSpaces != 0) {
                     curString += `${blankSpaces}`;
+                    blankSpaces = 0;
                 }
                 if (piece.colour == Colour.none) {
                     blankSpaces++;
@@ -150,5 +150,12 @@ export default class FENParser {
         fenString.push(`${FENDetails.fullMoveClock}`);
 
         return fenString.join(' ');
+    }
+
+    regenerateFen(fenDetails: FENDetails) {
+        this.currentFen = this.buildFenString(fenDetails);
+        this.data = fenDetails;
+        console.log(this.currentFen);
+        return this.currentFen;
     }
 }

@@ -9,13 +9,25 @@ import { Pieces } from '../board/piece/piecetype';
 
 export default class FENDetails {
     piecePlacement: Pieces[][];
-    activeColour: 'w' | 'b' = 'w';
-    castlingRights: '-' | ('Q' | 'q' | 'K' | 'k')[] = ['K', 'Q', 'k', 'q'];
-    enPassantTarget: Coordinates | null = null;
-    halfMoveClock: number = 0;
-    fullMoveClock: number = 0;
+    activeColour: 'w' | 'b';
+    castlingRights: '-' | ('Q' | 'q' | 'K' | 'k')[];
+    enPassantTarget: Coordinates | null;
+    halfMoveClock: number;
+    fullMoveClock: number;
 
-    constructor(piecePlacement: Pieces[][]) {
+    constructor(
+        piecePlacement: Pieces[][],
+        activeColour: 'w' | 'b' = 'w',
+        castlingRights: '-' | ('Q' | 'q' | 'K' | 'k')[] = ['K', 'Q', 'k', 'q'],
+        enPassantTarget: Coordinates | null = null,
+        halfMoveClock: number = 0,
+        fullMoveClock: number = 0
+    ) {
         this.piecePlacement = piecePlacement;
+        this.activeColour = activeColour;
+        this.castlingRights = castlingRights;
+        this.enPassantTarget = enPassantTarget;
+        this.halfMoveClock = halfMoveClock;
+        this.fullMoveClock = fullMoveClock;
     }
 }

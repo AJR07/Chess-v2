@@ -1,12 +1,14 @@
 import { PanInfo } from 'framer-motion';
 import Pair from '../../../utils/pair';
 import ChessEngine from '../../engine';
+import FENDetails from '../../fen/details';
 import Coordinates from '../coordinates/coordinates';
 import CoordType from '../coordinates/coordtype';
 import Colour from '../piece/colour';
 import { Pieces } from '../piece/piecetype';
 import Piece from '../piece/types/empty';
 import Move from './move';
+import MoveTypes from './movetypes';
 
 export default class MoveEngine {
     move: Move | null;
@@ -114,6 +116,32 @@ export default class MoveEngine {
                 )
             );
             this.updateBoard(changesList);
+
+            // update FEN Details
+            let oldFenDetails = engine.fenManager.data;
+            engine.fenManager.regenerateFen(
+                new FENDetails(
+                    board,
+                    board[coords.second.coords!.first][
+                        coords.second.coords!.second
+                    ].colour === Colour.white
+                        ? 'b'
+                        : 'w',
+                    oldFenDetails.castlingRights,
+                    null,
+                    board[coords.second.coords!.first][
+                        coords.second.coords!.second
+                    ].colour === Colour.black
+                        ? oldFenDetails.fullMoveClock + 1
+                        : oldFenDetails.fullMoveClock,
+                    board[coords.second.coords!.first][
+                        coords.second.coords!.second
+                    ].shortName === 'p' ||
+                    this.move!.moveType === MoveTypes.CaptureMove
+                        ? 0
+                        : oldFenDetails.halfMoveClock + 1
+                )
+            );
         }
         this.resetDrag(true);
         this.move = null;

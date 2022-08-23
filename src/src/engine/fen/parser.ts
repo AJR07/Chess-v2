@@ -1,3 +1,4 @@
+import CastlingEngine from '../board/castle/castling';
 import Coordinates from '../board/coordinates/coordinates';
 import CoordType from '../board/coordinates/coordtype';
 import Colour from '../board/piece/colour';
@@ -61,26 +62,8 @@ export default class FENParser {
 
         // !parse castling rights
         let castlingRights = fenComponents[2];
-        if (castlingRights == '-') {
-            // neither side can castle
-            data.castlingRights = '-';
-        } else {
-            data.castlingRights = [];
-            for (
-                let castlingRightsIdx = 0;
-                castlingRightsIdx < castlingRights.length;
-                castlingRightsIdx++
-            ) {
-                let castlingRight = castlingRights[castlingRightsIdx];
-                if (
-                    castlingRight == 'Q' ||
-                    castlingRight == 'q' ||
-                    castlingRight == 'K' ||
-                    castlingRight == 'k'
-                ) {
-                    data.castlingRights.push(castlingRight);
-                }
-            }
+        if (castlingRights != '-') {
+            data.castlingRights.processFENString(fenComponents[2]);
         }
 
         // !parse en-passant targets
@@ -133,10 +116,13 @@ export default class FENParser {
         fenString.push(FENDetails.activeColour === Colour.white ? 'w' : 'b');
 
         // !parse castling rights
-        if (FENDetails.castlingRights == '-') {
+        if (
+            !FENDetails.castlingRights.whiteCanCastle() &&
+            !FENDetails.castlingRights.blackCanCastle()
+        ) {
             fenString.push('-');
         } else {
-            fenString.push(FENDetails.castlingRights.join(''));
+            fenString.push(FENDetails.castlingRights.exportFENString());
         }
 
         // !parse en-passant targets

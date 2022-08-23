@@ -62,8 +62,16 @@ export default class MoveEngine {
                 )
             )
         );
+
         dragged.first += offset.second;
         dragged.second += offset.first;
+
+        //clamp it
+        dragged.first =
+            dragged.first < 0 ? 0 : dragged.first > 7 ? 7 : dragged.first;
+        dragged.second =
+            dragged.second < 0 ? 0 : dragged.second > 7 ? 7 : dragged.second;
+
         if (!this.move?.endPosition.comparingWith(dragged)) {
             this.move?.updateMove(
                 new Coordinates(dragged, CoordType.pairCoordinates)
@@ -74,7 +82,7 @@ export default class MoveEngine {
         return dragged;
     }
 
-    checkMoveType(move: Move, board: Pieces[][]) {
+    checkMoveType(move: Move, board: Pieces[][]): MoveTypes {
         if (
             board[move.endPosition.coords!.first][
                 move.endPosition.coords!.second
@@ -105,7 +113,7 @@ export default class MoveEngine {
                     move.endPosition.coords!.first === 7))
         )
             return MoveTypes.PromotionMove;
-        return MoveTypes.CaptureMove;
+        return MoveTypes.BaseMove;
     }
 
     onEnd(
@@ -127,36 +135,54 @@ export default class MoveEngine {
         this.move!.currentFenDetails = engine.fenManager.data;
         this.move!.moveType = this.checkMoveType(this.move!, board);
 
-        if (
-            board[coords.first.coords!.first][
-                coords.first.coords!.second
-            ].canBeMovedTo(this.move!, board)
-        ) {
-            let changesList: Pair<Coordinates, Pieces>[] = [];
-            board[coords.second.coords!.first][coords.second.coords!.second] =
-                board[coords.first.coords!.first][coords.first.coords!.second];
-            changesList.push(
-                new Pair(
-                    coords.second,
-                    board[coords.second.coords!.first][
-                        coords.second.coords!.second
-                    ]
-                )
-            );
-            board[coords.first.coords!.first][coords.first.coords!.second] =
-                new Piece(Colour.none);
-            changesList.push(
-                new Pair(
-                    coords.first,
+        // store if the move is evaluated to be legal in the end
+        let legal = false;
+
+        if (this.move!.moveType == MoveTypes.BaseMove) {
+            if (
+                board[coords.first.coords!.first][
+                    coords.first.coords!.second
+                ].canBeMovedTo(this.move!, board)
+            ) {
+                let changesList: Pair<Coordinates, Pieces>[] = [];
+                board[coords.second.coords!.first][
+                    coords.second.coords!.second
+                ] =
                     board[coords.first.coords!.first][
                         coords.first.coords!.second
-                    ]
-                )
-            );
-            this.updateBoard(changesList);
+                    ];
+                changesList.push(
+                    new Pair(
+                        coords.second,
+                        board[coords.second.coords!.first][
+                            coords.second.coords!.second
+                        ]
+                    )
+                );
+                board[coords.first.coords!.first][coords.first.coords!.second] =
+                    new Piece(Colour.none);
+                changesList.push(
+                    new Pair(
+                        coords.first,
+                        board[coords.first.coords!.first][
+                            coords.first.coords!.second
+                        ]
+                    )
+                );
+                this.updateBoard(changesList);
+                legal = true;
+            } else {
+                legal = false;
+            }
+        } else if (this.move!.moveType == MoveTypes.CastleMove) {
+        }
 
-            // update FEN Details
+        // update FEN Details
+        if (legal) {
             let oldFenDetails = engine.fenManager.data;
+
+            // calculate new castling stuff
+
             engine.fenManager.regenerateFen(
                 new FENDetails(
                     board,
@@ -181,6 +207,8 @@ export default class MoveEngine {
                 )
             );
         }
+
+        // update some state
         this.resetDrag(true);
         this.move = null;
         this.updateMove(this.move);

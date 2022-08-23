@@ -2,6 +2,7 @@ import { PanInfo } from 'framer-motion';
 import Pair from '../../../utils/pair';
 import ChessEngine from '../../engine';
 import FENDetails from '../../fen/details';
+import HasCastled from '../castle/hasCastled';
 import Coordinates from '../coordinates/coordinates';
 import CoordType from '../coordinates/coordtype';
 import Colour from '../piece/colour';
@@ -151,48 +152,120 @@ export default class MoveEngine {
         if (this.move!.moveType == MoveTypes.BaseMove) {
             if (startPiece.canBeMovedTo(this.move!, board)) {
                 let changesList: Pair<Coordinates, Pieces>[] = [];
+
                 board[this.move!.startPosition.coords!.first][
                     this.move!.startPosition.coords!.second
                 ] = startPiece;
                 changesList.push(new Pair(this.move!.startPosition, endPiece));
+
                 board[this.move!.endPosition.coords!.first][
                     this.move!.endPosition.coords!.second
                 ] = new Piece(Colour.none);
                 changesList.push(new Pair(this.move!.endPosition, startPiece));
+
                 this.updateBoard(changesList);
                 legal = true;
             } else {
                 legal = false;
             }
         } else if (this.move!.moveType == MoveTypes.CastleMove) {
-            console.log('CASTLE MOVE!');
+            let oldFenDetails = engine.fenManager.data;
+
+            // white
+            if (
+                startPiece.colour === Colour.white &&
+                this.move!.endPosition.coords!.first == 7
+            ) {
+                if (
+                    this.move!.endPosition.coords!.second == 2 &&
+                    oldFenDetails.castlingRights.whiteCastle.queen
+                ) {
+                    legal = true;
+                } else if (
+                    this.move!.endPosition.coords!.second == 6 &&
+                    oldFenDetails.castlingRights.whiteCastle.king
+                ) {
+                    legal = true;
+                }
+            }
+
+            // black
+            else if (
+                startPiece.colour === Colour.white &&
+                this.move!.endPosition.coords!.first == 7
+            ) {
+                if (
+                    this.move!.endPosition.coords!.second == 2 &&
+                    oldFenDetails.castlingRights.whiteCastle.queen
+                ) {
+                    legal = true;
+                } else if (
+                    this.move!.endPosition.coords!.second == 6 &&
+                    oldFenDetails.castlingRights.whiteCastle.king
+                ) {
+                    legal = true;
+                }
+            }
         }
 
         // update FEN Details
         if (legal) {
             let oldFenDetails = engine.fenManager.data;
 
-            // if its a rook moved from original position, update FEN
-            if (
-                board[this.move!.endPosition.coords!.first][
-                    this.move!.endPosition.coords!.second
-                ].shortName === PieceShortNames.Rook
-            ) {
-                oldFenDetails.castlingRights;
+            // if its a rook moved from original position, update FEN for castling
+            if (startPiece.shortName === PieceShortNames.Rook) {
+                if (startPiece.colour === Colour.white) {
+                    if (
+                        this.move!.startPosition.coords!.first == 7 &&
+                        this.move!.startPosition.coords!.second == 0
+                    )
+                        oldFenDetails.castlingRights.whiteCastle.queen = false;
+                    else if (
+                        this.move!.startPosition.coords!.first == 7 &&
+                        this.move!.startPosition.coords!.second == 7
+                    )
+                        oldFenDetails.castlingRights.whiteCastle.king = false;
+                } else if (startPiece.colour === Colour.black) {
+                    if (
+                        this.move!.startPosition.coords!.first == 0 &&
+                        this.move!.startPosition.coords!.second == 0
+                    )
+                        oldFenDetails.castlingRights.blackCastle.queen = false;
+                    else if (
+                        this.move!.startPosition.coords!.first == 0 &&
+                        this.move!.startPosition.coords!.second == 7
+                    )
+                        oldFenDetails.castlingRights.blackCastle.king = false;
+                }
+            }
+
+            // if its a king moved from original position, update FEN castling
+            if (startPiece.shortName === PieceShortNames.King) {
+                if (startPiece.colour === Colour.white) {
+                    oldFenDetails.castlingRights.whiteCastle = new HasCastled(
+                        false,
+                        false
+                    );
+                } else if (startPiece.colour === Colour.black) {
+                    oldFenDetails.castlingRights.blackCastle = new HasCastled(
+                        false,
+                        false
+                    );
+                }
             }
 
             engine.fenManager.regenerateFen(
                 new FENDetails(
                     board,
-                    endPiece.colour === Colour.white
+                    startPiece.colour === Colour.white
                         ? Colour.black
                         : Colour.white,
                     oldFenDetails.castlingRights,
                     null,
-                    endPiece.colour === Colour.black
+                    startPiece.colour === Colour.black
                         ? oldFenDetails.fullMoveClock + 1
                         : oldFenDetails.fullMoveClock,
-                    endPiece.shortName === 'p' ||
+                    startPiece.shortName === 'p' ||
                     this.move!.moveType === MoveTypes.CaptureMove
                         ? 0
                         : oldFenDetails.halfMoveClock + 1

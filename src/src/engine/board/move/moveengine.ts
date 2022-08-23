@@ -93,10 +93,12 @@ export default class MoveEngine {
             board[move.startPosition.coords!.first][
                 move.startPosition.coords!.second
             ].shortName === PieceShortNames.King &&
+            move.startPosition.coords!.first ==
+                move.endPosition.coords!.first &&
             Math.abs(
                 move.startPosition.coords!.second -
                     move.endPosition.coords!.second
-            ) > 1
+            ) == 2
         )
             return MoveTypes.CastleMove;
         if (
@@ -124,8 +126,7 @@ export default class MoveEngine {
     ) {
         this.whenDragged(dragged, event, info);
 
-        let board = engine.getBoardData(),
-            coords = new Pair(this.move!.startPosition, this.move!.endPosition);
+        let board = engine.getBoardData();
 
         // updating the moves
         this.move!.endPieceColour =
@@ -138,69 +139,60 @@ export default class MoveEngine {
         // store if the move is evaluated to be legal in the end
         let legal = false;
 
+        let startPiece =
+                board[this.move!.startPosition.coords!.first][
+                    this.move!.startPosition.coords!.second
+                ],
+            endPiece =
+                board[this.move!.endPosition.coords!.first][
+                    this.move!.endPosition.coords!.second
+                ];
+
         if (this.move!.moveType == MoveTypes.BaseMove) {
-            if (
-                board[coords.first.coords!.first][
-                    coords.first.coords!.second
-                ].canBeMovedTo(this.move!, board)
-            ) {
+            if (startPiece.canBeMovedTo(this.move!, board)) {
                 let changesList: Pair<Coordinates, Pieces>[] = [];
-                board[coords.second.coords!.first][
-                    coords.second.coords!.second
-                ] =
-                    board[coords.first.coords!.first][
-                        coords.first.coords!.second
-                    ];
-                changesList.push(
-                    new Pair(
-                        coords.second,
-                        board[coords.second.coords!.first][
-                            coords.second.coords!.second
-                        ]
-                    )
-                );
-                board[coords.first.coords!.first][coords.first.coords!.second] =
-                    new Piece(Colour.none);
-                changesList.push(
-                    new Pair(
-                        coords.first,
-                        board[coords.first.coords!.first][
-                            coords.first.coords!.second
-                        ]
-                    )
-                );
+                board[this.move!.startPosition.coords!.first][
+                    this.move!.startPosition.coords!.second
+                ] = startPiece;
+                changesList.push(new Pair(this.move!.startPosition, endPiece));
+                board[this.move!.endPosition.coords!.first][
+                    this.move!.endPosition.coords!.second
+                ] = new Piece(Colour.none);
+                changesList.push(new Pair(this.move!.endPosition, startPiece));
                 this.updateBoard(changesList);
                 legal = true;
             } else {
                 legal = false;
             }
         } else if (this.move!.moveType == MoveTypes.CastleMove) {
+            console.log('CASTLE MOVE!');
         }
 
         // update FEN Details
         if (legal) {
             let oldFenDetails = engine.fenManager.data;
 
-            // calculate new castling stuff
+            // if its a rook moved from original position, update FEN
+            if (
+                board[this.move!.endPosition.coords!.first][
+                    this.move!.endPosition.coords!.second
+                ].shortName === PieceShortNames.Rook
+            ) {
+                oldFenDetails.castlingRights;
+            }
 
             engine.fenManager.regenerateFen(
                 new FENDetails(
                     board,
-                    board[coords.second.coords!.first][
-                        coords.second.coords!.second
-                    ].colour === Colour.white
+                    endPiece.colour === Colour.white
                         ? Colour.black
                         : Colour.white,
                     oldFenDetails.castlingRights,
                     null,
-                    board[coords.second.coords!.first][
-                        coords.second.coords!.second
-                    ].colour === Colour.black
+                    endPiece.colour === Colour.black
                         ? oldFenDetails.fullMoveClock + 1
                         : oldFenDetails.fullMoveClock,
-                    board[coords.second.coords!.first][
-                        coords.second.coords!.second
-                    ].shortName === 'p' ||
+                    endPiece.shortName === 'p' ||
                     this.move!.moveType === MoveTypes.CaptureMove
                         ? 0
                         : oldFenDetails.halfMoveClock + 1

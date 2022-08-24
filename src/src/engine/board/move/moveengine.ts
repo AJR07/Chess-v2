@@ -119,6 +119,126 @@ export default class MoveEngine {
         return MoveTypes.BaseMove;
     }
 
+    evaluateCastling(
+        startPiece: Pieces,
+        endPiece: Pieces,
+        oldFenDetails: FENDetails,
+        board: Pieces[][]
+    ): boolean {
+        if (
+            startPiece.colour === Colour.white &&
+            this.move!.endPosition.coords!.first == 7
+        ) {
+            // !white
+            if (
+                this.move!.endPosition.coords!.second == 2 &&
+                oldFenDetails.castlingRights.whiteCastle.queen &&
+                board[7][1].colour === Colour.none &&
+                board[7][3].colour === Colour.none
+            ) {
+                // !queen side white
+                let changesList: Pair<Coordinates, Pieces>[] = [];
+
+                // move the king
+                board[7][2] = startPiece;
+                changesList.push(new Pair(this.move!.startPosition, endPiece));
+
+                board[7][4] = new Piece(Colour.none);
+                changesList.push(new Pair(this.move!.endPosition, startPiece));
+
+                // move the rook
+                board[7][3] = board[7][0];
+                changesList.push(
+                    new Pair(
+                        new Coordinates(
+                            new Pair(7, 3),
+                            CoordType.pairCoordinates
+                        ),
+                        board[7][3]
+                    )
+                );
+
+                board[7][0] = new Piece(Colour.none);
+                changesList.push(
+                    new Pair(
+                        new Coordinates(
+                            new Pair(7, 0),
+                            CoordType.pairCoordinates
+                        ),
+                        board[7][0]
+                    )
+                );
+
+                this.updateBoard(changesList);
+                return true;
+            } else if (
+                // !king side white
+                this.move!.endPosition.coords!.second == 6 &&
+                oldFenDetails.castlingRights.whiteCastle.king &&
+                board[7][5].colour === Colour.none
+            ) {
+                return true;
+            }
+        }
+
+        // black
+        else if (
+            startPiece.colour === Colour.black &&
+            this.move!.endPosition.coords!.first == 0
+        ) {
+            if (
+                this.move!.endPosition.coords!.second == 2 &&
+                oldFenDetails.castlingRights.blackCastle.queen &&
+                board[0][1].colour === Colour.none &&
+                board[0][3].colour === Colour.none
+            ) {
+                // !queen side black
+                let changesList: Pair<Coordinates, Pieces>[] = [];
+
+                // move the king
+                board[0][2] = startPiece;
+                changesList.push(new Pair(this.move!.startPosition, endPiece));
+
+                board[0][4] = new Piece(Colour.none);
+                changesList.push(new Pair(this.move!.endPosition, startPiece));
+
+                // move the rook
+                board[0][3] = board[0][0];
+                changesList.push(
+                    new Pair(
+                        new Coordinates(
+                            new Pair(0, 3),
+                            CoordType.pairCoordinates
+                        ),
+                        board[0][3]
+                    )
+                );
+
+                board[0][0] = new Piece(Colour.none);
+                changesList.push(
+                    new Pair(
+                        new Coordinates(
+                            new Pair(0, 0),
+                            CoordType.pairCoordinates
+                        ),
+                        board[0][0]
+                    )
+                );
+
+                this.updateBoard(changesList);
+                return true;
+            } else if (
+                this.move!.endPosition.coords!.second == 6 &&
+                oldFenDetails.castlingRights.blackCastle.king &&
+                board[0][5].colour === Colour.none
+            ) {
+                // !king side black
+                return true;
+            }
+        }
+        return false;
+    }
+
     onEnd(
         dragged: Pair<number, number>,
         event: MouseEvent | TouchEvent | PointerEvent,
@@ -171,87 +291,12 @@ export default class MoveEngine {
         } else if (this.move!.moveType == MoveTypes.CastleMove) {
             // !castling
             let oldFenDetails = engine.fenManager.data;
-
-            if (
-                startPiece.colour === Colour.white &&
-                this.move!.endPosition.coords!.first == 7
-            ) {
-                // !white
-                if (
-                    this.move!.endPosition.coords!.second == 2 &&
-                    oldFenDetails.castlingRights.whiteCastle.queen &&
-                    board[7][1].colour === Colour.none &&
-                    board[7][3].colour === Colour.none
-                ) {
-                    // !queen side white
-                    let changesList: Pair<Coordinates, Pieces>[] = [];
-
-                    // move the king
-                    board[7][2] = startPiece;
-                    changesList.push(
-                        new Pair(this.move!.startPosition, endPiece)
-                    );
-
-                    board[7][4] = new Piece(Colour.none);
-                    changesList.push(
-                        new Pair(this.move!.endPosition, startPiece)
-                    );
-
-                    // move the rook
-                    board[7][3] = board[7][0];
-                    changesList.push(
-                        new Pair(
-                            new Coordinates(
-                                new Pair(7, 3),
-                                CoordType.pairCoordinates
-                            ),
-                            board[7][3]
-                        )
-                    );
-
-                    board[7][0] = new Piece(Colour.none);
-                    changesList.push(
-                        new Pair(
-                            new Coordinates(
-                                new Pair(7, 0),
-                                CoordType.pairCoordinates
-                            ),
-                            board[7][0]
-                        )
-                    );
-
-                    this.updateBoard(changesList);
-                    legal = true;
-                } else if (
-                    // !king side white
-                    this.move!.endPosition.coords!.second == 6 &&
-                    oldFenDetails.castlingRights.whiteCastle.king &&
-                    board[7][5].colour === Colour.none
-                ) {
-                    legal = true;
-                }
-            }
-
-            // black
-            else if (
-                startPiece.colour === Colour.black &&
-                this.move!.endPosition.coords!.first == 0
-            ) {
-                if (
-                    this.move!.endPosition.coords!.second == 2 &&
-                    oldFenDetails.castlingRights.blackCastle.queen &&
-                    board[0][1].colour === Colour.none &&
-                    board[0][3].colour === Colour.none
-                ) {
-                    legal = true;
-                } else if (
-                    this.move!.endPosition.coords!.second == 6 &&
-                    oldFenDetails.castlingRights.blackCastle.king &&
-                    board[0][5].colour === Colour.none
-                ) {
-                    legal = true;
-                }
-            }
+            legal = this.evaluateCastling(
+                startPiece,
+                endPiece,
+                oldFenDetails,
+                board
+            );
         }
 
         // update FEN Details

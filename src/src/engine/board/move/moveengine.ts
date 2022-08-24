@@ -125,6 +125,7 @@ export default class MoveEngine {
         oldFenDetails: FENDetails,
         board: Pieces[][]
     ): boolean {
+        if (oldFenDetails.activeColour !== startPiece.colour) return false;
         if (
             startPiece.colour === Colour.white &&
             this.move!.endPosition.coords!.first == 7
@@ -172,11 +173,44 @@ export default class MoveEngine {
                 this.updateBoard(changesList);
                 return true;
             } else if (
-                // !king side white
                 this.move!.endPosition.coords!.second == 6 &&
                 oldFenDetails.castlingRights.whiteCastle.king &&
                 board[7][5].colour === Colour.none
             ) {
+                // !king side white
+                let changesList: Pair<Coordinates, Pieces>[] = [];
+
+                // move the king
+                board[7][6] = startPiece;
+                changesList.push(new Pair(this.move!.startPosition, endPiece));
+
+                board[7][4] = new Piece(Colour.none);
+                changesList.push(new Pair(this.move!.endPosition, startPiece));
+
+                // move the rook
+                board[7][5] = board[7][7];
+                changesList.push(
+                    new Pair(
+                        new Coordinates(
+                            new Pair(7, 5),
+                            CoordType.pairCoordinates
+                        ),
+                        board[7][5]
+                    )
+                );
+
+                board[7][7] = new Piece(Colour.none);
+                changesList.push(
+                    new Pair(
+                        new Coordinates(
+                            new Pair(7, 7),
+                            CoordType.pairCoordinates
+                        ),
+                        board[7][7]
+                    )
+                );
+
+                this.updateBoard(changesList);
                 return true;
             }
         }
@@ -233,6 +267,39 @@ export default class MoveEngine {
                 board[0][5].colour === Colour.none
             ) {
                 // !king side black
+                let changesList: Pair<Coordinates, Pieces>[] = [];
+
+                // move the king
+                board[0][6] = startPiece;
+                changesList.push(new Pair(this.move!.startPosition, endPiece));
+
+                board[0][4] = new Piece(Colour.none);
+                changesList.push(new Pair(this.move!.endPosition, startPiece));
+
+                // move the rook
+                board[0][5] = board[0][7];
+                changesList.push(
+                    new Pair(
+                        new Coordinates(
+                            new Pair(0, 5),
+                            CoordType.pairCoordinates
+                        ),
+                        board[0][5]
+                    )
+                );
+
+                board[0][7] = new Piece(Colour.none);
+                changesList.push(
+                    new Pair(
+                        new Coordinates(
+                            new Pair(0, 7),
+                            CoordType.pairCoordinates
+                        ),
+                        board[0][7]
+                    )
+                );
+
+                this.updateBoard(changesList);
                 return true;
             }
         }

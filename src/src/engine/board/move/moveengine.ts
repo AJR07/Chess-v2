@@ -169,21 +169,64 @@ export default class MoveEngine {
                 legal = false;
             }
         } else if (this.move!.moveType == MoveTypes.CastleMove) {
+            // !castling
             let oldFenDetails = engine.fenManager.data;
 
-            // white
             if (
                 startPiece.colour === Colour.white &&
                 this.move!.endPosition.coords!.first == 7
             ) {
+                // !white
                 if (
                     this.move!.endPosition.coords!.second == 2 &&
-                    oldFenDetails.castlingRights.whiteCastle.queen
+                    oldFenDetails.castlingRights.whiteCastle.queen &&
+                    board[7][1].colour === Colour.none &&
+                    board[7][3].colour === Colour.none
                 ) {
+                    // !queen side white
+                    let changesList: Pair<Coordinates, Pieces>[] = [];
+
+                    // move the king
+                    board[7][2] = startPiece;
+                    changesList.push(
+                        new Pair(this.move!.startPosition, endPiece)
+                    );
+
+                    board[7][4] = new Piece(Colour.none);
+                    changesList.push(
+                        new Pair(this.move!.endPosition, startPiece)
+                    );
+
+                    // move the rook
+                    board[7][3] = board[7][0];
+                    changesList.push(
+                        new Pair(
+                            new Coordinates(
+                                new Pair(7, 3),
+                                CoordType.pairCoordinates
+                            ),
+                            board[7][3]
+                        )
+                    );
+
+                    board[7][0] = new Piece(Colour.none);
+                    changesList.push(
+                        new Pair(
+                            new Coordinates(
+                                new Pair(7, 0),
+                                CoordType.pairCoordinates
+                            ),
+                            board[7][0]
+                        )
+                    );
+
+                    this.updateBoard(changesList);
                     legal = true;
                 } else if (
+                    // !king side white
                     this.move!.endPosition.coords!.second == 6 &&
-                    oldFenDetails.castlingRights.whiteCastle.king
+                    oldFenDetails.castlingRights.whiteCastle.king &&
+                    board[7][5].colour === Colour.none
                 ) {
                     legal = true;
                 }
@@ -191,17 +234,20 @@ export default class MoveEngine {
 
             // black
             else if (
-                startPiece.colour === Colour.white &&
-                this.move!.endPosition.coords!.first == 7
+                startPiece.colour === Colour.black &&
+                this.move!.endPosition.coords!.first == 0
             ) {
                 if (
                     this.move!.endPosition.coords!.second == 2 &&
-                    oldFenDetails.castlingRights.whiteCastle.queen
+                    oldFenDetails.castlingRights.blackCastle.queen &&
+                    board[0][1].colour === Colour.none &&
+                    board[0][3].colour === Colour.none
                 ) {
                     legal = true;
                 } else if (
                     this.move!.endPosition.coords!.second == 6 &&
-                    oldFenDetails.castlingRights.whiteCastle.king
+                    oldFenDetails.castlingRights.blackCastle.king &&
+                    board[0][5].colour === Colour.none
                 ) {
                     legal = true;
                 }
@@ -239,7 +285,7 @@ export default class MoveEngine {
                 }
             }
 
-            // if its a king moved from original position, update FEN castling
+            // if its a king moved from original position
             if (startPiece.shortName === PieceShortNames.King) {
                 if (startPiece.colour === Colour.white) {
                     oldFenDetails.castlingRights.whiteCastle = new HasCastled(

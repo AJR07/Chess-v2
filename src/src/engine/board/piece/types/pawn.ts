@@ -51,34 +51,29 @@ export default class Pawn extends Piece {
     }
 
     checkForCapture(move: Move) {
+        console.log(move.endPosition, move.startPosition);
         if (
-            move.endPieceColour != Colour.none &&
-            move.endPieceColour != this.colour
-        ) {
-            if (
-                move.endPosition.coords!.first -
-                    move.startPosition.coords!.first ==
-                    1 &&
-                Math.abs(
-                    move.startPosition.coords!.second -
-                        move.endPosition.coords!.second
-                ) == 1 &&
-                this.colour == Colour.white
-            )
-                return true;
-            if (
-                move.startPosition.coords!.first -
-                    move.endPosition.coords!.first ==
-                    1 &&
-                Math.abs(
-                    move.startPosition.coords!.second -
-                        move.endPosition.coords!.second
-                ) == 1 &&
-                this.colour == Colour.black
-            )
-                return true;
-            return false;
-        }
+            move.endPosition.coords!.first - move.startPosition.coords!.first ==
+                1 &&
+            Math.abs(
+                move.startPosition.coords!.second -
+                    move.endPosition.coords!.second
+            ) == 1 &&
+            this.colour == Colour.black &&
+            move.endPieceColour === Colour.white
+        )
+            return true;
+        if (
+            move.startPosition.coords!.first - move.endPosition.coords!.first ==
+                1 &&
+            Math.abs(
+                move.startPosition.coords!.second -
+                    move.endPosition.coords!.second
+            ) == 1 &&
+            this.colour == Colour.white &&
+            move.endPieceColour === Colour.black
+        )
+            return true;
         return false;
     }
 

@@ -4,6 +4,7 @@ import { Pieces, PieceShortNames } from '../piecetype';
 import Colour from '../colour';
 import Coordinates from '../../coordinates/coordinates';
 import CoordType from '../../coordinates/coordtype';
+import generateKnightMoveOffsets from '../../../../utils/knight';
 
 export default class Piece {
     shortName: string = '';
@@ -26,7 +27,7 @@ export default class Piece {
     }
 
     kingIsChecked(move: Move, oldBoard: Pieces[][]) {
-        let board = JSON.parse(JSON.stringify(oldBoard)); // dereference it
+        let board: Pieces[][] = JSON.parse(JSON.stringify(oldBoard)); // dereference it
         // play out the move on the board first
         board[move.endPosition.coords!.first][move.endPosition.coords!.second] =
             board[move.startPosition.coords!.first][
@@ -187,6 +188,44 @@ export default class Piece {
             if (piece.colour !== Colour.none) break;
         }
 
+        // L-shaped (knight)
+        for (let knightMove of generateKnightMoveOffsets()) {
+            let xCoord = kingPos!.coords!.first + knightMove.first,
+                yCoord = kingPos!.coords!.second + knightMove.second;
+            if (!(xCoord >= 0 && xCoord < 8 && yCoord >= 0 && yCoord < 8))
+                continue;
+            let potentialKnight = board[xCoord][yCoord];
+            if (
+                potentialKnight.colour === oppositeColour &&
+                potentialKnight.shortName === PieceShortNames.Knight
+            )
+                return true;
+        }
+
+        // Pawn (1, 1), (1, -1)
+        let movementDirection = move.startPieceColour === Colour.white ? -1 : 1,
+            xCoord = kingPos!.coords!.first + movementDirection;
+        console.log(xCoord);
+        if (
+            xCoord >= 0 &&
+            xCoord < 8 &&
+            kingPos!.coords!.second - 1 >= 0 &&
+            board[xCoord][kingPos!.coords!.second - 1].colour ===
+                oppositeColour &&
+            board[xCoord][kingPos!.coords!.second - 1].shortName ===
+                PieceShortNames.Pawn
+        )
+            return true;
+        if (
+            xCoord >= 0 &&
+            xCoord < 8 &&
+            kingPos!.coords!.second + 1 < 8 &&
+            board[xCoord][kingPos!.coords!.second + 1].colour ===
+                oppositeColour &&
+            board[xCoord][kingPos!.coords!.second + 1].shortName ===
+                PieceShortNames.Pawn
+        )
+            return true;
         return false;
     }
 

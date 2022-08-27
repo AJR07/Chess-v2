@@ -51,7 +51,6 @@ export default class Pawn extends Piece {
     }
 
     checkForCapture(move: Move) {
-        console.log(move.endPosition, move.startPosition);
         if (
             move.endPosition.coords!.first - move.startPosition.coords!.first ==
                 1 &&

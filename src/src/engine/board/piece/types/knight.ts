@@ -3,6 +3,7 @@ import Move from '../../move/move';
 import Colour from '../colour';
 import Piece from './empty';
 import { Pieces } from '../piecetype';
+import generateKnightMoveOffsets from '../../../../utils/knight';
 
 export default class Knight extends Piece {
     name = 'knight';
@@ -12,18 +13,7 @@ export default class Knight extends Piece {
     constructor(colour: Colour | undefined) {
         super(colour);
         if (Knight.moveOffsets.length == 0)
-            Knight.moveOffsets = this.generateMoveOffsets();
-    }
-
-    generateMoveOffsets(): Pair<number, number>[] {
-        let moveOffsets: Pair<number, number>[] = [];
-        for (let i of [1, 2, -1, -2]) {
-            for (let j of [1, 2, -1, -2]) {
-                if (Math.abs(i) != Math.abs(j))
-                    moveOffsets.push(new Pair(i, j));
-            }
-        }
-        return moveOffsets;
+            Knight.moveOffsets = generateKnightMoveOffsets();
     }
 
     canBeMovedTo(move: Move, board: Pieces[][]) {

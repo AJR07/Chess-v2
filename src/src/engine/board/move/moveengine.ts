@@ -336,7 +336,10 @@ export default class MoveEngine {
                     this.move!.endPosition.coords!.second
                 ];
 
-        if (this.move!.moveType == MoveTypes.BaseMove) {
+        if (
+            this.move!.moveType == MoveTypes.BaseMove ||
+            this.move!.moveType === MoveTypes.CaptureMove
+        ) {
             if (startPiece.canBeMovedTo(this.move!, board)) {
                 let changesList: Pair<Coordinates, Pieces>[] = [];
 
@@ -364,6 +367,8 @@ export default class MoveEngine {
                 oldFenDetails,
                 board
             );
+        } else if (this.move!.moveType == MoveTypes.PromotionMove) {
+            // !promotion
         }
 
         // update FEN Details

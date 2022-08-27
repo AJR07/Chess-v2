@@ -205,7 +205,7 @@ export default class Piece {
         // Pawn (1, 1), (1, -1)
         let movementDirection = move.startPieceColour === Colour.white ? -1 : 1,
             xCoord = kingPos!.coords!.first + movementDirection;
-        console.log(xCoord);
+
         if (
             xCoord >= 0 &&
             xCoord < 8 &&

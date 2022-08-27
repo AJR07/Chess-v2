@@ -2,6 +2,10 @@ import Move from '../../move/move';
 import Colour from '../colour';
 import Piece from './empty';
 import { Pieces } from '../piecetype';
+import Coordinates from '../../coordinates/coordinates';
+import Pair from '../../../../utils/pair';
+import CoordType from '../../coordinates/coordtype';
+import MoveTypes from '../../move/movetypes';
 
 export default class Pawn extends Piece {
     name = 'pawn';
@@ -76,12 +80,58 @@ export default class Pawn extends Piece {
         return false;
     }
 
+    checkForEnPassant(move: Move, board: Pieces[][]) {
+        if (
+            move.endPosition.coords!.first - move.startPosition.coords!.first ==
+                1 &&
+            Math.abs(
+                move.startPosition.coords!.second -
+                    move.endPosition.coords!.second
+            ) == 1 &&
+            this.colour == Colour.black &&
+            move.endPieceColour === Colour.none &&
+            board[move.startPosition.coords!.first][
+                move.endPosition.coords!.second
+            ].colour === Colour.white &&
+            move.currentFenDetails!.enPassantTarget !== null &&
+            new Pair(
+                move.startPosition.coords!.first,
+                move.endPosition.coords!.second
+            ).equals(move.currentFenDetails!.enPassantTarget!.coords!)
+        )
+            return true;
+        if (
+            move.startPosition.coords!.first - move.endPosition.coords!.first ==
+                1 &&
+            Math.abs(
+                move.startPosition.coords!.second -
+                    move.endPosition.coords!.second
+            ) == 1 &&
+            this.colour == Colour.white &&
+            move.endPieceColour === Colour.none &&
+            board[move.startPosition.coords!.first][
+                move.endPosition.coords!.second
+            ].colour === Colour.black &&
+            move.currentFenDetails!.enPassantTarget !== null &&
+            new Pair(
+                move.startPosition.coords!.first,
+                move.endPosition.coords!.second
+            ).equals(move.currentFenDetails!.enPassantTarget!.coords!)
+        )
+            return true;
+        return false;
+    }
+
     canBeMovedTo(move: Move, board: Pieces[][]) {
         if (!this.basicLegalValidation(move, board)) return false;
         if (this.checkOneSquareForward(move)) return true;
         if (this.checkIfSecondRank(move)) return true;
         if (this.checkForCapture(move)) return true;
-        // TODO: implement en-passant
+        if (this.checkForEnPassant(move, board)) {
+            // change move type for move engine to detect
+            move.moveType = MoveTypes.EnPassantMove;
+            return true;
+        }
         return false;
     }
 }

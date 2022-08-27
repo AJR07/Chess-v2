@@ -343,7 +343,8 @@ export default class MoveEngine {
 
         if (
             (this.move!.moveType == MoveTypes.BaseMove ||
-                this.move!.moveType === MoveTypes.CaptureMove) &&
+                this.move!.moveType === MoveTypes.CaptureMove ||
+                this.move!.moveType === MoveTypes.EnPassantMove) &&
             startPiece.canBeMovedTo(this.move!, board)
         ) {
             let changesList: Pair<Coordinates, Pieces>[] = [];
@@ -364,6 +365,27 @@ export default class MoveEngine {
                     ]
                 )
             );
+
+            // for en passant
+            if (this.move!.moveType === MoveTypes.EnPassantMove) {
+                board[this.move!.startPosition.coords!.first][
+                    this.move!.endPosition.coords!.second
+                ] = new Piece(Colour.none);
+                changesList.push(
+                    new Pair(
+                        new Coordinates(
+                            new Pair(
+                                this.move!.startPosition.coords!.first,
+                                this.move!.endPosition.coords!.second
+                            ),
+                            CoordType.pairCoordinates
+                        ),
+                        board[this.move!.startPosition.coords!.first][
+                            this.move!.endPosition.coords!.second
+                        ]
+                    )
+                );
+            }
 
             this.updateBoard(changesList);
             legal = true;
@@ -433,7 +455,13 @@ export default class MoveEngine {
                         ? Colour.black
                         : Colour.white,
                     oldFenDetails.castlingRights,
-                    null,
+                    startPiece.shortName === PieceShortNames.Pawn &&
+                    Math.abs(
+                        this.move!.startPosition.coords!.first -
+                            this.move!.endPosition.coords!.first
+                    ) === 2
+                        ? this.move!.endPosition
+                        : null,
                     startPiece.colour === Colour.black
                         ? oldFenDetails.fullMoveClock + 1
                         : oldFenDetails.fullMoveClock,

@@ -9,7 +9,7 @@ export default class Coordinates {
             this.coords = coords as Pair<number, number>;
         else if (coordtype == CoordType.algebraicCoordinates)
             this.coords = this.parseAlgebraic(coords as string);
-        else this.coords = this.parseAlgebraic(coords as string);
+        else this.coords = this.parseNumeric(`${coords as number}`);
     }
 
     comparingWith(otherCoordinates: Pair<number, number>) {

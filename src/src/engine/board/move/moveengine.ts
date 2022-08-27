@@ -36,6 +36,7 @@ export default class MoveEngine {
     ) {
         this.move = new Move(
             new Coordinates(dragged, CoordType.pairCoordinates),
+            null,
             null
         );
         this.updateMove(this.move);
@@ -321,6 +322,10 @@ export default class MoveEngine {
             board[this.move!.endPosition.coords!.first][
                 this.move!.endPosition.coords!.second
             ].colour;
+        this.move!.startPieceColour =
+            board[this.move!.startPosition.coords!.first][
+                this.move!.startPosition.coords!.second
+            ].colour;
         this.move!.currentFenDetails = engine.fenManager.data;
         this.move!.moveType = this.checkMoveType(this.move!, board);
 
@@ -337,27 +342,31 @@ export default class MoveEngine {
                 ];
 
         if (
-            this.move!.moveType == MoveTypes.BaseMove ||
-            this.move!.moveType === MoveTypes.CaptureMove
+            (this.move!.moveType == MoveTypes.BaseMove ||
+                this.move!.moveType === MoveTypes.CaptureMove) &&
+            startPiece.canBeMovedTo(this.move!, board)
         ) {
-            if (startPiece.canBeMovedTo(this.move!, board)) {
-                let changesList: Pair<Coordinates, Pieces>[] = [];
+            let changesList: Pair<Coordinates, Pieces>[] = [];
 
-                board[this.move!.startPosition.coords!.first][
-                    this.move!.startPosition.coords!.second
-                ] = startPiece;
-                changesList.push(new Pair(this.move!.startPosition, endPiece));
+            board[this.move!.endPosition.coords!.first][
+                this.move!.endPosition.coords!.second
+            ] = startPiece;
+            changesList.push(new Pair(this.move!.endPosition, startPiece));
 
-                board[this.move!.endPosition.coords!.first][
-                    this.move!.endPosition.coords!.second
-                ] = new Piece(Colour.none);
-                changesList.push(new Pair(this.move!.endPosition, startPiece));
+            board[this.move!.startPosition.coords!.first][
+                this.move!.startPosition.coords!.second
+            ] = new Piece(Colour.none);
+            changesList.push(
+                new Pair(
+                    this.move!.startPosition,
+                    board[this.move!.startPosition.coords!.first][
+                        this.move!.startPosition.coords!.second
+                    ]
+                )
+            );
 
-                this.updateBoard(changesList);
-                legal = true;
-            } else {
-                legal = false;
-            }
+            this.updateBoard(changesList);
+            legal = true;
         } else if (this.move!.moveType == MoveTypes.CastleMove) {
             // !castling
             let oldFenDetails = engine.fenManager.data;

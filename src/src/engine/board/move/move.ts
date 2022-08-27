@@ -6,17 +6,20 @@ import MoveTypes from './movetypes';
 export default class Move {
     startPosition: Coordinates;
     endPosition: Coordinates;
+    startPieceColour: Colour | null;
     endPieceColour: Colour | null;
     moveType: MoveTypes;
     currentFenDetails: FENDetails | null = null;
 
     constructor(
         startCoords: Coordinates,
+        startPieceColour: Colour | null,
         endPieceColour: Colour | null,
         moveType: MoveTypes = MoveTypes.BaseMove
     ) {
         this.startPosition = startCoords;
         this.endPosition = startCoords;
+        this.startPieceColour = startPieceColour;
         this.endPieceColour = endPieceColour;
         this.moveType = moveType;
     }

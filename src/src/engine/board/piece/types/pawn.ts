@@ -81,7 +81,7 @@ export default class Pawn extends Piece {
     }
 
     canBeMovedTo(move: Move, board: Pieces[][]) {
-        if (!this.basicLegalValidation(move)) return false;
+        if (!this.basicLegalValidation(move, board)) return false;
         if (this.checkOneSquareForward(move)) return true;
         if (this.checkIfSecondRank(move)) return true;
         if (this.checkForCapture(move)) return true;

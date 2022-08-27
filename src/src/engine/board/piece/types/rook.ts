@@ -50,7 +50,7 @@ export default class Rook extends Piece {
 
     canBeMovedTo(move: Move, board: Pieces[][]) {
         let offset = this.calculateOffset(move);
-        if (!this.basicLegalValidation(move)) return false;
+        if (!this.basicLegalValidation(move, board)) return false;
         if (!this.crossCheckJump(move, board)) return false;
         if (offset.first == 0 || offset.second == 0) return true;
         return false;

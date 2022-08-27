@@ -28,7 +28,7 @@ export default class Knight extends Piece {
 
     canBeMovedTo(move: Move, board: Pieces[][]) {
         let offset = this.calculateOffset(move);
-        if (!this.basicLegalValidation(move)) return false;
+        if (!this.basicLegalValidation(move, board)) return false;
         for (let legalOffset of Knight.moveOffsets) {
             if (offset.equals(legalOffset)) return true;
         }

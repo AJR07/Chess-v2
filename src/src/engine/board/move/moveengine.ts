@@ -74,11 +74,13 @@ export default class MoveEngine {
         dragged.second =
             dragged.second < 0 ? 0 : dragged.second > 7 ? 7 : dragged.second;
 
-        if (!this.move?.endPosition.comparingWith(dragged)) {
-            this.move?.updateMove(
-                new Coordinates(dragged, CoordType.pairCoordinates)
+        if (!this.move!.endPosition.comparingWith(dragged)) {
+            this.move!.endPosition = new Coordinates(
+                dragged,
+                CoordType.pairCoordinates
             );
-            this.updateMove(this.move);
+            let newMove = JSON.parse(JSON.stringify(this.move));
+            this.updateMove(newMove);
         }
 
         return dragged;

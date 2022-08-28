@@ -23,10 +23,5 @@ export default class Move {
         this.endPieceColour = endPieceColour;
         this.moveType = moveType;
     }
-
-    updateMove(endCoords: Coordinates) {
-        this.endPosition = endCoords;
-    }
-
     // TODO: More methods including notation, applying move etc to be implemented
 }

@@ -1,40 +1,33 @@
-import { Stack, Theme, useTheme } from '@mui/material';
-import { Component, useRef, useState } from 'react';
-import CoordType from './board/coordinates/coordtype';
-import ChessEngine from './engine';
-import Square from './board/square';
+import { Stack } from '@mui/material';
+import { Component } from 'react';
+import CoordType from '../board/coordinates/coordtype';
+import ChessEngine from '../engine';
+import Square from '../board/square';
 import { motion, PanInfo } from 'framer-motion';
-import Pair from '../utils/pair';
-import { Box } from '@mui/system';
-import Move from './board/move/move';
-import MoveEngine from './board/move/moveengine';
-import { Pieces } from './board/piece/piecetype';
-import Coordinates from './board/coordinates/coordinates';
+import Pair from '../../utils/pair';
+import Move from '../board/move/move';
+import MoveEngine from '../board/move/moveengine';
+import { Pieces } from '../board/piece/piecetype';
+import Coordinates from '../board/coordinates/coordinates';
 
-interface ChessBoardProps {
+interface ChessPiecesProps {
+    move: [null | Move, React.Dispatch<React.SetStateAction<null | Move>>];
     reference: React.MutableRefObject<null>;
-    theme: Theme;
 }
 
-interface ChessBoardState {
-    move: Move | null;
+interface ChessPiecesState {
     resetDrag: boolean;
     board: Pieces[][];
 }
 
-function ChessBoard(Component: any) {
-    return function WrappedComponent() {
-        const ref = useRef(null);
-        const theme = useTheme();
-        return <Component reference={ref} theme={theme} />;
-    };
-}
-
-class ChessBoardClass extends Component<ChessBoardProps, ChessBoardState> {
+export default class ChessPiecesClass extends Component<
+    ChessPiecesProps,
+    ChessPiecesState
+> {
     engine: ChessEngine;
     moveEngine: MoveEngine;
 
-    constructor(props: ChessBoardProps) {
+    constructor(props: ChessPiecesProps) {
         super(props);
         this.engine = new ChessEngine();
 
@@ -45,13 +38,12 @@ class ChessBoardClass extends Component<ChessBoardProps, ChessBoardState> {
         // board state
         this.updateBoard = this.updateBoard.bind(this);
         this.state = {
-            move: null,
             resetDrag: false,
             board: this.engine.getBoardData(),
         };
 
         this.moveEngine = new MoveEngine(
-            this.state.move,
+            this.props.move[0],
             this.updateMove,
             this.resetDrag,
             this.updateBoard
@@ -73,16 +65,14 @@ class ChessBoardClass extends Component<ChessBoardProps, ChessBoardState> {
     }
 
     updateMove(newMove: Move | null) {
-        this.setState({ move: newMove });
+        this.props.move[1](newMove);
     }
 
     render() {
-        let boardDisplay: JSX.Element[] = [],
-            background: JSX.Element[] = [];
+        let boardDisplay: JSX.Element[] = [];
 
         for (let i = 0; i < 8; i++) {
-            let row: JSX.Element[] = [],
-                rowBackground: JSX.Element[] = [];
+            let row: JSX.Element[] = [];
             for (let j = 0; j < 8; j++) {
                 row.push(
                     <motion.div
@@ -127,75 +117,29 @@ class ChessBoardClass extends Component<ChessBoardProps, ChessBoardState> {
                         ></Square>
                     </motion.div>
                 );
-                let startComparison =
-                        this.state.move?.startPosition.comparingWith(
-                            new Pair(i, j)
-                        ),
-                    endComparison = this.state.move?.endPosition.comparingWith(
-                        new Pair(i, j)
-                    );
-                rowBackground.push(
-                    <Box
-                        sx={{
-                            backgroundColor: startComparison
-                                ? this.props.theme.palette.secondary.light
-                                : endComparison
-                                ? this.props.theme.palette.error.light
-                                : `primary.${
-                                      (i + j) % 2 == 0 ? 'light' : 'dark'
-                                  }`,
-                            width: '5vw',
-                            height: '5vw',
-                        }}
-                        key={j}
-                    ></Box>
-                );
             }
             boardDisplay.push(
                 <Stack direction="row" key={i}>
                     {row}
                 </Stack>
             );
-            background.push(
-                <Stack direction="row" key={i}>
-                    {rowBackground}
-                </Stack>
-            );
         }
 
         return (
-            <Stack
-                alignItems="center"
-                justifyContent="center"
-                direction="column"
-                sx={{
-                    opacity: '0.9',
-                }}
+            <motion.div
+                id="chessboard"
+                className="horizontal-center"
+                ref={this.props.reference}
+                style={{ position: 'absolute' }}
             >
-                <motion.div
-                    id="chessboard"
-                    className="horizontal-center"
-                    ref={this.props.reference}
+                <Stack
+                    alignItems="center"
+                    justifyContent="center"
+                    direction="column"
                 >
-                    <Stack
-                        alignItems="center"
-                        justifyContent="center"
-                        direction="column"
-                        style={{ position: 'absolute' }}
-                    >
-                        {boardDisplay}
-                    </Stack>
-                    <Stack
-                        alignItems="center"
-                        justifyContent="center"
-                        direction="column"
-                    >
-                        {background}
-                    </Stack>
-                </motion.div>
-            </Stack>
+                    {boardDisplay}
+                </Stack>
+            </motion.div>
         );
     }
 }
-
-export default ChessBoard(ChessBoardClass);

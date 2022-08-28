@@ -127,10 +127,10 @@ export default class ChessPiecesClass extends Component<
 
         return (
             <motion.div
-                id="chessboard"
                 className="horizontal-center"
                 ref={this.props.reference}
                 style={{ position: 'absolute' }}
+                id="pieces-screen"
             >
                 <Stack
                     alignItems="center"

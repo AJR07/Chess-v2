@@ -3,8 +3,13 @@ import { useRef, useState } from 'react';
 import Move from '../board/move/move';
 import ChessBackgroundClass from './chessbackground';
 import ChessPiecesClass from './chesspieces';
+import ChessPromotionClass from './chesspromotion';
 
-function ChessBoard(PiecesComponent: any, BackgroundComponent: any) {
+function ChessBoard(
+    PiecesComponent: any,
+    BackgroundComponent: any,
+    PromotionComponent: any
+) {
     return function WrappedComponent() {
         const ref = useRef(null);
         const theme = useTheme();
@@ -24,9 +29,14 @@ function ChessBoard(PiecesComponent: any, BackgroundComponent: any) {
             >
                 <BackgroundComponent theme={theme} move={moveState} />
                 <PiecesComponent reference={ref} move={moveState} />
+                <PromotionComponent move={moveState} />
             </Stack>
         );
     };
 }
 
-export default ChessBoard(ChessPiecesClass, ChessBackgroundClass);
+export default ChessBoard(
+    ChessPiecesClass,
+    ChessBackgroundClass,
+    ChessPromotionClass
+);

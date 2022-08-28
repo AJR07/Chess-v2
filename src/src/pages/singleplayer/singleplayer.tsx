@@ -14,7 +14,7 @@ export default function SinglePlayer() {
                     paddingBottom: '5vh',
                 }}
             >
-                Single-Player Chessboard
+                Pass-and-Play
             </Typography>
             <ChessBoard />
         </div>

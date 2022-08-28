@@ -1,7 +1,6 @@
 import { Stack } from '@mui/material';
 import { Box, Theme } from '@mui/system';
 import { Component } from 'react';
-import Pair from '../../utils/pair';
 import Move from '../board/move/move';
 
 interface ChessBackgroundProps {
@@ -54,7 +53,8 @@ export default class ChessBackgroundClass extends Component<
                 alignItems="center"
                 justifyContent="center"
                 direction="column"
-                style={{ position: 'absolute' }}
+                style={{ position: 'absolute', opacity: 0.8 }}
+                id="background-screen"
             >
                 {background}
             </Stack>

@@ -88,6 +88,20 @@ export default class MoveEngine {
 
     checkMoveType(move: Move, board: Pieces[][]): MoveTypes {
         if (
+            board[move.startPosition.coords!.first][
+                move.startPosition.coords!.second
+            ].shortName === PieceShortNames.Pawn &&
+            ((board[move.startPosition.coords!.first][
+                move.startPosition.coords!.second
+            ].colour === Colour.white &&
+                move.endPosition.coords!.first === 0) ||
+                (board[move.startPosition.coords!.first][
+                    move.startPosition.coords!.second
+                ].colour === Colour.black &&
+                    move.endPosition.coords!.first === 7))
+        )
+            return MoveTypes.PromotionMove;
+        if (
             board[move.endPosition.coords!.first][
                 move.endPosition.coords!.second
             ].colour != Colour.none
@@ -105,20 +119,6 @@ export default class MoveEngine {
             ) == 2
         )
             return MoveTypes.CastleMove;
-        if (
-            board[move.startPosition.coords!.first][
-                move.startPosition.coords!.second
-            ].shortName === PieceShortNames.Pawn &&
-            ((board[move.startPosition.coords!.first][
-                move.startPosition.coords!.second
-            ].colour === Colour.white &&
-                move.endPosition.coords!.first === 0) ||
-                (board[move.startPosition.coords!.first][
-                    move.startPosition.coords!.second
-                ].colour === Colour.black &&
-                    move.endPosition.coords!.first === 7))
-        )
-            return MoveTypes.PromotionMove;
         return MoveTypes.BaseMove;
     }
 
@@ -346,7 +346,8 @@ export default class MoveEngine {
         if (
             (this.move!.moveType == MoveTypes.BaseMove ||
                 this.move!.moveType === MoveTypes.CaptureMove ||
-                this.move!.moveType === MoveTypes.EnPassantMove) &&
+                this.move!.moveType === MoveTypes.EnPassantMove ||
+                this.move!.moveType === MoveTypes.PromotionMove) &&
             startPiece.canBeMovedTo(this.move!, board)
         ) {
             let changesList: Pair<Coordinates, Pieces>[] = [];
@@ -400,8 +401,6 @@ export default class MoveEngine {
                 oldFenDetails,
                 board
             );
-        } else if (this.move!.moveType == MoveTypes.PromotionMove) {
-            // !promotion
         }
 
         // update FEN Details
@@ -477,7 +476,11 @@ export default class MoveEngine {
 
         // update some state
         this.resetDrag(true);
-        this.move = null;
-        this.updateMove(this.move);
+        if (this.move!.moveType === MoveTypes.PromotionMove) {
+            this.updateMove(JSON.parse(JSON.stringify(this.move)));
+        } else {
+            this.move = null;
+            this.updateMove(this.move);
+        }
     }
 }

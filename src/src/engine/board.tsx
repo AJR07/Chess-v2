@@ -13,7 +13,6 @@ import Coordinates from './board/coordinates/coordinates';
 
 interface ChessBoardProps {
     reference: React.MutableRefObject<null>;
-    theme: Theme;
 }
 
 interface ChessBoardState {
@@ -25,8 +24,7 @@ interface ChessBoardState {
 function ChessBoard(Component: any) {
     return function WrappedComponent() {
         const ref = useRef(null);
-        const theme = useTheme();
-        return <Component reference={ref} theme={theme} />;
+        return <Component reference={ref} />;
     };
 }
 

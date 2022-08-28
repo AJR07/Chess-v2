@@ -100,7 +100,7 @@ export default class MoveEngine {
                 ].colour === Colour.black &&
                     move.endPosition.coords!.first === 7))
         )
-            return MoveTypes.PromotionMove;
+            return MoveTypes.PromotionMoveStage1;
         if (
             board[move.endPosition.coords!.first][
                 move.endPosition.coords!.second
@@ -347,7 +347,7 @@ export default class MoveEngine {
             (this.move!.moveType == MoveTypes.BaseMove ||
                 this.move!.moveType === MoveTypes.CaptureMove ||
                 this.move!.moveType === MoveTypes.EnPassantMove ||
-                this.move!.moveType === MoveTypes.PromotionMove) &&
+                this.move!.moveType === MoveTypes.PromotionMoveStage1) &&
             startPiece.canBeMovedTo(this.move!, board)
         ) {
             let changesList: Pair<Coordinates, Pieces>[] = [];
@@ -404,7 +404,7 @@ export default class MoveEngine {
         }
 
         // update FEN Details
-        if (legal) {
+        if (legal && this.move!.moveType !== MoveTypes.PromotionMoveStage1) {
             let oldFenDetails = engine.fenManager.data;
 
             // if its a rook moved from original position, update FEN for castling
@@ -476,11 +476,53 @@ export default class MoveEngine {
 
         // update some state
         this.resetDrag(true);
-        if (this.move!.moveType === MoveTypes.PromotionMove) {
+        if (this.move!.moveType === MoveTypes.PromotionMoveStage1) {
             this.updateMove(JSON.parse(JSON.stringify(this.move)));
         } else {
             this.move = null;
             this.updateMove(this.move);
         }
+    }
+
+    onPromotionEnd(
+        pieceSelected: Pieces,
+        board: Pieces[][],
+        engine: ChessEngine
+    ) {
+        let changesList: Pair<Coordinates, Pieces>[] = [];
+        board[this.move!.endPosition.coords!.first][
+            this.move!.endPosition.coords!.second
+        ] = pieceSelected;
+        changesList.push(new Pair(this.move!.endPosition, pieceSelected));
+        this.updateBoard(changesList);
+
+        // update fen
+        let oldFenDetails = engine.fenManager.data;
+        engine.fenManager.regenerateFen(
+            new FENDetails(
+                board,
+                pieceSelected.colour === Colour.white
+                    ? Colour.black
+                    : Colour.white,
+                oldFenDetails.castlingRights,
+                pieceSelected.shortName === PieceShortNames.Pawn &&
+                Math.abs(
+                    this.move!.startPosition.coords!.first -
+                        this.move!.endPosition.coords!.first
+                ) === 2
+                    ? this.move!.endPosition
+                    : null,
+                pieceSelected.colour === Colour.black
+                    ? oldFenDetails.fullMoveClock + 1
+                    : oldFenDetails.fullMoveClock,
+                pieceSelected.shortName === 'p' ||
+                this.move!.moveType === MoveTypes.CaptureMove
+                    ? 0
+                    : oldFenDetails.halfMoveClock + 1
+            )
+        );
+
+        this.move = null;
+        this.updateMove(this.move);
     }
 }

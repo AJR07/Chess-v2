@@ -9,6 +9,7 @@ import Move from '../board/move/move';
 import MoveEngine from '../board/move/moveengine';
 import { Pieces } from '../board/piece/piecetype';
 import Coordinates from '../board/coordinates/coordinates';
+import ChessPromotionClass from './chesspromotion';
 
 interface ChessPiecesProps {
     move: [null | Move, React.Dispatch<React.SetStateAction<null | Move>>];
@@ -137,6 +138,11 @@ export default class ChessPiecesClass extends Component<
                     justifyContent="center"
                     direction="column"
                 >
+                    <ChessPromotionClass
+                        moveEngine={this.moveEngine}
+                        board={this.state.board}
+                        chessEngine={this.engine}
+                    />
                     {boardDisplay}
                 </Stack>
             </motion.div>

@@ -1,6 +1,7 @@
 import FENDetails from '../../fen/details';
 import Coordinates from '../coordinates/coordinates';
 import Colour from '../piece/colour';
+import { Pieces } from '../piece/piecetype';
 import MoveTypes from './movetypes';
 
 export default class Move {
@@ -10,6 +11,7 @@ export default class Move {
     endPieceColour: Colour | null;
     moveType: MoveTypes;
     currentFenDetails: FENDetails | null = null;
+    promotionTargetPiece: Pieces | null = null;
 
     constructor(
         startCoords: Coordinates,

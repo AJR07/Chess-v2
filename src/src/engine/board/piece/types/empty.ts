@@ -232,6 +232,12 @@ export default class Piece {
     basicLegalValidation(move: Move, board: Pieces[][]) {
         if (move.currentFenDetails!.activeColour !== this.colour) return false;
         if (move.endPieceColour == this.colour) return false;
+        if (
+            board[move.endPosition.coords!.first][
+                move.endPosition.coords!.second
+            ].shortName === PieceShortNames.King
+        )
+            return false;
         if (this.kingIsChecked(move, board)) return false;
         return true;
     }

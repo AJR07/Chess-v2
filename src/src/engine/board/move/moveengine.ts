@@ -475,12 +475,12 @@ export default class MoveEngine {
         }
 
         // update some state
-        this.resetDrag(true);
-        if (this.move!.moveType === MoveTypes.PromotionMoveStage1) {
+        if (this.move!.moveType === MoveTypes.PromotionMoveStage1 && legal) {
             this.updateMove(JSON.parse(JSON.stringify(this.move)));
         } else {
             this.move = null;
             this.updateMove(this.move);
+            this.resetDrag(true);
         }
     }
 

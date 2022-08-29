@@ -1,4 +1,4 @@
-# Development Log
+# **Development Log**
 
 > - What goals you had set for the week and whether they were accomplished or not
 > - What problems you encountered (if any) that prevented you from meeting your goals
@@ -29,24 +29,25 @@
   - Unfortunately, having OBS on this week meant that a large part of the week I didn't have enough rest and motivation to make a lot of progress
   - There was a bunch of other details I had to iron out, and was not planned properly i guess
   - Were able to get done all of the points until the last
+  - Completed on week 10 instead (took a lot longer than i expected), but the code is much neater and much more optimised
 
 ### **Week 7 (9 Aug - 15 Aug)**
+
+- Goal: **UI Update** (swapped with authentication update)
+  - Improve on the UI of the app in general
+  - Chatting functionality [Maybe if there is time]
+  - Catch up on any updates that have not been done
+- Problems:
+  - (not updated)
+
+### **Week 8 (16 Aug - 22 Aug)**
 
 - Goal: **Authentication Update**
   - Sign up functionality
   - Login functionality
   - Other account-related functionality
   - Editing of profiles
-  - Friend systems
-- Problems:
-  - (not updated)
-
-### **Week 8 (16 Aug - 22 Aug)**
-
-- Goal: **UI Update** (a lighter update because there are more WAs closing up to this date)
-  - Improve on the UI of the app in general
-  - Chatting functionality
-  - Catch up on any updates that have not been done
+  - Friend systems [If there is time]
 - Problems:
   - (not updated)
 

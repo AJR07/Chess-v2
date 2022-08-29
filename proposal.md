@@ -1,4 +1,4 @@
-# General description of project
+# **General description of project**
 
 Building an online pass-and-play chess engine. This will be hosted on a website where you can play chess!
 
@@ -24,7 +24,7 @@ For when the features will be implemented, see [plans for specific features in t
   - Store a profile picture, name, etc...
   - Interact with other users (friends list etc)
   - Leaderboards :D
-- Chat function:
+- Chat function: [If there is time]
   - Message other users on the platforms
   - Message other users in the game
 

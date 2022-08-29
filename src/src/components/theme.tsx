@@ -1,25 +1,56 @@
 import { ThemeOptions } from '@mui/material';
 
-export const themeOptions: ThemeOptions = {
-    palette: {
-        primary: {
-            main: 'rgba(63,119,181,0.99)',
+export const themeOptions: { [themeName: string]: ThemeOptions } = {
+    blue: {
+        palette: {
+            primary: {
+                main: 'rgba(63,119,181,0.99)',
+            },
+            secondary: {
+                main: '#0063f5',
+            },
+            warning: {
+                main: '#ff9800',
+            },
+            error: {
+                main: '#f43636',
+            },
+            info: {
+                main: '#2196f3',
+            },
+            background: {
+                default: '#bbdefb',
+            },
         },
-        secondary: {
-            main: '#0063f5',
+        typography: {
+            fontFamily: 'Helvetica',
         },
-        error: {
-            main: '#f43636',
-        },
-        info: {
-            main: '#2196f3',
-        },
-        background: {
-            default: '#bbdefb',
-        },
+        spacing: 8,
     },
-    typography: {
-        fontFamily: 'Helvetica',
+    yellow: {
+        palette: {
+            primary: {
+                main: 'rgba(192,210,31,0.99)',
+            },
+            secondary: {
+                main: '#bb9f11',
+            },
+            error: {
+                main: '#f43636',
+            },
+            info: {
+                main: '#2196f3',
+            },
+            background: {
+                default: '#bbdefb',
+            },
+            warning: {
+                main: '#ff9800',
+            },
+        },
+        typography: {
+            fontFamily: 'Helvetica',
+        },
+        spacing: 8,
     },
-    spacing: 8,
 };

@@ -27,8 +27,8 @@ export default function NavBar() {
                     >
                         <NavBarItem title="home" redirect="/" icon={<Home />} />
                         <NavBarItem
-                            title="singleplayer"
-                            redirect="/singleplayer"
+                            title="pass-and-play"
+                            redirect="/pass-and-play"
                             icon={<Person />}
                         />
                     </Stack>

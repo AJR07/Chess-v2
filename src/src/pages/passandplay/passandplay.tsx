@@ -1,9 +1,9 @@
 import { Typography } from '@mui/material';
 import ChessBoard from '../../engine/render/board';
 
-export default function SinglePlayer() {
+export default function PassAndPlay() {
     return (
-        <div id="singleplayer">
+        <div id="pass-and-play">
             <Typography
                 variant="h2"
                 fontWeight={1000}

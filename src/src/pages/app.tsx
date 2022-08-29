@@ -10,7 +10,7 @@ import NavBar from '../components/navbar/navbar';
 import { themeOptions } from '../components/theme';
 import Home from './home/home';
 import '../css/master.css';
-import SinglePlayer from './singleplayer/singleplayer';
+import PassAndPlay from './passandplay/passandplay';
 
 export default function App() {
     return AppSettings(
@@ -18,7 +18,7 @@ export default function App() {
             <NavBar />
             <Grid item id="app" sx={{ width: '92.5vw' }}>
                 <Routes>
-                    <Route path="/singleplayer" element={<SinglePlayer />} />
+                    <Route path="/pass-and-play" element={<PassAndPlay />} />
                     <Route path="/" element={<Home />} />
                 </Routes>
             </Grid>

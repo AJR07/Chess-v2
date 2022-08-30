@@ -11,11 +11,18 @@ import { themeOptions } from '../components/theme';
 import Home from './home/home';
 import '../css/master.css';
 import PassAndPlay from './passandplay/passandplay';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ThemeSelector from './theme/theme';
 
 export default function App() {
-    let [themeIdx, setThemeName] = useState('blue');
+    let [themeIdx, setThemeName] = useState(
+        (!localStorage.getItem('theme')
+            ? 'blue'
+            : localStorage.getItem('theme')) as string
+    );
+    useEffect(() => {
+        localStorage.setItem('theme', themeIdx);
+    }, [themeIdx]);
     return AppSettings(
         themeIdx,
         <>

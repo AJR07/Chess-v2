@@ -1,5 +1,6 @@
 import { Stack, Typography } from '@mui/material';
 import { motion } from 'framer-motion';
+import CustomisedCard from '../../components/card';
 
 export default function Home() {
     return (
@@ -30,6 +31,15 @@ export default function Home() {
                 >
                     AJR's Chess Arena
                 </Typography>
+            </Stack>
+            <Stack id="card-section" direction="row">
+                <CustomisedCard
+                    imageName="chessboard"
+                    imageLink="/images/chessboard.png"
+                    description="Play chess with another human in real life, or just setup a board on your own and experiment! :D"
+                    webpageLink="chess-ajr07.web.app/pass-and-play"
+                    shortenedWebpageLink="/pass-and-play"
+                />
             </Stack>
         </Stack>
     );

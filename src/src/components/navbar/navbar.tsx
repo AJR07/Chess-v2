@@ -2,6 +2,7 @@ import { Home, Person } from '@mui/icons-material';
 import { Grid, Stack } from '@mui/material';
 import NavBarItem from './navbaritem';
 import ColorLensIcon from '@mui/icons-material/ColorLens';
+import InfoIcon from '@mui/icons-material/Info';
 
 export default function NavBar() {
     return (
@@ -36,6 +37,11 @@ export default function NavBar() {
                             title="theme-selector"
                             redirect="/theme-selector"
                             icon={<ColorLensIcon />}
+                        />
+                        <NavBarItem
+                            title="info"
+                            redirect="/info"
+                            icon={<InfoIcon />}
                         />
                     </Stack>
                 </Grid>

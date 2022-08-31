@@ -1,5 +1,5 @@
 import { Typography } from '@mui/material';
-import ChessBoard from '../../engine/render/board';
+import ExtendedChessBoard from '../../engine/render/extendedboard';
 
 export default function PassAndPlay() {
     return (
@@ -16,7 +16,7 @@ export default function PassAndPlay() {
             >
                 Pass-and-Play
             </Typography>
-            <ChessBoard />
+            <ExtendedChessBoard />
         </div>
     );
 }

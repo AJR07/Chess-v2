@@ -4,7 +4,7 @@ import Move from '../board/move/move';
 import ChessBackgroundClass from './chessbackground';
 import ChessPiecesClass from './chesspieces';
 
-function ChessBoard(PiecesComponent: any, BackgroundComponent: any) {
+function Board(PiecesComponent: any, BackgroundComponent: any) {
     return function WrappedComponent() {
         const ref = useRef(null);
         const theme = useTheme();
@@ -19,7 +19,6 @@ function ChessBoard(PiecesComponent: any, BackgroundComponent: any) {
                     opacity: '0.9',
                     width: '40vw',
                     height: '40vw',
-                    marginLeft: '25vw',
                 }}
             >
                 <BackgroundComponent theme={theme} move={moveState} />
@@ -29,4 +28,4 @@ function ChessBoard(PiecesComponent: any, BackgroundComponent: any) {
     };
 }
 
-export default ChessBoard(ChessPiecesClass, ChessBackgroundClass);
+export default Board(ChessPiecesClass, ChessBackgroundClass);

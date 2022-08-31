@@ -15,6 +15,7 @@ import PassAndPlay from './passandplay/passandplay';
 import { useEffect, useState } from 'react';
 import ThemeSelector from './theme/theme';
 import Info from './info/info';
+import PageNotFound from './404/404';
 
 export default function App() {
     let [themeIdx, setThemeName] = useState(
@@ -43,6 +44,8 @@ export default function App() {
                     />
                     <Route path="/info" element={<Info />} />
                     <Route path="/" element={<Home />} />
+                    <Route path="/home" element={<Home />} />
+                    <Route path="*" element={<PageNotFound />} />
                 </Routes>
             </Grid>
             <Typography

@@ -1,5 +1,13 @@
 import { List, ListItem, Stack, Typography } from '@mui/material';
 
+function ListTitle(props: { text: string }) {
+    return (
+        <ListItem>
+            <Typography> - {props.text} </Typography>
+        </ListItem>
+    );
+}
+
 export default function Info() {
     return (
         <Stack sx={{ marginRight: '3vw' }}>
@@ -18,7 +26,7 @@ export default function Info() {
             <Stack spacing={5}>
                 <Stack sx={{ color: '#000000' }}>
                     <List
-                        id="made with"
+                        id="made-with"
                         sx={{
                             backgroundColor: 'primary.dark',
                             borderRadius: '1vw',
@@ -26,25 +34,16 @@ export default function Info() {
                         }}
                     >
                         <Typography variant="h6" fontWeight={1000}>
-                            Made With
+                            Made With:
                         </Typography>
-                        <ListItem>
-                            <Typography>ReactTS</Typography>
-                        </ListItem>
-                        <ListItem>
-                            <Typography>Typescript</Typography>
-                        </ListItem>
-                        <ListItem>
-                            <Typography>Firebase (Hosting)</Typography>
-                        </ListItem>
-                        <ListItem>
-                            <Typography>Framer Motion (Animation)</Typography>
-                        </ListItem>
-                        <ListItem>
-                            <Typography>Material UI (UI Library)</Typography>
-                        </ListItem>
+                        <ListTitle text="ReactTS" />
+                        <ListTitle text="Typescript" />
+                        <ListTitle text="Firebase (Hosting)" />
+                        <ListTitle text="Framer Motion (Animation)" />
+                        <ListTitle text="Material UI (UI Library)" />
                     </List>
                 </Stack>
+
                 <Stack
                     sx={{
                         color: '#000000',
@@ -56,10 +55,7 @@ export default function Info() {
                     <Typography variant="h6" fontWeight={1000}>
                         Made By:
                     </Typography>
-                    <Typography
-                        variant="caption"
-                        sx={{ color: 'primary.light' }}
-                    >
+                    <Typography variant="caption" sx={{ color: '#000000' }}>
                         AJR07
                     </Typography>
                 </Stack>

@@ -33,15 +33,26 @@ export default function SidePanel() {
         let section = sections[sectionIdx];
         chooseSection.push(
             <Button
-                color="primary"
                 aria-label="chat"
                 key={section.name}
                 onClick={() => {
                     setSelectedSectionIdx(sectionIdx);
                 }}
                 fullWidth
+                sx={{
+                    borderRadius: '1vw',
+                    color: '#000000',
+                    backgroundColor:
+                        selectedSectionIdx === sectionIdx
+                            ? 'primary.main'
+                            : 'primary.dark',
+                }}
             >
-                <Stack direction="column">
+                <Stack
+                    direction="column"
+                    alignItems="center"
+                    justifyContent="center"
+                >
                     <Typography variant="caption">{section.name}</Typography>
                     {section.icon}
                 </Stack>
@@ -55,16 +66,16 @@ export default function SidePanel() {
             sx={{
                 width: '25vw',
                 height: '50vh',
-                backgroundColor: 'primary.dark',
+                backgroundColor: 'secondary.dark',
                 borderRadius: '1vw',
             }}
         >
             <Stack
                 direction="row"
                 sx={{
-                    backgroundColor: 'secondary.dark',
                     borderTopLeftRadius: '1vw',
                     borderTopRightRadius: '1vw',
+                    backgroundColor: 'primary.dark',
                 }}
             >
                 {chooseSection}

@@ -25,7 +25,7 @@ export default function CustomisedCard(props: CustomisedCardProps) {
             drag
             dragElastic={0.2}
             dragConstraints={{ left: 10, top: 10, right: 10, bottom: 10 }}
-            whileHover={{ scale: 1.1 }}
+            whileHover={{ scale: 1.05 }}
         >
             <Card sx={{ maxWidth: 345, backgroundColor: 'primary.light' }}>
                 <CardMedia
@@ -49,13 +49,13 @@ export default function CustomisedCard(props: CustomisedCardProps) {
                         onClick={() => {
                             navigator.clipboard.writeText(props.webpageLink);
                         }}
-                        sx={{ color: 'success.dark' }}
+                        sx={{ color: 'primary.dark', fontWeight: '1000' }}
                     >
                         SHARE
                     </Button>
                     <Button
                         size="small"
-                        sx={{ color: 'info.dark' }}
+                        sx={{ color: 'success.dark', fontWeight: '1000' }}
                         onClick={() => {
                             navigate(props.shortenedWebpageLink);
                         }}

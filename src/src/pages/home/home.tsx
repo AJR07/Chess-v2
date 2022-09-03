@@ -32,13 +32,30 @@ export default function Home() {
                     AJR's Chess Arena
                 </Typography>
             </Stack>
-            <Stack id="card-section" direction="row">
+            <Stack id="card-section" direction="row" spacing={3}>
                 <CustomisedCard
+                    name="Pass-And-Play"
                     imageName="chessboard"
-                    imageLink="/images/chessboard.png"
+                    imageLink="/images/card_images/chessboard.png"
                     description="Play chess with another human in real life, or just setup a board on your own and experiment! :D"
                     webpageLink="chess-ajr07.web.app/pass-and-play"
                     shortenedWebpageLink="/pass-and-play"
+                />
+                <CustomisedCard
+                    name="Theme Picker"
+                    imageName="theme-picker"
+                    imageLink="/images/card_images/theme_selector.jpg"
+                    description="Choose the theme that best suits you for the site."
+                    webpageLink="chess-ajr07.web.app/theme-selector"
+                    shortenedWebpageLink="/theme-selector"
+                />
+                <CustomisedCard
+                    name="About"
+                    imageName="about"
+                    imageLink="/images/card_images/AJR07.png"
+                    description="Find out more about this site!"
+                    webpageLink="chess-ajr07.web.app/info"
+                    shortenedWebpageLink="/info"
                 />
             </Stack>
         </Stack>

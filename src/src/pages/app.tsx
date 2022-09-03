@@ -2,6 +2,7 @@ import {
     createTheme,
     Grid,
     responsiveFontSizes,
+    Snackbar,
     ThemeProvider,
     Typography,
 } from '@mui/material';
@@ -12,10 +13,12 @@ import { themeOptions } from '../components/theme';
 import Home from './home/home';
 import '../css/master.css';
 import PassAndPlay from './passandplay/passandplay';
-import { useEffect, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
 import ThemeSelector from './theme/theme';
 import Info from './info/info';
 import PageNotFound from './404/404';
+
+// const NotificationContext = createContext();
 
 export default function App() {
     let [themeIdx, setThemeName] = useState(
@@ -61,6 +64,15 @@ export default function App() {
             >
                 Made by: <a href="https://github.com/AJR07/Chess-v2">AJR07</a>
             </Typography>
+            <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+                <Alert
+                    onClose={handleClose}
+                    severity="success"
+                    sx={{ width: '100%' }}
+                >
+                    This is a success message!
+                </Alert>
+            </Snackbar>
         </>
     );
 }

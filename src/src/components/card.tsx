@@ -10,6 +10,7 @@ import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 
 interface CustomisedCardProps {
+    name: string;
     imageName: string;
     imageLink: string;
     description: string;
@@ -27,7 +28,13 @@ export default function CustomisedCard(props: CustomisedCardProps) {
             dragConstraints={{ left: 10, top: 10, right: 10, bottom: 10 }}
             whileHover={{ scale: 1.05 }}
         >
-            <Card sx={{ maxWidth: 345, backgroundColor: 'primary.light' }}>
+            <Card
+                sx={{
+                    maxWidth: 345,
+                    backgroundColor: 'primary.light',
+                    boxShadow: '0vw 0vw 1.5vw #333333',
+                }}
+            >
                 <CardMedia
                     component="img"
                     alt={props.imageName}
@@ -37,7 +44,7 @@ export default function CustomisedCard(props: CustomisedCardProps) {
                 />
                 <CardContent>
                     <Typography gutterBottom variant="h5" component="div">
-                        Pass And Play
+                        {props.name}
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
                         {props.description}
@@ -60,7 +67,7 @@ export default function CustomisedCard(props: CustomisedCardProps) {
                             navigate(props.shortenedWebpageLink);
                         }}
                     >
-                        PLAY
+                        VISIT
                     </Button>
                 </CardActions>
             </Card>

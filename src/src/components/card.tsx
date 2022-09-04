@@ -7,7 +7,10 @@ import {
     Typography,
 } from '@mui/material';
 import { motion } from 'framer-motion';
+import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { AlertContext } from './alert/alert';
+import AlertDetails from './alert/alertdetails';
 
 interface CustomisedCardProps {
     name: string;
@@ -20,6 +23,7 @@ interface CustomisedCardProps {
 
 export default function CustomisedCard(props: CustomisedCardProps) {
     let navigate = useNavigate();
+    let addAlert = useContext(AlertContext);
     return (
         <motion.div
             id="card"
@@ -32,7 +36,7 @@ export default function CustomisedCard(props: CustomisedCardProps) {
                 sx={{
                     maxWidth: 345,
                     backgroundColor: 'primary.light',
-                    boxShadow: '0vw 0vw 1.5vw #333333',
+                    boxShadow: '0vw 0vw 2vw #444444',
                 }}
             >
                 <CardMedia
@@ -55,6 +59,10 @@ export default function CustomisedCard(props: CustomisedCardProps) {
                         size="small"
                         onClick={() => {
                             navigator.clipboard.writeText(props.webpageLink);
+                            addAlert(new AlertDetails('Copied to Clipboard!'));
+                            addAlert(
+                                new AlertDetails('Copied to Clipboard...')
+                            );
                         }}
                         sx={{ color: 'primary.dark', fontWeight: '1000' }}
                     >

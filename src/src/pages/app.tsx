@@ -2,7 +2,6 @@ import {
     createTheme,
     Grid,
     responsiveFontSizes,
-    Snackbar,
     ThemeProvider,
     Typography,
 } from '@mui/material';
@@ -17,8 +16,7 @@ import { createContext, useEffect, useState } from 'react';
 import ThemeSelector from './theme/theme';
 import Info from './info/info';
 import PageNotFound from './404/404';
-
-// const NotificationContext = createContext();
+import { AlertManager } from '../components/alert/alert';
 
 export default function App() {
     let [themeIdx, setThemeName] = useState(
@@ -29,9 +27,8 @@ export default function App() {
     useEffect(() => {
         localStorage.setItem('theme', themeIdx);
     }, [themeIdx]);
-    return AppSettings(
-        themeIdx,
-        <>
+    return (
+        <AppSettings themeIdx={themeIdx}>
             <NavBar />
             <Grid item id="app" sx={{ width: '92.5vw' }}>
                 <Routes>
@@ -64,36 +61,34 @@ export default function App() {
             >
                 Made by: <a href="https://github.com/AJR07/Chess-v2">AJR07</a>
             </Typography>
-            <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-                <Alert
-                    onClose={handleClose}
-                    severity="success"
-                    sx={{ width: '100%' }}
-                >
-                    This is a success message!
-                </Alert>
-            </Snackbar>
-        </>
+        </AppSettings>
     );
 }
 
-function AppSettings(themeIdx: string, content: JSX.Element) {
+interface AppSettingsProps {
+    themeIdx: string;
+    children: JSX.Element[];
+}
+
+function AppSettings(props: AppSettingsProps) {
     return (
         <>
             <BrowserRouter>
                 <ParallaxProvider>
                     <ThemeProvider
                         theme={responsiveFontSizes(
-                            createTheme(themeOptions[themeIdx])
+                            createTheme(themeOptions[props.themeIdx])
                         )}
                     >
-                        <Grid
-                            container
-                            direction="row"
-                            sx={{ height: '100vh' }}
-                        >
-                            {content}
-                        </Grid>
+                        <AlertManager>
+                            <Grid
+                                container
+                                direction="row"
+                                sx={{ height: '100vh' }}
+                            >
+                                {props.children}
+                            </Grid>
+                        </AlertManager>
                     </ThemeProvider>
                 </ParallaxProvider>
             </BrowserRouter>

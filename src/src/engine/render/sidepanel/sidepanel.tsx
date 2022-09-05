@@ -1,8 +1,9 @@
-import { Button, Stack, Typography } from '@mui/material';
+import { Button, List, ListItem, Stack, Typography } from '@mui/material';
 import SidePanelDetails from './sidepaneldetails';
 import ChatIcon from '@mui/icons-material/Chat';
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import { useState } from 'react';
+import DetailsPanel from './panels/details';
 
 export default function SidePanel() {
     let sections: SidePanelDetails[] = [
@@ -16,13 +17,7 @@ export default function SidePanel() {
             );
         }),
         new SidePanelDetails(<FormatListBulletedIcon />, 'Details', {}, () => {
-            return (
-                <Stack id="details" alignItems="center" justifyContent="center">
-                    <Typography variant="body1" fontWeight={1000}>
-                        Details
-                    </Typography>
-                </Stack>
-            );
+            return <DetailsPanel />;
         }),
     ];
     let [selectedSectionIdx, setSelectedSectionIdx] = useState(0);

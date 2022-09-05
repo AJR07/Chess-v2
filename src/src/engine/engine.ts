@@ -12,8 +12,4 @@ export default class ChessEngine {
     getBoardData() {
         return this.fenManager.data.piecePlacement;
     }
-
-    editBoardData(coords: Coordinates) {}
-
-    regenerateFen() {}
 }

@@ -8,10 +8,14 @@ import FENDetails from './details';
 
 export default class FENParser {
     currentFen: string;
+    fenHistory: string[];
+    fenListeners: ((fenHistory: string[]) => void)[];
     data: FENDetails;
 
     constructor(fen: string) {
         this.currentFen = fen;
+        this.fenHistory = [this.currentFen];
+        this.fenListeners = [];
         this.data = this.parseFEN(fen);
     }
 
@@ -139,10 +143,21 @@ export default class FENParser {
         return fenString.join(' ');
     }
 
+    addListener(fn: (fenHistory: string[]) => void) {
+        this.fenListeners.push(fn);
+    }
+
+    updateFenHistory(newFEN: string) {
+        this.fenHistory.push(this.currentFen);
+        for (let listener of this.fenListeners) {
+            listener(this.fenHistory);
+        }
+    }
+
     regenerateFen(fenDetails: FENDetails) {
         this.currentFen = this.buildFenString(fenDetails);
         this.data = fenDetails;
-        console.log(this.currentFen);
+        this.updateFenHistory(this.currentFen);
         return this.currentFen;
     }
 }

@@ -78,8 +78,6 @@
   - Implement different levels of the AI
   - Ensure playing against AI works
 
-### **In progress:**
-
 ### **Sep Holiday (5 Sep - 10 Sep)** (Submission date is 10 Sep)
 
 - Goal: **Final Touches Update**

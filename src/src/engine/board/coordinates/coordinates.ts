@@ -12,20 +12,20 @@ export default class Coordinates {
         else this.coords = this.parseNumeric(`${coords as number}`);
     }
 
-    comparingWith(otherCoordinates: Pair<number, number>) {
-        if (this.coords == null) return false;
-        else return this.coords.equals(otherCoordinates);
-    }
-
-    parseAlgebraic(coords: string): Pair<number, number> | null {
+    private parseAlgebraic(coords: string): Pair<number, number> | null {
         return new Pair(
             7 - (coords.charCodeAt(0) - 'a'.charCodeAt(0)),
             parseInt(coords[1]) - 1
         );
     }
 
-    parseNumeric(coords: string): Pair<number, number> | null {
+    private parseNumeric(coords: string): Pair<number, number> | null {
         return new Pair(coords.charCodeAt(0), coords.charCodeAt(1));
+    }
+
+    comparingWith(otherCoordinates: Pair<number, number>) {
+        if (this.coords == null) return false;
+        else return this.coords.equals(otherCoordinates);
     }
 
     convertAlgebraic(): string | null {

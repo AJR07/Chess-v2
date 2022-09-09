@@ -7,9 +7,9 @@ import { Pieces } from '../board/piece/piecetype';
 import FENDetails from './details';
 
 export default class FENParser {
-    currentFen: string;
-    fenHistory: string[];
-    fenListeners: ((fenHistory: string[]) => void)[];
+    private currentFen: string;
+    private fenHistory: string[];
+    private fenListeners: ((fenHistory: string[]) => void)[];
     data: FENDetails;
 
     constructor(fen: string) {
@@ -19,7 +19,66 @@ export default class FENParser {
         this.data = this.parseFEN(fen);
     }
 
-    parseFEN(fen: string) {
+    private addListener(fn: (fenHistory: string[]) => void) {
+        this.fenListeners.push(fn);
+    }
+
+    private buildFenString(FENDetails: FENDetails) {
+        let fenString: string[] = [];
+
+        // !parse piece placements
+        let piecePlacements = '';
+        for (let row of FENDetails.piecePlacement) {
+            let curString = '',
+                blankSpaces = 0;
+            for (let piece of row) {
+                if (piece.colour != Colour.none && blankSpaces != 0) {
+                    curString += `${blankSpaces}`;
+                    blankSpaces = 0;
+                }
+                if (piece.colour == Colour.none) {
+                    blankSpaces++;
+                }
+                curString +=
+                    piece.colour == Colour.white
+                        ? piece.shortName.toUpperCase()
+                        : piece.shortName.toLowerCase();
+            }
+            if (blankSpaces != 0) {
+                curString += `${blankSpaces}`;
+            }
+            piecePlacements += `${curString}/`;
+        }
+        fenString.push(piecePlacements.slice(0, -1));
+
+        // !parse active colour
+        fenString.push(FENDetails.activeColour === Colour.white ? 'w' : 'b');
+
+        // !parse castling rights
+        if (
+            !FENDetails.castlingRights.whiteCanCastle() &&
+            !FENDetails.castlingRights.blackCanCastle()
+        ) {
+            fenString.push('-');
+        } else {
+            fenString.push(FENDetails.castlingRights.exportFENString());
+        }
+
+        // !parse en-passant targets
+        if (!FENDetails.enPassantTarget) {
+            fenString.push('-');
+        } else {
+            fenString.push(FENDetails.enPassantTarget.convertAlgebraic()!);
+        }
+
+        // !parse half-move and full-move clock
+        fenString.push(`${FENDetails.halfMoveClock}`);
+        fenString.push(`${FENDetails.fullMoveClock}`);
+
+        return fenString.join(' ');
+    }
+
+    private parseFEN(fen: string) {
         // TODO: ERROR HANDLING FOR INCORRECT STRINGS
         let fenComponents = fen.split(' ');
 
@@ -88,66 +147,7 @@ export default class FENParser {
         return data;
     }
 
-    buildFenString(FENDetails: FENDetails) {
-        let fenString: string[] = [];
-
-        // !parse piece placements
-        let piecePlacements = '';
-        for (let row of FENDetails.piecePlacement) {
-            let curString = '',
-                blankSpaces = 0;
-            for (let piece of row) {
-                if (piece.colour != Colour.none && blankSpaces != 0) {
-                    curString += `${blankSpaces}`;
-                    blankSpaces = 0;
-                }
-                if (piece.colour == Colour.none) {
-                    blankSpaces++;
-                }
-                curString +=
-                    piece.colour == Colour.white
-                        ? piece.shortName.toUpperCase()
-                        : piece.shortName.toLowerCase();
-            }
-            if (blankSpaces != 0) {
-                curString += `${blankSpaces}`;
-            }
-            piecePlacements += `${curString}/`;
-        }
-        fenString.push(piecePlacements.slice(0, -1));
-
-        // !parse active colour
-        fenString.push(FENDetails.activeColour === Colour.white ? 'w' : 'b');
-
-        // !parse castling rights
-        if (
-            !FENDetails.castlingRights.whiteCanCastle() &&
-            !FENDetails.castlingRights.blackCanCastle()
-        ) {
-            fenString.push('-');
-        } else {
-            fenString.push(FENDetails.castlingRights.exportFENString());
-        }
-
-        // !parse en-passant targets
-        if (!FENDetails.enPassantTarget) {
-            fenString.push('-');
-        } else {
-            fenString.push(FENDetails.enPassantTarget.convertAlgebraic()!);
-        }
-
-        // !parse half-move and full-move clock
-        fenString.push(`${FENDetails.halfMoveClock}`);
-        fenString.push(`${FENDetails.fullMoveClock}`);
-
-        return fenString.join(' ');
-    }
-
-    addListener(fn: (fenHistory: string[]) => void) {
-        this.fenListeners.push(fn);
-    }
-
-    updateFenHistory(newFEN: string) {
+    private updateFenHistory(newFEN: string) {
         this.fenHistory.push(this.currentFen);
         for (let listener of this.fenListeners) {
             listener(this.fenHistory);

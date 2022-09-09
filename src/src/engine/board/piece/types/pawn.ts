@@ -11,50 +11,7 @@ export default class Pawn extends Piece {
     name = 'pawn';
     shortName = 'p';
 
-    checkIfSecondRank(move: Move) {
-        // TODO: add en passant target
-        if (
-            move.startPosition.coords!.second ==
-                move.endPosition.coords!.second &&
-            move.startPosition.coords!.first == 1 &&
-            move.endPosition.coords!.first == 3 &&
-            this.colour == Colour.black
-        )
-            return true;
-        if (
-            move.startPosition.coords!.second ==
-                move.endPosition.coords!.second &&
-            move.startPosition.coords!.first == 6 &&
-            move.endPosition.coords!.first == 4 &&
-            this.colour == Colour.white
-        )
-            return true;
-        return false;
-    }
-
-    checkOneSquareForward(move: Move) {
-        if (
-            move.endPosition.coords!.first - move.startPosition.coords!.first ==
-                1 &&
-            move.startPosition.coords!.second ==
-                move.endPosition.coords!.second &&
-            this.colour == Colour.black &&
-            move.endPieceColour != Colour.white
-        )
-            return true;
-        if (
-            move.startPosition.coords!.first - move.endPosition.coords!.first ==
-                1 &&
-            move.startPosition.coords!.second ==
-                move.endPosition.coords!.second &&
-            this.colour == Colour.white &&
-            move.endPieceColour != Colour.black
-        )
-            return true;
-        return false;
-    }
-
-    checkForCapture(move: Move) {
+    private checkForCapture(move: Move) {
         if (
             move.endPosition.coords!.first - move.startPosition.coords!.first ==
                 1 &&
@@ -80,7 +37,7 @@ export default class Pawn extends Piece {
         return false;
     }
 
-    checkForEnPassant(move: Move, board: Pieces[][]) {
+    private checkForEnPassant(move: Move, board: Pieces[][]) {
         if (
             move.endPosition.coords!.first - move.startPosition.coords!.first ==
                 1 &&
@@ -117,6 +74,49 @@ export default class Pawn extends Piece {
                 move.startPosition.coords!.first,
                 move.endPosition.coords!.second
             ).equals(move.currentFenDetails!.enPassantTarget!.coords!)
+        )
+            return true;
+        return false;
+    }
+
+    private checkIfSecondRank(move: Move) {
+        // TODO: add en passant target
+        if (
+            move.startPosition.coords!.second ==
+                move.endPosition.coords!.second &&
+            move.startPosition.coords!.first == 1 &&
+            move.endPosition.coords!.first == 3 &&
+            this.colour == Colour.black
+        )
+            return true;
+        if (
+            move.startPosition.coords!.second ==
+                move.endPosition.coords!.second &&
+            move.startPosition.coords!.first == 6 &&
+            move.endPosition.coords!.first == 4 &&
+            this.colour == Colour.white
+        )
+            return true;
+        return false;
+    }
+
+    private checkOneSquareForward(move: Move) {
+        if (
+            move.endPosition.coords!.first - move.startPosition.coords!.first ==
+                1 &&
+            move.startPosition.coords!.second ==
+                move.endPosition.coords!.second &&
+            this.colour == Colour.black &&
+            move.endPieceColour != Colour.white
+        )
+            return true;
+        if (
+            move.startPosition.coords!.first - move.endPosition.coords!.first ==
+                1 &&
+            move.startPosition.coords!.second ==
+                move.endPosition.coords!.second &&
+            this.colour == Colour.white &&
+            move.endPieceColour != Colour.black
         )
             return true;
         return false;

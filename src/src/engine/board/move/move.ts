@@ -5,14 +5,13 @@ import { Pieces } from '../piece/piecetype';
 import MoveTypes from './movetypes';
 
 export default class Move {
-    startPosition: Coordinates;
-    endPosition: Coordinates;
-    startPieceColour: Colour | null;
-    endPieceColour: Colour | null;
-    moveType: MoveTypes;
+    private promotionTargetPiece: Pieces | null = null;
     currentFenDetails: FENDetails | null = null;
-    promotionTargetPiece: Pieces | null = null;
-
+    endPieceColour: Colour | null;
+    endPosition: Coordinates;
+    moveType: MoveTypes;
+    startPieceColour: Colour | null;
+    startPosition: Coordinates;
     constructor(
         startCoords: Coordinates,
         startPieceColour: Colour | null,

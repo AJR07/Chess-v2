@@ -71,7 +71,7 @@ export default class ChessPromotionClass extends Component<
         this.pieceSelected = this.pieceSelected.bind(this);
     }
 
-    pieceSelected(pieceType: Pieces) {
+    private pieceSelected(pieceType: Pieces) {
         this.props.moveEngine.onPromotionEnd(
             pieceType,
             this.props.board,

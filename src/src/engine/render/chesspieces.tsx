@@ -25,8 +25,8 @@ export default class ChessPiecesClass extends Component<
     ChessPiecesProps,
     ChessPiecesState
 > {
-    engine: ChessEngine;
-    moveEngine: MoveEngine;
+    private engine: ChessEngine;
+    private moveEngine: MoveEngine;
 
     constructor(props: ChessPiecesProps) {
         super(props);
@@ -51,7 +51,11 @@ export default class ChessPiecesClass extends Component<
         );
     }
 
-    updateBoard(changesList: Pair<Coordinates, Pieces>[]) {
+    private resetDrag(newDrag: boolean) {
+        this.setState({ resetDrag: newDrag });
+    }
+
+    private updateBoard(changesList: Pair<Coordinates, Pieces>[]) {
         let board: Pieces[][] = [...this.state.board];
 
         for (let change of changesList) {
@@ -61,11 +65,7 @@ export default class ChessPiecesClass extends Component<
         this.setState({ board: board });
     }
 
-    resetDrag(newDrag: boolean) {
-        this.setState({ resetDrag: newDrag });
-    }
-
-    updateMove(newMove: Move | null) {
+    private updateMove(newMove: Move | null) {
         this.props.move[1](newMove);
     }
 

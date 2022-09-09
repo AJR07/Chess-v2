@@ -8,7 +8,7 @@ export default class Queen extends Piece {
     name = 'queen';
     shortName = 'q';
 
-    crossCheckJump(move: Move, board: Pieces[][]) {
+    private crossCheckJump(move: Move, board: Pieces[][]) {
         let iSorted = new Pair(
                 move.startPosition.coords!.first <
                 move.endPosition.coords!.first
@@ -48,7 +48,7 @@ export default class Queen extends Piece {
         return true;
     }
 
-    diagonalCheckJump(move: Move, board: Pieces[][]) {
+    private diagonalCheckJump(move: Move, board: Pieces[][]) {
         let iDirection =
                 move.startPosition.coords!.first <
                 move.endPosition.coords!.first

@@ -6,10 +6,9 @@ import { Pieces } from '../piecetype';
 import generateKnightMoveOffsets from '../../../../utils/knight';
 
 export default class Knight extends Piece {
+    static moveOffsets: Pair<number, number>[] = [];
     name = 'knight';
     shortName = 'n';
-    static moveOffsets: Pair<number, number>[] = [];
-
     constructor(colour: Colour | undefined) {
         super(colour);
         if (Knight.moveOffsets.length == 0)

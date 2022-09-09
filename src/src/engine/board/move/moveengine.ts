@@ -12,11 +12,10 @@ import Move from './move';
 import MoveTypes from './movetypes';
 
 export default class MoveEngine {
+    private resetDrag: (newDrag: boolean) => void;
+    private updateBoard: (changesList: Pair<Coordinates, Pieces>[]) => void;
+    private updateMove: (newMove: Move | null) => void;
     move: Move | null;
-    updateMove: (newMove: Move | null) => void;
-    resetDrag: (newDrag: boolean) => void;
-    updateBoard: (changesList: Pair<Coordinates, Pieces>[]) => void;
-
     constructor(
         move: Move | null,
         setMove: (newMove: Move | null) => void,
@@ -29,64 +28,7 @@ export default class MoveEngine {
         this.updateBoard = updateBoard;
     }
 
-    onStart(
-        dragged: Pair<number, number>,
-        event: MouseEvent | TouchEvent | PointerEvent,
-        info: PanInfo
-    ) {
-        this.move = new Move(
-            new Coordinates(dragged, CoordType.pairCoordinates),
-            null,
-            null
-        );
-        this.updateMove(this.move);
-        this.resetDrag(false);
-    }
-
-    whenDragged(
-        dragged: Pair<number, number>,
-        event: MouseEvent | TouchEvent | PointerEvent,
-        info: PanInfo
-    ) {
-        function resolveHalfSquare(num: number) {
-            if (num < 0) return num - 0.5;
-            else return num + 0.5;
-        }
-        let offset = new Pair(
-            Math.trunc(
-                resolveHalfSquare(
-                    info.offset.x / ((window.outerWidth / 100) * 5)
-                )
-            ),
-            Math.trunc(
-                resolveHalfSquare(
-                    info.offset.y / ((window.outerWidth / 100) * 5)
-                )
-            )
-        );
-
-        dragged.first += offset.second;
-        dragged.second += offset.first;
-
-        //clamp it
-        dragged.first =
-            dragged.first < 0 ? 0 : dragged.first > 7 ? 7 : dragged.first;
-        dragged.second =
-            dragged.second < 0 ? 0 : dragged.second > 7 ? 7 : dragged.second;
-
-        if (!this.move!.endPosition.comparingWith(dragged)) {
-            this.move!.endPosition = new Coordinates(
-                dragged,
-                CoordType.pairCoordinates
-            );
-            let newMove = JSON.parse(JSON.stringify(this.move));
-            this.updateMove(newMove);
-        }
-
-        return dragged;
-    }
-
-    checkMoveType(move: Move, board: Pieces[][]): MoveTypes {
+    private checkMoveType(move: Move, board: Pieces[][]): MoveTypes {
         if (
             board[move.startPosition.coords!.first][
                 move.startPosition.coords!.second
@@ -122,7 +64,7 @@ export default class MoveEngine {
         return MoveTypes.BaseMove;
     }
 
-    evaluateCastling(
+    private evaluateCastling(
         startPiece: Pieces,
         endPiece: Pieces,
         oldFenDetails: FENDetails,
@@ -524,5 +466,62 @@ export default class MoveEngine {
 
         this.move = null;
         this.updateMove(this.move);
+    }
+
+    onStart(
+        dragged: Pair<number, number>,
+        event: MouseEvent | TouchEvent | PointerEvent,
+        info: PanInfo
+    ) {
+        this.move = new Move(
+            new Coordinates(dragged, CoordType.pairCoordinates),
+            null,
+            null
+        );
+        this.updateMove(this.move);
+        this.resetDrag(false);
+    }
+
+    whenDragged(
+        dragged: Pair<number, number>,
+        event: MouseEvent | TouchEvent | PointerEvent,
+        info: PanInfo
+    ) {
+        function resolveHalfSquare(num: number) {
+            if (num < 0) return num - 0.5;
+            else return num + 0.5;
+        }
+        let offset = new Pair(
+            Math.trunc(
+                resolveHalfSquare(
+                    info.offset.x / ((window.outerWidth / 100) * 5)
+                )
+            ),
+            Math.trunc(
+                resolveHalfSquare(
+                    info.offset.y / ((window.outerWidth / 100) * 5)
+                )
+            )
+        );
+
+        dragged.first += offset.second;
+        dragged.second += offset.first;
+
+        //clamp it
+        dragged.first =
+            dragged.first < 0 ? 0 : dragged.first > 7 ? 7 : dragged.first;
+        dragged.second =
+            dragged.second < 0 ? 0 : dragged.second > 7 ? 7 : dragged.second;
+
+        if (!this.move!.endPosition.comparingWith(dragged)) {
+            this.move!.endPosition = new Coordinates(
+                dragged,
+                CoordType.pairCoordinates
+            );
+            let newMove = JSON.parse(JSON.stringify(this.move));
+            this.updateMove(newMove);
+        }
+
+        return dragged;
     }
 }

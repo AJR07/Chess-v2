@@ -1,20 +1,14 @@
 import HasCastled from './hasCastled';
 
 export default class CastlingEngine {
-    whiteCastle: HasCastled = new HasCastled(false, false);
     blackCastle: HasCastled = new HasCastled(false, false);
-
+    whiteCastle: HasCastled = new HasCastled(false, false);
     constructor(castleString: string) {
         this.processFENString(castleString);
     }
 
-    processFENString(string: string) {
-        for (let char of string) {
-            if (char === 'Q') this.whiteCastle.queen = true;
-            else if (char === 'q') this.blackCastle.queen = true;
-            else if (char === 'K') this.whiteCastle.king = true;
-            else if (char === 'k') this.blackCastle.king = true;
-        }
+    blackCanCastle() {
+        return this.blackCastle.king && this.blackCastle.queen;
     }
 
     exportFENString() {
@@ -33,11 +27,16 @@ export default class CastlingEngine {
         return exportedString;
     }
 
-    whiteCanCastle() {
-        return this.whiteCastle.king && this.whiteCastle.queen;
+    processFENString(string: string) {
+        for (let char of string) {
+            if (char === 'Q') this.whiteCastle.queen = true;
+            else if (char === 'q') this.blackCastle.queen = true;
+            else if (char === 'K') this.whiteCastle.king = true;
+            else if (char === 'k') this.blackCastle.king = true;
+        }
     }
 
-    blackCanCastle() {
-        return this.blackCastle.king && this.blackCastle.queen;
+    whiteCanCastle() {
+        return this.whiteCastle.king && this.whiteCastle.queen;
     }
 }

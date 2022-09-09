@@ -10,13 +10,12 @@ import Colour from '../board/piece/colour';
 import { Pieces } from '../board/piece/piecetype';
 
 export default class FENDetails {
-    piecePlacement: Pieces[][];
     activeColour: Colour;
     castlingRights: CastlingEngine;
     enPassantTarget: Coordinates | null;
-    halfMoveClock: number;
     fullMoveClock: number;
-
+    halfMoveClock: number;
+    piecePlacement: Pieces[][];
     constructor(
         piecePlacement: Pieces[][],
         activeColour: Colour = Colour.white,

@@ -7,26 +7,14 @@ import CoordType from '../../coordinates/coordtype';
 import generateKnightMoveOffsets from '../../../../utils/knight';
 
 export default class Piece {
-    shortName: string = '';
-    name: string = '';
     colour: Colour;
-
+    name: string = '';
+    shortName: string = '';
     constructor(colour: Colour = Colour.none) {
         this.colour = colour;
     }
 
-    getLongName() {
-        return `${this.colour}_${this.name}`;
-    }
-
-    calculateOffset(move: Move) {
-        return new Pair(
-            move.startPosition.coords!.first - move.endPosition.coords!.first,
-            move.startPosition.coords!.second - move.endPosition.coords!.second
-        );
-    }
-
-    kingIsChecked(move: Move, oldBoard: Pieces[][]) {
+    private kingIsChecked(move: Move, oldBoard: Pieces[][]) {
         let board: Pieces[][] = JSON.parse(JSON.stringify(oldBoard)); // dereference it
         // play out the move on the board first
         board[move.endPosition.coords!.first][move.endPosition.coords!.second] =
@@ -242,7 +230,18 @@ export default class Piece {
         return true;
     }
 
+    calculateOffset(move: Move) {
+        return new Pair(
+            move.startPosition.coords!.first - move.endPosition.coords!.first,
+            move.startPosition.coords!.second - move.endPosition.coords!.second
+        );
+    }
+
     canBeMovedTo(move: Move, board: Pieces[][]) {
         return false;
+    }
+
+    getLongName() {
+        return `${this.colour}_${this.name}`;
     }
 }

@@ -7,7 +7,7 @@ export default class Bishop extends Piece {
     name = 'bishop';
     shortName = 'b';
 
-    diagonalCheckJump(move: Move, board: Pieces[][]) {
+    private diagonalCheckJump(move: Move, board: Pieces[][]) {
         let iDirection =
                 move.startPosition.coords!.first <
                 move.endPosition.coords!.first

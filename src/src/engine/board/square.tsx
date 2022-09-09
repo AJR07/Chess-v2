@@ -11,9 +11,8 @@ interface SquareProps {
 }
 
 export default class Square extends React.Component<SquareProps, {}> {
-    piece: Pieces;
-    coordinates: Coordinates;
-
+    private coordinates: Coordinates;
+    private piece: Pieces;
     constructor(props: SquareProps) {
         super(props);
         // TODO: CHECK FOR INACCURATE PARAMS PASSED IN

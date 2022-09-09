@@ -17,7 +17,7 @@ export class AlertManager extends Component<
     AlertManagerProps,
     AlertManagerState
 > {
-    locked: boolean = false;
+    private locked: boolean = false;
     constructor(props: AlertManagerProps) {
         super(props);
         this.state = {
@@ -27,7 +27,7 @@ export class AlertManager extends Component<
         this.dismissAlert = this.dismissAlert.bind(this);
     }
 
-    addAlert(alert: AlertDetails) {
+    private addAlert(alert: AlertDetails) {
         let newAlerts = [...this.state.alerts];
         newAlerts.push(alert);
         this.setState({ alerts: newAlerts });
@@ -36,7 +36,7 @@ export class AlertManager extends Component<
         }, 3000);
     }
 
-    dismissAlert() {
+    private dismissAlert() {
         let newAlerts = [...this.state.alerts];
         newAlerts.pop();
         this.setState({ alerts: newAlerts });

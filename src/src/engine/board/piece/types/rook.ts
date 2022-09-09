@@ -8,7 +8,7 @@ export default class Rook extends Piece {
     name = 'rook';
     shortName = 'r';
 
-    crossCheckJump(move: Move, board: Pieces[][]) {
+    private crossCheckJump(move: Move, board: Pieces[][]) {
         let iSorted = new Pair(
                 move.startPosition.coords!.first <
                 move.endPosition.coords!.first

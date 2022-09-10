@@ -2,7 +2,7 @@ import { PanInfo } from 'framer-motion';
 import Pair from '../../../utils/pair';
 import ChessEngine from '../../engine';
 import FENDetails from '../../fen/details';
-import HasCastled from '../castle/hasCastled';
+import HasCastled from '../castle/hascastled';
 import Coordinates from '../coordinates/coordinates';
 import CoordType from '../coordinates/coordtype';
 import Colour from '../piece/colour';
@@ -11,11 +11,52 @@ import Piece from '../piece/types/empty';
 import Move from './move';
 import MoveTypes from './movetypes';
 
+/**
+ * Move Engine that tracks the move as it is being made and validates it.
+ *
+ * @export
+ * @class MoveEngine
+ * @typedef {MoveEngine}
+ */
 export default class MoveEngine {
+    /**
+     * Function that allows the engine to reset any drag from the UI chess board.
+     *
+     * @private
+     * @type {(newDrag: boolean) => void}
+     */
     private resetDrag: (newDrag: boolean) => void;
+    /**
+     * Function that allows the engine to update the board
+     *
+     * @private
+     * @type {(changesList: Pair<Coordinates, Pieces>[]) => void}
+     */
     private updateBoard: (changesList: Pair<Coordinates, Pieces>[]) => void;
+    /**
+     * Function that allows the engine to update the current move that is tracked by the UI
+     *
+     * @private
+     * @type {((newMove: Move | null) => void)}
+     */
     private updateMove: (newMove: Move | null) => void;
+    /**
+     * Tracks the current move
+     *
+     * @type {(Move | null)}
+     */
     move: Move | null;
+
+    /**
+     * Creates an instance of MoveEngine.
+     * @date 9/10/2022 - 10:23:34 PM
+     *
+     * @constructor
+     * @param {(Move | null)} move
+     * @param {((newMove: Move | null) => void)} setMove
+     * @param {(newDrag: boolean) => void} resetDrag
+     * @param {(changesList: Pair<Coordinates, Pieces>[]) => void} updateBoard
+     */
     constructor(
         move: Move | null,
         setMove: (newMove: Move | null) => void,
@@ -28,6 +69,14 @@ export default class MoveEngine {
         this.updateBoard = updateBoard;
     }
 
+    /**
+     * Utility function to check the move type based on the different coordinates.
+     *
+     * @private
+     * @param {Move} move
+     * @param {Pieces[][]} board
+     * @returns {MoveTypes}
+     */
     private checkMoveType(move: Move, board: Pieces[][]): MoveTypes {
         if (
             board[move.startPosition.coords!.first][
@@ -64,6 +113,16 @@ export default class MoveEngine {
         return MoveTypes.BaseMove;
     }
 
+    /**
+     * Utility function to evaluate if a castling move is legal
+     *
+     * @private
+     * @param {Pieces} startPiece
+     * @param {Pieces} endPiece
+     * @param {FENDetails} oldFenDetails
+     * @param {Pieces[][]} board
+     * @returns {boolean}
+     */
     private evaluateCastling(
         startPiece: Pieces,
         endPiece: Pieces,
@@ -251,6 +310,14 @@ export default class MoveEngine {
         return false;
     }
 
+    /**
+     * Run through validation and updating code when the user lets go of the drag (when they make the move).
+     *
+     * @param {Pair<number, number>} dragged
+     * @param {(MouseEvent | TouchEvent | PointerEvent)} event
+     * @param {PanInfo} info
+     * @param {ChessEngine} engine
+     */
     onEnd(
         dragged: Pair<number, number>,
         event: MouseEvent | TouchEvent | PointerEvent,
@@ -426,6 +493,13 @@ export default class MoveEngine {
         }
     }
 
+    /**
+     * Called when the user selects which piece the pawn is to be promoted to, includes updating and registering the new board.
+     *
+     * @param {Pieces} pieceSelected
+     * @param {Pieces[][]} board
+     * @param {ChessEngine} engine
+     */
     onPromotionEnd(
         pieceSelected: Pieces,
         board: Pieces[][],
@@ -468,6 +542,13 @@ export default class MoveEngine {
         this.updateMove(this.move);
     }
 
+    /**
+     * Called when the user begins dragging, includes initialising the new Move
+     *
+     * @param {Pair<number, number>} dragged
+     * @param {(MouseEvent | TouchEvent | PointerEvent)} event
+     * @param {PanInfo} info
+     */
     onStart(
         dragged: Pair<number, number>,
         event: MouseEvent | TouchEvent | PointerEvent,
@@ -482,6 +563,14 @@ export default class MoveEngine {
         this.resetDrag(false);
     }
 
+    /**
+     * Called when the user is dragging (every frame). This is responsible for changing the display of the start and end moves in the board's UI background.
+     *
+     * @param {Pair<number, number>} dragged
+     * @param {(MouseEvent | TouchEvent | PointerEvent)} event
+     * @param {PanInfo} info
+     * @returns {Pair<number, number>}
+     */
     whenDragged(
         dragged: Pair<number, number>,
         event: MouseEvent | TouchEvent | PointerEvent,

@@ -4,6 +4,13 @@ import Move from '../board/move/move';
 import ChessBackgroundClass from './chessbackground';
 import ChessPiecesClass from './chesspieces';
 
+/**
+ * Contains the basic UI of the board, including the promotion, background and piece renderer ordered and displayed correctly
+ *
+ * @param {*} PiecesComponent
+ * @param {*} BackgroundComponent
+ * @returns {() => any}
+ */
 function Board(PiecesComponent: any, BackgroundComponent: any) {
     return function WrappedComponent() {
         const ref = useRef(null);

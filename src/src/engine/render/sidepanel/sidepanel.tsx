@@ -5,6 +5,13 @@ import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import { useState } from 'react';
 import DetailsPanel from './panels/details';
 
+/**
+ * UI Component for the SidePanel part of the extended chessboard.
+ * Includes all the functionality to switch between panels.
+ *
+ * @export
+ * @returns {*}
+ */
 export default function SidePanel() {
     let sections: SidePanelDetails[] = [
         new SidePanelDetails(<ChatIcon />, 'Chat', {}, () => {

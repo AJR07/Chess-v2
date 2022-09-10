@@ -4,10 +4,28 @@ import { Pieces } from '../piecetype';
 import Pair from '../../../../utils/pair';
 import Colour from '../colour';
 
+/**
+ * Represents the functionality of a bishop. This is inherited from the base Piece.
+ * @date 9/10/2022 - 9:34:22 PM
+ *
+ * @export
+ * @class Queen
+ * @typedef {Queen}
+ * @extends {Piece}
+ */
 export default class Queen extends Piece {
     name = 'queen';
     shortName = 'q';
 
+    /**
+     * Checking if a vertical + horizontal jump that is detailed by the move parameter is legal
+     * It does this by checking if there is any piece in between the end square and the piece's start square.
+     *
+     * @private
+     * @param {Move} move
+     * @param {Pieces[][]} board
+     * @returns {boolean}
+     */
     private crossCheckJump(move: Move, board: Pieces[][]) {
         let iSorted = new Pair(
                 move.startPosition.coords!.first <
@@ -48,6 +66,15 @@ export default class Queen extends Piece {
         return true;
     }
 
+    /**
+     * Checking if a diagonal jump that is detailed by the move parameter is legal
+     * It does this by checking if there is any piece in between the end square and the piece's start square.
+     *
+     * @private
+     * @param {Move} move
+     * @param {Pieces[][]} board
+     * @returns {boolean}
+     */
     private diagonalCheckJump(move: Move, board: Pieces[][]) {
         let iDirection =
                 move.startPosition.coords!.first <
@@ -79,6 +106,13 @@ export default class Queen extends Piece {
         return true;
     }
 
+    /**
+     * Checking if the current piece can have the move executed on it, given the board as a parameter.
+     *
+     * @param {Move} move
+     * @param {Pieces[][]} board
+     * @returns {boolean}
+     */
     canBeMovedTo(move: Move, board: Pieces[][]) {
         let offset = this.calculateOffset(move);
         if (!this.basicLegalValidation(move, board)) return false;

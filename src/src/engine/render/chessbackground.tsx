@@ -3,16 +3,43 @@ import { Box, Theme } from '@mui/system';
 import { Component } from 'react';
 import Move from '../board/move/move';
 
+/**
+ * Props for the chess background class.
+ * Since the class needs to track the state of the move, it is included in the props.
+ *
+ * @interface ChessBackgroundProps
+ * @typedef {ChessBackgroundProps}
+ */
 interface ChessBackgroundProps {
     move: [null | Move, React.Dispatch<React.SetStateAction<null | Move>>];
     theme: Theme;
 }
+/**
+ * State for the chess background class.
+ * In this case, there is no state.
+ *
+ * @interface ChessBackgroundState
+ * @typedef {ChessBackgroundState}
+ */
 interface ChessBackgroundState {}
 
+/**
+ * Class that renders the Background of the chessboard (a.k.a. the board itself)
+ *
+ * @export
+ * @class ChessBackgroundClass
+ * @typedef {ChessBackgroundClass}
+ * @extends {Component<ChessBackgroundProps, ChessBackgroundState>}
+ */
 export default class ChessBackgroundClass extends Component<
     ChessBackgroundProps,
     ChessBackgroundState
 > {
+    /**
+     * Called by react to render the board's background.
+     *
+     * @returns {*}
+     */
     render() {
         let background: JSX.Element[] = [];
         for (let i = 0; i < 8; i++) {

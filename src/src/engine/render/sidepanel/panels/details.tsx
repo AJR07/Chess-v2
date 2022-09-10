@@ -1,9 +1,14 @@
 import { List, ListItem, Stack, Typography } from '@mui/material';
-import { useState } from 'react';
 
+/**
+ * The side panel that includes the details of the board that is being displayed.
+ * TODO: Include a log of the FEN Strings of every move, move notation for every move, and other information from the FEN String
+ * @date 9/10/2022 - 8:44:29 PM
+ *
+ * @export
+ * @returns {*}
+ */
 export default function DetailsPanel() {
-    let [FENLog, setFENLog] = useState([]);
-
     return (
         <Stack id="details" alignItems="center" justifyContent="center">
             <Typography variant="body1" fontWeight={1000}>

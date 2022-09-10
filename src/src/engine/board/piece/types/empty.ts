@@ -6,14 +6,37 @@ import Coordinates from '../../coordinates/coordinates';
 import CoordType from '../../coordinates/coordtype';
 import generateKnightMoveOffsets from '../../../../utils/knight';
 
+/**
+ * The base piece when there is nothing in the square.
+ * All other pieces inherit from functionality provided by this class and extends on it.
+ *
+ * @export
+ * @class Piece
+ * @typedef {Piece}
+ */
 export default class Piece {
     colour: Colour;
     name: string = '';
     shortName: string = '';
+    /**
+     * Creates an instance of Piece.
+     *
+     * @constructor
+     * @param {Colour} [colour=Colour.none]
+     */
     constructor(colour: Colour = Colour.none) {
         this.colour = colour;
     }
 
+    /**
+     * Functionality for every class to assess if after the move the king is checked.
+     * (If it is, then it is an illegal move)
+     *
+     * @private
+     * @param {Move} move
+     * @param {Pieces[][]} oldBoard
+     * @returns {boolean}
+     */
     private kingIsChecked(move: Move, oldBoard: Pieces[][]) {
         let board: Pieces[][] = JSON.parse(JSON.stringify(oldBoard)); // dereference it
         // play out the move on the board first
@@ -217,6 +240,18 @@ export default class Piece {
         return false;
     }
 
+    /**
+     * Basic legal validation for each piece. This includes:
+     * 1. Checking if the piece that is moving is the colour of the piece that is supposed to be moving.
+     * 2. Checking if the piece that it is capturing is the same colour as the one that is moving.
+     * 3. Checking if the piece that is capturing is the king.
+     * 4. Checking if after the move the king is still checked.
+     * This applies to all piece types, thus included in this class.
+     *
+     * @param {Move} move
+     * @param {Pieces[][]} board
+     * @returns {boolean}
+     */
     basicLegalValidation(move: Move, board: Pieces[][]) {
         if (move.currentFenDetails!.activeColour !== this.colour) return false;
         if (move.endPieceColour == this.colour) return false;
@@ -230,6 +265,12 @@ export default class Piece {
         return true;
     }
 
+    /**
+     * Utility function to calculate the offset between the start and end position of a move.
+     *
+     * @param {Move} move
+     * @returns {*}
+     */
     calculateOffset(move: Move) {
         return new Pair(
             move.startPosition.coords!.first - move.endPosition.coords!.first,
@@ -237,10 +278,24 @@ export default class Piece {
         );
     }
 
+    /**
+     * Checking if the current piece can have the move executed on it, given the board as a parameter.
+     * In this case, since a empty piece shouldn't be able to be moved, it returns false by efault.
+     *
+     * @param {Move} move
+     * @param {Pieces[][]} board
+     * @returns {boolean}
+     */
     canBeMovedTo(move: Move, board: Pieces[][]) {
         return false;
     }
 
+    /**
+     * Utility function that retrieves the long name of the piece.
+     * The format is exactly how the images in the public folder is formatted.
+     *
+     * @returns {string}
+     */
     getLongName() {
         return `${this.colour}_${this.name}`;
     }

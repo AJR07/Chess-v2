@@ -1,7 +1,6 @@
 import { Stack, Typography } from '@mui/material';
 import { Component } from 'react';
 import CoordType from '../board/coordinates/coordtype';
-import Move from '../board/move/move';
 import MoveTypes from '../board/move/movetypes';
 import Colour from '../board/piece/colour';
 import { Pieces } from '../board/piece/piecetype';
@@ -14,6 +13,16 @@ import { motion } from 'framer-motion';
 import MoveEngine from '../board/move/moveengine';
 import ChessEngine from '../engine';
 
+/**
+ * Represents the UI selection and functionality that the pawn can be promoted to
+ * In this case, it is set to Knight, Bishop, Rook and Queen as seen in the switch
+ * @param {{
+    index: number;
+    colour: Colour;
+    onClick: (pieceType: Pieces) => void;
+}} props
+ * @returns {void; }) => any}
+ */
 function ChessSelectionPiece(props: {
     index: number;
     colour: Colour;
@@ -56,21 +65,48 @@ function ChessSelectionPiece(props: {
     );
 }
 
+/**
+ * Props for the chess promotion component
+ * @interface ChessPromotionProps
+ * @typedef {ChessPromotionProps}
+ */
 interface ChessPromotionProps {
     chessEngine: ChessEngine;
     moveEngine: MoveEngine;
     board: Pieces[][];
 }
 
+/**
+ * The UI which appears when the user has to select what piece needs to be promoted.
+ * Shows a bar with each piece and gets the user to click on the one
+ *
+ * @export
+ * @class ChessPromotionClass
+ * @typedef {ChessPromotionClass}
+ * @extends {Component<ChessPromotionProps, {}>}
+ */
 export default class ChessPromotionClass extends Component<
     ChessPromotionProps,
     {}
 > {
+    /**
+     * Creates an instance of ChessPromotionClass
+     *
+     * @constructor
+     * @param {ChessPromotionProps} props
+     */
     constructor(props: ChessPromotionProps) {
         super(props);
         this.pieceSelected = this.pieceSelected.bind(this);
     }
 
+    /**
+     * Run logic in the move engine for when a piece is selected in the UI
+     * Passes the piece that was selected into the move engine for it to update the relevant details
+     *
+     * @private
+     * @param {Pieces} pieceType
+     */
     private pieceSelected(pieceType: Pieces) {
         this.props.moveEngine.onPromotionEnd(
             pieceType,
@@ -79,6 +115,11 @@ export default class ChessPromotionClass extends Component<
         );
     }
 
+    /**
+     * Function that is called by react when rendering the component
+     *
+     * @returns {*}
+     */
     render() {
         if (
             this.props.moveEngine.move &&

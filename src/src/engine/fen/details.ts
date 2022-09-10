@@ -9,6 +9,13 @@ import Coordinates from '../board/coordinates/coordinates';
 import Colour from '../board/piece/colour';
 import { Pieces } from '../board/piece/piecetype';
 
+/**
+ * Details of a FEN String when parsed, represented with the proper classes that are used in this codebase.
+ *
+ * @export
+ * @class FENDetails
+ * @typedef {FENDetails}
+ */
 export default class FENDetails {
     activeColour: Colour;
     castlingRights: CastlingEngine;
@@ -16,6 +23,17 @@ export default class FENDetails {
     fullMoveClock: number;
     halfMoveClock: number;
     piecePlacement: Pieces[][];
+    /**
+     * Creates an instance of FENDetails.
+     *
+     * @constructor
+     * @param {Pieces[][]} piecePlacement
+     * @param {Colour} [activeColour=Colour.white]
+     * @param {CastlingEngine} [castlingRights=new CastlingEngine('KQkq')]
+     * @param {(Coordinates | null)} [enPassantTarget=null]
+     * @param {number} [halfMoveClock=0]
+     * @param {number} [fullMoveClock=0]
+     */
     constructor(
         piecePlacement: Pieces[][],
         activeColour: Colour = Colour.white,

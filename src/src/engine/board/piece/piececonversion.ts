@@ -7,6 +7,16 @@ import Pawn from './types/pawn';
 import Queen from './types/queen';
 import Rook from './types/rook';
 
+/**
+ * A utility function to create a piece from the short name provided.
+ * It also passes in the rest of the parameters provided in the function as constructor arguments for the pieces.
+ * @date 9/10/2022 - 9:03:59 PM
+ *
+ * @export
+ * @param {string} name
+ * @param {...ConstructorParameters<typeof Piece>} args
+ * @returns {Pieces}
+ */
 export default function convertPiece(
     name: string,
     ...args: ConstructorParameters<typeof Piece>

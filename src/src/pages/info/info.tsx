@@ -1,5 +1,12 @@
 import { List, ListItem, Stack, Typography } from '@mui/material';
 
+/**
+ * A utility class that wraps a typography text UI with a ListItem component.
+ * So that it can be displayed as a list item.
+ *
+ * @param {{ text: string }} props
+ * @returns {*}
+ */
 function ListTitle(props: { text: string }) {
     return (
         <ListItem>
@@ -8,6 +15,12 @@ function ListTitle(props: { text: string }) {
     );
 }
 
+/**
+ * Renders the page where you can view the important info about the site.
+ *
+ * @export
+ * @returns {*}
+ */
 export default function Info() {
     return (
         <Stack sx={{ marginRight: '3vw' }}>

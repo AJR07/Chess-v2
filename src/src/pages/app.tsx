@@ -18,6 +18,15 @@ import Info from './info/info';
 import PageNotFound from './404/404';
 import { AlertManager } from '../components/alert/alert';
 
+/**
+ * This function is the top of the UI tree where the main app lies in.
+ * It also wraps the AppSettings renderer around the main app, which applies many settings that the app needs to have for basic things to function.
+ *
+ * @date 9/10/2022 - 9:58:50 PM
+ *
+ * @export
+ * @returns {*}
+ */
 export default function App() {
     let [themeIdx, setThemeName] = useState(
         (!localStorage.getItem('theme')
@@ -65,11 +74,26 @@ export default function App() {
     );
 }
 
+/**
+ * Props that the app settings wrapper takes in.
+ *
+ * @interface AppSettingsProps
+ * @typedef {AppSettingsProps}
+ */
 interface AppSettingsProps {
     themeIdx: string;
     children: JSX.Element[];
 }
 
+/**
+ * A wrapper that wraps a lot of key app settings such as:
+ * 1. Themes
+ * 2. Parallax Provider
+ * 3. Alert Managers
+ *
+ * @param {AppSettingsProps} props
+ * @returns {*}
+ */
 function AppSettings(props: AppSettingsProps) {
     return (
         <>

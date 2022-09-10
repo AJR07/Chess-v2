@@ -12,6 +12,12 @@ import { useNavigate } from 'react-router-dom';
 import { AlertContext } from './alert/alert';
 import AlertDetails from './alert/alertdetails';
 
+/**
+ * The props for the customised card renderer.
+ *
+ * @interface CustomisedCardProps
+ * @typedef {CustomisedCardProps}
+ */
 interface CustomisedCardProps {
     name: string;
     imageName: string;
@@ -21,6 +27,13 @@ interface CustomisedCardProps {
     shortenedWebpageLink: string;
 }
 
+/**
+ * Customised card UI for the home page, where details of the card can be passed in for it to be rendered.
+ *
+ * @export
+ * @param {CustomisedCardProps} props
+ * @returns {*}
+ */
 export default function CustomisedCard(props: CustomisedCardProps) {
     let navigate = useNavigate();
     let addAlert = useContext(AlertContext);

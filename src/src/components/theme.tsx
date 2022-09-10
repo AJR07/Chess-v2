@@ -1,5 +1,10 @@
 import { ThemeOptions } from '@mui/material';
 
+/**
+ * A constant that contains all the themes available in the website.
+ *
+ * @type {{ [themeName: string]: ThemeOptions }}
+ */
 export const themeOptions: { [themeName: string]: ThemeOptions } = {
     blue: {
         palette: {

@@ -2,6 +2,12 @@ import { Stack, Typography } from '@mui/material';
 import { motion } from 'framer-motion';
 import CustomisedCard from '../../components/card';
 
+/**
+ * Renders the home page - where there are cards that you can use to navigate to other pages.
+ *
+ * @export
+ * @returns {*}
+ */
 export default function Home() {
     return (
         <Stack id="home" style={{ padding: '1vw' }} direction="column">

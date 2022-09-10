@@ -1,5 +1,11 @@
 import { Stack, Typography } from '@mui/material';
 
+/**
+ * Renders the 404 page which is displayed if no other page is found at the route.
+ *
+ * @export
+ * @returns {*}
+ */
 export default function PageNotFound() {
     return (
         <Stack>

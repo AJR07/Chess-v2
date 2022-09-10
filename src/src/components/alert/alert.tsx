@@ -2,22 +2,52 @@ import { Alert, Grid, Snackbar } from '@mui/material';
 import { Component, createContext } from 'react';
 import AlertDetails from './alertdetails';
 
+/**
+ * Props for the Alert Manager
+ *
+ * @interface AlertManagerProps
+ * @typedef {AlertManagerProps}
+ */
 interface AlertManagerProps {
     children: JSX.Element;
 }
 
+/**
+ * State for Alert Manager
+ *
+ * @interface AlertManagerState
+ * @typedef {AlertManagerState}
+ */
 interface AlertManagerState {
     alerts: AlertDetails[];
 }
 
+/**
+ * Alert Context - a function that can be accessed through useContext by any component under the tree. This allows every component to add an alert to the alert manager.
+ *
+ * @type {React.Context<(alert: AlertDetails) => void>}
+ */
 export let AlertContext: React.Context<(alert: AlertDetails) => void> =
     createContext((alert: AlertDetails) => {});
 
+/**
+ * Alert Manager class that displays the alerts in a snackbar.
+ *
+ * @export
+ * @class AlertManager
+ * @typedef {AlertManager}
+ * @extends {Component<AlertManagerProps, AlertManagerState>}
+ */
 export class AlertManager extends Component<
     AlertManagerProps,
     AlertManagerState
 > {
-    private locked: boolean = false;
+    /**
+     * Creates an instance of AlertManager.
+     *
+     * @constructor
+     * @param {AlertManagerProps} props
+     */
     constructor(props: AlertManagerProps) {
         super(props);
         this.state = {
@@ -27,6 +57,13 @@ export class AlertManager extends Component<
         this.dismissAlert = this.dismissAlert.bind(this);
     }
 
+    /**
+     * For the alert context to use when adding an alert.
+     * Calls the dismiss alert function after 3s so each alert lasts for 3s.
+     *
+     * @private
+     * @param {AlertDetails} alert
+     */
     private addAlert(alert: AlertDetails) {
         let newAlerts = [...this.state.alerts];
         newAlerts.push(alert);
@@ -36,12 +73,22 @@ export class AlertManager extends Component<
         }, 3000);
     }
 
+    /**
+     * Called once the 3s timer runs out.
+     *
+     * @private
+     */
     private dismissAlert() {
         let newAlerts = [...this.state.alerts];
         newAlerts.pop();
         this.setState({ alerts: newAlerts });
     }
 
+    /**
+     * Renders the alerts one by one :D
+     *
+     * @returns {*}
+     */
     render() {
         return (
             <Grid

@@ -1,11 +1,24 @@
 import { Button, Stack, Typography } from '@mui/material';
 import { themeOptions } from '../../components/theme';
 
+/**
+ * Props for the theme selector.
+ *
+ * @interface ThemeSelectorProps
+ * @typedef {ThemeSelectorProps}
+ */
 interface ThemeSelectorProps {
     themeName: string;
     setThemeName: React.Dispatch<React.SetStateAction<string>>;
 }
 
+/**
+ * Renders the page where you can select which theme you would like to use.
+ *
+ * @export
+ * @param {ThemeSelectorProps} props
+ * @returns {*}
+ */
 export default function ThemeSelector(props: ThemeSelectorProps) {
     let themesSelectButtons: JSX.Element[] = [];
     for (let themeName in themeOptions) {

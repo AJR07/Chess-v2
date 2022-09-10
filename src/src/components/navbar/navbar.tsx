@@ -4,6 +4,12 @@ import NavBarItem from './navbaritem';
 import ColorLensIcon from '@mui/icons-material/ColorLens';
 import InfoIcon from '@mui/icons-material/Info';
 
+/**
+ * The navbar component that manages route switching.
+ *
+ * @export
+ * @returns {*}
+ */
 export default function NavBar() {
     return (
         <Grid item id="navbar" sx={{ width: '7.5vw' }}>

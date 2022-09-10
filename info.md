@@ -1,5 +1,11 @@
 # **Information about the project & codebase**
 
+## **Content**
+
+1. [Basic Guidelines](#basic-guidelines)
+2. [Code Structure](#code-structure)
+3. [Libraries Used](#libraries-used)
+
 ## **Basic Guidelines**
 
 - For every file, there would _usually_ be at most 1 class or 1 functional component. This is so that the tree of components and classes can be accessed more easily.
@@ -143,3 +149,27 @@ This file is what will be run when the app is run in development mode. It is ess
 ---
 
 That is all the code structure explained in a fairly detailed way :D.
+
+## **Libraries Used**
+
+Here is a section that outlines the purpose of each library that was used in this project. There are 2 types of libraries, [Development Libraries](#development-libraries) and [Production Libraries](#production-libraries)
+
+### **Development Libraries**
+
+These are the libraries used that don't actually help with the real app, but the codebase. The ones that I used were:
+
+#### **Vite**
+
+As you might know, this is a library that allows me to build the app efficiently and effectively, doing things like tree-shaking and stuff. More importantly, it also allows me to render the app real-time and hot-reload the webpage.
+
+#### **Prettier**
+
+This is a library that allows me to format my code with a certain style. Such a formatter is useful to keep the code structured clean, without having to manually and painstakingly do it on your own.
+
+#### **Husky**
+
+THis is a library that allows me to run the previous library, prettier, for every commit. Therefore, I am able to format my code every commit
+
+### **Production Libraries**
+
+#### **MUI**

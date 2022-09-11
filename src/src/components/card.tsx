@@ -39,7 +39,7 @@ export default function CustomisedCard(props: CustomisedCardProps) {
     let addAlert = useContext(AlertContext);
     return (
         <motion.div
-            id="card"
+            id='card'
             drag
             dragElastic={0.2}
             dragConstraints={{ left: 10, top: 10, right: 10, bottom: 10 }}
@@ -53,36 +53,33 @@ export default function CustomisedCard(props: CustomisedCardProps) {
                 }}
             >
                 <CardMedia
-                    component="img"
+                    component='img'
                     alt={props.imageName}
-                    width="100vw"
-                    height="200vh"
+                    width='100vw'
+                    height='200vh'
                     image={props.imageLink}
                 />
                 <CardContent>
-                    <Typography gutterBottom variant="h5" component="div">
+                    <Typography gutterBottom variant='h5' component='div'>
                         {props.name}
                     </Typography>
-                    <Typography variant="body2" color="text.secondary">
+                    <Typography variant='body2' color='text.secondary'>
                         {props.description}
                     </Typography>
                 </CardContent>
                 <CardActions>
                     <Button
-                        size="small"
+                        size='small'
                         onClick={() => {
                             navigator.clipboard.writeText(props.webpageLink);
                             addAlert(new AlertDetails('Copied to Clipboard!'));
-                            addAlert(
-                                new AlertDetails('Copied to Clipboard...')
-                            );
                         }}
                         sx={{ color: 'primary.dark', fontWeight: '1000' }}
                     >
                         SHARE
                     </Button>
                     <Button
-                        size="small"
+                        size='small'
                         sx={{ color: 'success.dark', fontWeight: '1000' }}
                         onClick={() => {
                             navigate(props.shortenedWebpageLink);

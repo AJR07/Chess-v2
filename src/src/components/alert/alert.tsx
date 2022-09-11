@@ -92,18 +92,25 @@ export class AlertManager extends Component<
     render() {
         return (
             <Grid
-                id="alert-manager"
+                id='alert-manager'
                 container
-                direction="row"
+                direction='row'
                 sx={{ height: '100vh' }}
             >
                 <AlertContext.Provider value={this.addAlert}>
                     {this.props.children}
                 </AlertContext.Provider>
                 <Snackbar open={this.state.alerts.length > 0 ? true : false}>
-                    <Alert severity="success" sx={{ width: '100%' }}>
-                        {this.state.alerts[0] ? this.state.alerts[0].title : ''}
-                    </Alert>
+                    {this.state.alerts[0] ? (
+                        <Alert
+                            severity={this.state.alerts[0].severity}
+                            sx={{ width: '100%' }}
+                        >
+                            {this.state.alerts[0].title}
+                        </Alert>
+                    ) : (
+                        <div></div>
+                    )}
                 </Snackbar>
             </Grid>
         );

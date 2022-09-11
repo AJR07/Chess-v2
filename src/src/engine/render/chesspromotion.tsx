@@ -139,8 +139,8 @@ export default class ChessPromotionClass extends Component<
             }
             return (
                 <Stack
-                    id="promotion-screen"
-                    direction="column"
+                    id='promotion-screen'
+                    direction='column'
                     style={{
                         width: '40vw',
                         height: '40vw',
@@ -149,9 +149,9 @@ export default class ChessPromotionClass extends Component<
                     }}
                 >
                     <Typography
-                        variant="h4"
+                        variant='h4'
                         fontWeight={1000}
-                        className="horizontal-center"
+                        className='horizontal-center'
                         sx={{
                             paddingTop: '2.5vw',
                             color: 'warning.light',
@@ -160,7 +160,7 @@ export default class ChessPromotionClass extends Component<
                         Select the piece to be promoted to:
                     </Typography>
                     <div
-                        id="style-selection-panel"
+                        id='style-selection-panel'
                         style={{
                             padding: '1vw',
                             margin: '1vw',
@@ -169,9 +169,9 @@ export default class ChessPromotionClass extends Component<
                         }}
                     >
                         <Stack
-                            direction="row"
-                            alignItems="center"
-                            justifyContent="center"
+                            direction='row'
+                            alignItems='center'
+                            justifyContent='center'
                         >
                             {selection}
                         </Stack>
@@ -179,7 +179,7 @@ export default class ChessPromotionClass extends Component<
                 </Stack>
             );
         } else {
-            return <div id="promotion-screen"></div>;
+            return <div id='promotion-screen'></div>;
         }
     }
 }

@@ -10,6 +10,7 @@ import MoveEngine from '../board/move/moveengine';
 import { Pieces } from '../board/piece/piecetype';
 import Coordinates from '../board/coordinates/coordinates';
 import ChessPromotionClass from './chesspromotion';
+import AlertDetails from '../../components/alert/alertdetails';
 
 /**
  * Props for the Chess Pieces Renderer
@@ -20,6 +21,7 @@ import ChessPromotionClass from './chesspromotion';
 interface ChessPiecesProps {
     move: [null | Move, React.Dispatch<React.SetStateAction<null | Move>>];
     reference: React.MutableRefObject<null>;
+    addAlert: (alert: AlertDetails) => void;
 }
 
 /**
@@ -173,7 +175,8 @@ export default class ChessPiecesClass extends Component<
                                 new Pair(i, j),
                                 event,
                                 info,
-                                this.engine
+                                this.engine,
+                                this.props.addAlert
                             )
                         }
                         dragConstraints={this.props.reference}
@@ -189,7 +192,7 @@ export default class ChessPiecesClass extends Component<
                 );
             }
             boardDisplay.push(
-                <Stack direction="row" key={i}>
+                <Stack direction='row' key={i}>
                     {row}
                 </Stack>
             );
@@ -197,15 +200,15 @@ export default class ChessPiecesClass extends Component<
 
         return (
             <motion.div
-                className="horizontal-center"
+                className='horizontal-center'
                 ref={this.props.reference}
                 style={{ position: 'absolute' }}
-                id="pieces-screen"
+                id='pieces-screen'
             >
                 <Stack
-                    alignItems="center"
-                    justifyContent="center"
-                    direction="column"
+                    alignItems='center'
+                    justifyContent='center'
+                    direction='column'
                 >
                     <ChessPromotionClass
                         moveEngine={this.moveEngine}

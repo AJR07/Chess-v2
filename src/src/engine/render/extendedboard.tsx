@@ -11,8 +11,8 @@ import SidePanel from './sidepanel/sidepanel';
  */
 export default function ExtendedChessBoard() {
     return (
-        <Stack direction="row" spacing={5}>
-            <div id="board" style={{ marginLeft: '15vw' }}>
+        <Stack direction='row' spacing={5}>
+            <div id='board' style={{ marginLeft: '15vw' }}>
                 <Board />
             </div>
             <SidePanel />

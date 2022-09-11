@@ -28,7 +28,7 @@ export default function NavBarItem(props: NavBarItemProps) {
             onClick={() => {
                 navigate(props.redirect);
             }}
-            size="large"
+            size='large'
         >
             {props.icon}
         </IconButton>

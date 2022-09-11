@@ -9,11 +9,11 @@ import ExtendedChessBoard from '../../engine/render/extendedboard';
  */
 export default function PassAndPlay() {
     return (
-        <div id="pass-and-play">
+        <div id='pass-and-play'>
             <Typography
-                variant="h2"
+                variant='h2'
                 fontWeight={1000}
-                className="horizontal-center"
+                className='horizontal-center'
                 sx={{
                     color: 'secondary.light',
                     paddingTop: '5vh',

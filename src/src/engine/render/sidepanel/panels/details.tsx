@@ -10,13 +10,11 @@ import { List, ListItem, Stack, Typography } from '@mui/material';
  */
 export default function DetailsPanel() {
     return (
-        <Stack id="details" alignItems="center" justifyContent="center">
-            <Typography variant="body1" fontWeight={1000}>
-                FEN Log
+        <Stack id='details' alignItems='center' justifyContent='center'>
+            <Typography variant='body1' fontWeight={1000}>
+                FEN Log (In development)
             </Typography>
-            <List>
-                <ListItem>HELLO!</ListItem>
-            </List>
+            <List></List>
         </Stack>
     );
 }

@@ -46,11 +46,11 @@ export default function ThemeSelector(props: ThemeSelectorProps) {
         );
     }
     return (
-        <Stack id="theme-selector" direction="column">
+        <Stack id='theme-selector' direction='column'>
             <Typography
-                variant="h2"
+                variant='h2'
                 fontWeight={1000}
-                className="horizontal-center"
+                className='horizontal-center'
                 sx={{
                     color: 'secondary.light',
                     paddingTop: '5vh',
@@ -60,15 +60,15 @@ export default function ThemeSelector(props: ThemeSelectorProps) {
                 Theme Selector
             </Typography>
             <Stack
-                direction="column"
-                id="colour-selector"
-                justifyContent="center"
-                alignItems="center"
+                direction='column'
+                id='colour-selector'
+                justifyContent='center'
+                alignItems='center'
             >
                 <Typography
-                    variant="h4"
+                    variant='h4'
                     fontWeight={1000}
-                    className="horizontal-center"
+                    className='horizontal-center'
                     sx={{
                         color: 'primary.light',
                         paddingBottom: '1vw',
@@ -76,7 +76,7 @@ export default function ThemeSelector(props: ThemeSelectorProps) {
                 >
                     Colour Theme
                 </Typography>
-                <Stack direction="row" spacing={5}>
+                <Stack direction='row' spacing={5}>
                     {themesSelectButtons}
                 </Stack>
             </Stack>

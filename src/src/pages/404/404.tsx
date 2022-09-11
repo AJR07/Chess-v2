@@ -10,9 +10,9 @@ export default function PageNotFound() {
     return (
         <Stack>
             <Typography
-                variant="h2"
+                variant='h2'
                 fontWeight={1000}
-                className="horizontal-center"
+                className='horizontal-center'
                 sx={{
                     color: 'secondary.light',
                     paddingTop: '5vh',
@@ -22,8 +22,8 @@ export default function PageNotFound() {
                 This link does not exist.
             </Typography>
             <Typography
-                className="horizontal-center"
-                variant="h4"
+                className='horizontal-center'
+                variant='h4'
                 sx={{ color: 'warning.main' }}
             >
                 Try using the navbar to navigate to the other pages :D

@@ -1,4 +1,4 @@
-> Note: Please look at [info.md](info.md) for details of parts of the project
+> Note: Please look at [info.md](info.md)!
 
 # **Development Log**
 

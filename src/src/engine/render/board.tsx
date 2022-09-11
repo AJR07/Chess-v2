@@ -1,5 +1,6 @@
 import { Stack, useTheme } from '@mui/material';
-import { useRef, useState } from 'react';
+import { useContext, useRef, useState } from 'react';
+import { AlertContext } from '../../components/alert/alert';
 import Move from '../board/move/move';
 import ChessBackgroundClass from './chessbackground';
 import ChessPiecesClass from './chesspieces';
@@ -19,9 +20,10 @@ function Board(PiecesComponent: any, BackgroundComponent: any) {
             null | Move,
             React.Dispatch<React.SetStateAction<null | Move>>
         ] = useState<null | Move>(null);
+        const addAlert = useContext(AlertContext);
         return (
             <Stack
-                direction="column"
+                direction='column'
                 sx={{
                     opacity: '0.9',
                     width: '40vw',
@@ -29,7 +31,11 @@ function Board(PiecesComponent: any, BackgroundComponent: any) {
                 }}
             >
                 <BackgroundComponent theme={theme} move={moveState} />
-                <PiecesComponent reference={ref} move={moveState} />
+                <PiecesComponent
+                    reference={ref}
+                    move={moveState}
+                    addAlert={addAlert}
+                />
             </Stack>
         );
     };

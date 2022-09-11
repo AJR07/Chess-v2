@@ -12,11 +12,11 @@ import InfoIcon from '@mui/icons-material/Info';
  */
 export default function NavBar() {
     return (
-        <Grid item id="navbar" sx={{ width: '7.5vw' }}>
+        <Grid item id='navbar' sx={{ width: '7.5vw' }}>
             <Grid container sx={{ height: '85vh' }}>
                 <Grid
                     item
-                    className="vertical-center"
+                    className='vertical-center'
                     sx={{
                         width: '5vw',
                         height: '85vh',
@@ -29,24 +29,24 @@ export default function NavBar() {
                     }}
                 >
                     <Stack
-                        direction="column"
-                        alignItems="center"
+                        direction='column'
+                        alignItems='center'
                         sx={{ paddingTop: '10%' }}
                     >
-                        <NavBarItem title="home" redirect="/" icon={<Home />} />
+                        <NavBarItem title='home' redirect='/' icon={<Home />} />
                         <NavBarItem
-                            title="pass-and-play"
-                            redirect="/pass-and-play"
+                            title='pass-and-play'
+                            redirect='/pass-and-play'
                             icon={<Person />}
                         />
                         <NavBarItem
-                            title="theme-selector"
-                            redirect="/theme-selector"
+                            title='theme-selector'
+                            redirect='/theme-selector'
                             icon={<ColorLensIcon />}
                         />
                         <NavBarItem
-                            title="info"
-                            redirect="/info"
+                            title='info'
+                            redirect='/info'
                             icon={<InfoIcon />}
                         />
                     </Stack>

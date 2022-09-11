@@ -60,7 +60,7 @@ export default class Square extends React.Component<SquareProps, {}> {
     render() {
         return (
             <Box
-                id="square"
+                id='square'
                 sx={{
                     width: '5vw',
                     height: '5vw',
@@ -71,7 +71,7 @@ export default class Square extends React.Component<SquareProps, {}> {
                         src={`/images/chess_set/version2/${this.piece.getLongName()}.png`}
                         style={{ width: '5vw', height: '5vw' }}
                         draggable={false}
-                        className="undraggable"
+                        className='undraggable'
                     ></img>
                 ) : (
                     <></>

@@ -70,18 +70,18 @@ export default class ChessBackgroundClass extends Component<
                 );
             }
             background.push(
-                <Stack direction="row" key={i}>
+                <Stack direction='row' key={i}>
                     {rowBackground}
                 </Stack>
             );
         }
         return (
             <Stack
-                alignItems="center"
-                justifyContent="center"
-                direction="column"
+                alignItems='center'
+                justifyContent='center'
+                direction='column'
                 style={{ position: 'absolute', opacity: 0.8 }}
-                id="background-screen"
+                id='background-screen'
             >
                 {background}
             </Stack>

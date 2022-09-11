@@ -16,9 +16,9 @@ export default function SidePanel() {
     let sections: SidePanelDetails[] = [
         new SidePanelDetails(<ChatIcon />, 'Chat', {}, () => {
             return (
-                <Stack id="details" alignItems="center" justifyContent="center">
-                    <Typography variant="body1" fontWeight={1000}>
-                        Chat
+                <Stack id='details' alignItems='center' justifyContent='center'>
+                    <Typography variant='body1' fontWeight={1000}>
+                        Chat (In development)
                     </Typography>
                 </Stack>
             );
@@ -35,7 +35,7 @@ export default function SidePanel() {
         let section = sections[sectionIdx];
         chooseSection.push(
             <Button
-                aria-label="chat"
+                aria-label='chat'
                 key={section.name}
                 onClick={() => {
                     setSelectedSectionIdx(sectionIdx);
@@ -51,11 +51,11 @@ export default function SidePanel() {
                 }}
             >
                 <Stack
-                    direction="column"
-                    alignItems="center"
-                    justifyContent="center"
+                    direction='column'
+                    alignItems='center'
+                    justifyContent='center'
                 >
-                    <Typography variant="caption">{section.name}</Typography>
+                    <Typography variant='caption'>{section.name}</Typography>
                     {section.icon}
                 </Stack>
             </Button>
@@ -63,8 +63,8 @@ export default function SidePanel() {
     }
     return (
         <Stack
-            id="side-panel"
-            direction="column"
+            id='side-panel'
+            direction='column'
             sx={{
                 width: '25vw',
                 height: '50vh',
@@ -73,7 +73,7 @@ export default function SidePanel() {
             }}
         >
             <Stack
-                direction="row"
+                direction='row'
                 sx={{
                     borderTopLeftRadius: '1vw',
                     borderTopRightRadius: '1vw',
@@ -82,7 +82,7 @@ export default function SidePanel() {
             >
                 {chooseSection}
             </Stack>
-            <div id="side-panel-main" style={{ padding: '1vw' }}>
+            <div id='side-panel-main' style={{ padding: '1vw' }}>
                 <MainSection />
             </div>
         </Stack>

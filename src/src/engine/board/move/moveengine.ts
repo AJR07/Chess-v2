@@ -1,4 +1,5 @@
 import { PanInfo } from 'framer-motion';
+import AlertDetails from '../../../components/alert/alertdetails';
 import Pair from '../../../utils/pair';
 import ChessEngine from '../../engine';
 import FENDetails from '../../fen/details';
@@ -322,7 +323,8 @@ export default class MoveEngine {
         dragged: Pair<number, number>,
         event: MouseEvent | TouchEvent | PointerEvent,
         info: PanInfo,
-        engine: ChessEngine
+        engine: ChessEngine,
+        addAlert: (alert: AlertDetails) => void
     ) {
         this.whenDragged(dragged, event, info);
 
@@ -481,6 +483,8 @@ export default class MoveEngine {
                         : oldFenDetails.halfMoveClock + 1
                 )
             );
+        } else if (!legal) {
+            addAlert(new AlertDetails('Illegal Move', 'warning'));
         }
 
         // update some state

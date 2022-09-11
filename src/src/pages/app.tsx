@@ -39,11 +39,11 @@ export default function App() {
     return (
         <AppSettings themeIdx={themeIdx}>
             <NavBar />
-            <Grid item id="app" sx={{ width: '92.5vw' }}>
+            <Grid item id='app' sx={{ width: '92.5vw' }}>
                 <Routes>
-                    <Route path="/pass-and-play" element={<PassAndPlay />} />
+                    <Route path='/pass-and-play' element={<PassAndPlay />} />
                     <Route
-                        path="/theme-selector"
+                        path='/theme-selector'
                         element={
                             <ThemeSelector
                                 themeName={themeIdx}
@@ -51,14 +51,14 @@ export default function App() {
                             />
                         }
                     />
-                    <Route path="/info" element={<Info />} />
-                    <Route path="/" element={<Home />} />
-                    <Route path="/home" element={<Home />} />
-                    <Route path="*" element={<PageNotFound />} />
+                    <Route path='/info' element={<Info />} />
+                    <Route path='/' element={<Home />} />
+                    <Route path='/home' element={<Home />} />
+                    <Route path='*' element={<PageNotFound />} />
                 </Routes>
             </Grid>
             <Typography
-                variant="caption"
+                variant='caption'
                 fontWeight={1000}
                 fontSize={15}
                 sx={{
@@ -68,7 +68,7 @@ export default function App() {
                     marginTop: '95vh',
                 }}
             >
-                Made by: <a href="https://github.com/AJR07/Chess-v2">AJR07</a>
+                Made by: <a href='https://github.com/AJR07/Chess-v2'>AJR07</a>
             </Typography>
         </AppSettings>
     );
@@ -107,7 +107,7 @@ function AppSettings(props: AppSettingsProps) {
                         <AlertManager>
                             <Grid
                                 container
-                                direction="row"
+                                direction='row'
                                 sx={{ height: '100vh' }}
                             >
                                 {props.children}

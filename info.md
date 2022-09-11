@@ -5,9 +5,9 @@
 1. [Basic Guidelines](#basic-guidelines)
 2. [Code Structure](#code-structure)
 3. [Libraries Used](#libraries-used)
-4. [Design Decisions](#design-decisions)
-5. [Reflection](#reflection)
-6. [Other Links](#other-links)
+4. **[Design Decisions](#design-decisions)**
+5. **[Reflection](#reflection)**
+6. **[Other Links](#other-links)**
 
 ## **Basic Guidelines**
 
@@ -320,4 +320,77 @@ Hopefully that gives you a good idea on how the project's codebase is planned an
 
 ## **Reflection**
 
+I think you would have gotten a good idea of some of the design decisions [here](#design-decisions), so I would not cover them here. Instead, I will cover challenges faced, what I have learnt and what I am proud of here.
+
+### **Challenges Faced**
+
+1. Deploying the app to firebase
+   - Despite my experience with deploying the app to firebase, I had not done it with vite before and only did it with create-react-app before
+   - Believe it or not, it was actually quite a significant challenge to try to figure out all the details (esp since we had to put all our code into `/src`)
+   - Eventually tinkered with some settings and got it working... for free!
+2. Designing UI
+   - I am bad at designing UI :(
+   - It just took a lot of trial and error to nail one that is somewhat decent
+3. Legal checker for the engine
+   - It was tough trying to make the design decisions that I did
+   - Had to consider many pros and cons while trying to make progress at the same time
+
+Other than that, it was quite smooth because I have created multiple Web Apps, but the challenge is mostly to do with familiarising myself with the libraries.
+
+### **What I have learnt**
+
+This being one of the bigger projects that I have taken on, so naturally I would have learnt a few things in the process...?
+
+1. Familiarised myself with many of the libraries
+   - Naturally, since I did use quite a few libraries, I did familiarise myself with how to work with them.
+   - For example, for React, I learnt how and when to use class components, how to manage state and props in them etc.
+   - I also learnt how to use contexts in react, and use the provider pattern.
+   - Learnt a thing or two about managing animations, routes and things
+   - Learnt how to optimise production with vite and work with it to provide good dev experience
+2. Design Decisions
+   - ~~Here we go again~~
+   - I learnt that naturally, there were quite a few ways to approach problems in OOP. They provide different advantages and disadvantages.
+   - I have definitely learnt to be more critical on what kind of decisions I make when coding, and how I could potentially refractor it to optimise developer experience or user experience.
+3. Making somewhat decent UI
+   - I learnt that ~~I am quite bad at making UI and themes~~
+   - It takes a while and some experimentation to get the best UI out of the app
+   - Sometimes it is better just to use another library that can probably provide better UI than you would have otherwise
+
+### **What I am _proud_ of** :D
+
+1. Having actually done a successful (?) legal checker
+   > From what I know so far after testing it a few times with friends and by myself, it doesn't have any bugs.
+   - It was actually way harder than I thought (I thought of finishing it within a week, but it took ~3 weeks)
+   - And good thing it took 3 weeks, because if not I would probably ran into a couple of bugs and issues if i chose the other design decisions
+2. Building a half-decent UI
+   - The UI on my other websites look quite sad, and generally don't feel modern enough.
+   - Adding animations helped a lot with the interactivity
+   - I took inspiration from other websites too :D
+3. Getting it all done within `~1 to 2 months`
+   - With all the Weighted Assessments and everything, being able to create a project that can be considered finished for now is a good achievement in my opinion
+4. Learning new things :D
+   - As much as I wish this project is useful in some way, let's face it, its not really that useful given websites like [chess.com](chess.com) exists.
+   - What I like doing is selecting random project ideas and just attempting them, and learning the skills needed along the way
+   - And the things I have learnt in this project really helped in my Web Development journey
+5. Also just having a playable chess app that I made :D
+
+---
+
+This whole project was quite poggers, I learnt quite a bit and experimented quite a bit with design decisions and things. The fact that it had a "time limit" also motivated me to push it as far as I can. :D
+
 ## **Other Links**
+
+1. Github Repository [(Chess-v2)](https://github.com/AJR07/Chess-v2)
+2. [UML Diagram](Class_Diagram.png)
+3. [Video](Video.mp4)
+   > Note: The video is quite a large file thus will not be available in the github repository. Please find it in the zip file instead :D
+
+> The video is also quite choppy at some points because my computer can't handle OBS 4. [Website](https://chess-ajr07.web.app) 5. [Devlog](devlog.md)
+
+## **Acknowledgements**
+
+- CEP Teacher (Mrs Neo)
+- Youtube Channels: Fireship/Seb Lague
+- Friends
+
+# **That's It! :D**

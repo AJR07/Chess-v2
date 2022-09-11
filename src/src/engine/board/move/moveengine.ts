@@ -130,19 +130,20 @@ export default class MoveEngine {
         oldFenDetails: FENDetails,
         board: Pieces[][]
     ): boolean {
+        // if the wrong colour is trying to castle (the other colour is supposed to play the move)
         if (oldFenDetails.activeColour !== startPiece.colour) return false;
         if (
             startPiece.colour === Colour.white &&
             this.move!.endPosition.coords!.first == 7
         ) {
-            // !white
+            // !Evaluate castling for white
             if (
                 this.move!.endPosition.coords!.second == 2 &&
                 oldFenDetails.castlingRights.whiteCastle.queen &&
                 board[7][1].colour === Colour.none &&
                 board[7][3].colour === Colour.none
             ) {
-                // !queen side white
+                // !Check queen side white
                 let changesList: Pair<Coordinates, Pieces>[] = [];
 
                 // move the king
@@ -182,7 +183,7 @@ export default class MoveEngine {
                 oldFenDetails.castlingRights.whiteCastle.king &&
                 board[7][5].colour === Colour.none
             ) {
-                // !king side white
+                // !Check king side white
                 let changesList: Pair<Coordinates, Pieces>[] = [];
 
                 // move the king
@@ -220,7 +221,7 @@ export default class MoveEngine {
             }
         }
 
-        // black
+        // !Evaluate castling for black
         else if (
             startPiece.colour === Colour.black &&
             this.move!.endPosition.coords!.first == 0
@@ -231,7 +232,7 @@ export default class MoveEngine {
                 board[0][1].colour === Colour.none &&
                 board[0][3].colour === Colour.none
             ) {
-                // !queen side black
+                // !Check for queen side black
                 let changesList: Pair<Coordinates, Pieces>[] = [];
 
                 // move the king
@@ -271,7 +272,7 @@ export default class MoveEngine {
                 oldFenDetails.castlingRights.blackCastle.king &&
                 board[0][5].colour === Colour.none
             ) {
-                // !king side black
+                // !Check king side black
                 let changesList: Pair<Coordinates, Pieces>[] = [];
 
                 // move the king
@@ -326,11 +327,12 @@ export default class MoveEngine {
         engine: ChessEngine,
         addAlert: (alert: AlertDetails) => void
     ) {
+        // get some information about the new move
         this.whenDragged(dragged, event, info);
 
         let board = engine.getBoardData();
 
-        // updating the moves
+        // updating the moves with the relevant new information
         this.move!.endPieceColour =
             board[this.move!.endPosition.coords!.first][
                 this.move!.endPosition.coords!.second
@@ -354,6 +356,7 @@ export default class MoveEngine {
                     this.move!.endPosition.coords!.second
                 ];
 
+        // check if its legal for most move types
         if (
             (this.move!.moveType == MoveTypes.BaseMove ||
                 this.move!.moveType === MoveTypes.CaptureMove ||
@@ -404,7 +407,7 @@ export default class MoveEngine {
             this.updateBoard(changesList);
             legal = true;
         } else if (this.move!.moveType == MoveTypes.CastleMove) {
-            // !castling
+            // check if its legal if the player played a castling move
             let oldFenDetails = engine.fenManager.data;
             legal = this.evaluateCastling(
                 startPiece,
@@ -460,6 +463,7 @@ export default class MoveEngine {
                 }
             }
 
+            // update th efen string with all the new details
             engine.fenManager.regenerateFen(
                 new FENDetails(
                     board,
@@ -484,13 +488,15 @@ export default class MoveEngine {
                 )
             );
         } else if (!legal) {
+            // if its illegal, spit out a warning
             addAlert(new AlertDetails('Illegal Move', 'warning'));
         }
 
-        // update some state
         if (this.move!.moveType === MoveTypes.PromotionMoveStage1 && legal) {
+            // update the move to the new state
             this.updateMove(JSON.parse(JSON.stringify(this.move)));
         } else {
+            // reset the move since the move is done
             this.move = null;
             this.updateMove(this.move);
             this.resetDrag(true);
@@ -509,6 +515,7 @@ export default class MoveEngine {
         board: Pieces[][],
         engine: ChessEngine
     ) {
+        // update the board
         let changesList: Pair<Coordinates, Pieces>[] = [];
         board[this.move!.endPosition.coords!.first][
             this.move!.endPosition.coords!.second
@@ -581,6 +588,7 @@ export default class MoveEngine {
         info: PanInfo
     ) {
         function resolveHalfSquare(num: number) {
+            // utility function to resolve the half square (since the piece is in the middle, the coordinates would be 0.5, 0.5)
             if (num < 0) return num - 0.5;
             else return num + 0.5;
         }
@@ -600,7 +608,7 @@ export default class MoveEngine {
         dragged.first += offset.second;
         dragged.second += offset.first;
 
-        //clamp it
+        // clamp it to within the 4 walls of the chessboard
         dragged.first =
             dragged.first < 0 ? 0 : dragged.first > 7 ? 7 : dragged.first;
         dragged.second =
